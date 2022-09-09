@@ -69,6 +69,7 @@ jacocoTestReport {
 }
 
 tasks.named('test') {
+    systemProperty("spring.profiles.active", "test")
     outputs.dir snippetsDir
     useJUnitPlatform()
     finalizedBy 'jacocoTestReport'

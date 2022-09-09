@@ -27,16 +27,21 @@ public class ImageFile {
     @Column(nullable = false)
     private String filePath;
 
+    @Column
+    private Boolean isThumbnail;
+
     @ManyToOne
     @JoinColumn(name = "POST_ID", nullable = false)
     private Post post;
 
     @Builder
-    public ImageFile(Long id, String originFilename, String filename, String filePath, Post post) {
+    public ImageFile(Long id, String originFilename, String filename, String filePath,
+                     Boolean isThumbnail, Post post) {
         this.id = id;
         this.originFilename = originFilename;
         this.filename = filename;
         this.filePath = filePath;
+        this.isThumbnail = isThumbnail!=null?isThumbnail:false;
         this.post = post;
     }
 

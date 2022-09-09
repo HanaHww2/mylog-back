@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,13 +29,13 @@ public class PostController {
     /**
      * 게시글 저장
      * @param dto
-     * @param userPrincipal
+     * @param principal
      * @return
      */
     @PostMapping("/v1/posts")
-    public ResponseEntity<?> savePost(@RequestBody PostSaveRequestDto dto, Principal Principal) {
+    public ResponseEntity<?> savePost(@RequestBody PostSaveRequestDto dto, Principal principal) {
 
-        PostDetailResponseDto responseDto = postService.save(dto, Principal.getName());
+        PostDetailResponseDto responseDto = postService.save(dto, principal.getName());
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/id")
@@ -65,13 +66,18 @@ public class PostController {
      * @param size
      * @return
      */
-    @GetMapping("/v1/posts/boards/{boardId}")
-    public ResponseEntity<?> getAllPostByBoardId(@PathVariable("boardId") Long boardId,
-                                                 @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    @GetMapping("/v1/posts")
+    public ResponseEntity<?> getAllPostByBoardId(@RequestParam(value ="boardId", required = false) Long boardId, @RequestParam(value ="categoryId", required = false) Long categoryId,
+                                                 @RequestParam(value ="page", required = false, defaultValue = "0") Integer page, @RequestParam(value ="size", required = false, defaultValue = "10") Integer size) {
 
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedDate"));
+        List<PostMainResponseDto> dtoList;
+        if (categoryId != null) {
+            dtoList =  postService.getAllPostDescByCategoryId(categoryId, pageRequest);
+            return ResponseEntity.ok(new CommonResult<>("success", dtoList));
 
-        List<PostMainResponseDto> dtoList = postService.getAllPostDescByBoardId(boardId, pageRequest);
+        }
+        dtoList= postService.getAllPostDescByBoardId(boardId, pageRequest);
         return ResponseEntity.ok(new CommonResult<>("success", dtoList));
     }
 
@@ -81,7 +87,7 @@ public class PostController {
      * @param size
      * @return
      */
-    @GetMapping("/v1/posts")
+    @GetMapping("/v1/posts/all")
     public ResponseEntity<?> getAllPosts(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page, @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
 
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedDate"));

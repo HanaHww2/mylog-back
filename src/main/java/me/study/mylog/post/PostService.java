@@ -11,12 +11,10 @@ import me.study.mylog.upload.domain.ImageFile;
 import me.study.mylog.upload.repository.ImageFileRepository;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
-import org.hibernate.cache.spi.CacheTransactionSynchronization;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -75,11 +73,29 @@ public class PostService {
      * @param id
      * @return
      */
-    @Transactional(readOnly=true)
+    @Transactional
     public PostDetailResponseDto getPostDetailInfoById(Long id) {
-        return postRepository.findById(id)
-                .map(PostDetailResponseDto::new)
-                .orElseThrow(()-> new IllegalArgumentException("찾는 글이 존재하지 않습니다."));
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("찾는 글이 존재하지 않습니다."));
+
+        // 조횟수 추가 (변경 감지 작동으로 자동 업데이트)
+        Integer count = post.addReadingCount();
+        return new PostDetailResponseDto(post);
+    }
+
+    /**
+     * 게시글 조회수 업데이트 (리턴 없이 업데이트만 수행)
+     * @param id
+     * @return
+     */
+    @Transactional
+    public Integer updatePostReadingCountById(Long id) {
+        // 게시글 조회
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("찾는 글이 존재하지 않습니다."));
+
+        // 조횟수 추가 (변경 감지 작동으로 자동 업데이트)
+        return post.addReadingCount();
     }
 
     /**

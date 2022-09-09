@@ -14,9 +14,14 @@ import java.util.Optional;
 public class PostDetailResponseDto {
     private Long id;
     private Long boardId;
+    private String boardName;
+    private String boardUri;
     private Long categoryId;
+    private String categoryName;
     private String title;
     private String content;
+    private Integer readingCount;
+
     private String email;
     private String authorName;
     private String hashtagList;
@@ -25,11 +30,15 @@ public class PostDetailResponseDto {
     public PostDetailResponseDto(Post entity) {
         id = entity.getId();
         boardId = entity.getBoard().getId();
+        boardName = entity.getBoard().getName();
+        boardUri = entity.getBoard().getUri();
         categoryId = entity.getCategory().getId();
+        categoryName = entity.getCategory().getName();
         title = entity.getTitle();
         email = entity.getUser().getEmail();
         authorName = entity.getUser().getName();
         content = entity.getContent();
+        readingCount = entity.getReadingCount();
         modifiedDate = entity.getModifiedDate();
         hashtagList = entity.getHashtagList();
     }

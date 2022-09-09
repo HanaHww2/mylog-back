@@ -53,8 +53,8 @@ public class SecurityConfig {
                         .antMatchers("/actuator/health", "/h2-console/**").permitAll()
 
                         .antMatchers("/", "/css/**", "/images/**").permitAll()
-                        .antMatchers("/api/v1/boards", "/api/v1/boards/**", "/api/v1/auth/signin", "/api/v1/auth/signup").permitAll()
-                        .antMatchers("/api/v1/posts/**").permitAll()
+                        .antMatchers("/api/v1/boards", "/api/v1/boards/**", "/api/v1/auth/**").permitAll()
+                        .antMatchers(HttpMethod.GET,"/api/v1/posts/**").permitAll()
 
                         .antMatchers("/api/v1/users/**").hasRole(RoleType.USER.name())
                         .anyRequest().authenticated()
