@@ -2,12 +2,13 @@ package me.study.mylog.users.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.study.mylog.auth.exception.DuplicateUserMailException;
+import me.study.mylog.common.exception.DuplicatedResoureException;
 import me.study.mylog.board.BoardService;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.dto.UserDto;
 import me.study.mylog.users.repository.UserRepository;
 import me.study.mylog.users.domain.RoleType;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,27 +29,72 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserDto findUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Not Registered User Mail"));
+
+        return UserDto.builder()
+                .email(user.getEmail())
+                .name(user.getName())
+                .nickname(user.getNickname())
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existsByName(String name) {
+        return userRepository.existsByName(name);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean checkIfDuplicatedUserByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            throw new DuplicatedResoureException(
+                    "Already Exists User Mail with " + user.get().getAuthProviderType(), HttpStatus.CONFLICT);
+        }
+        return false;
     }
 
     @Transactional
-    public User register(UserDto userDto) throws DuplicateUserMailException {
-        if (userRepository.findByEmail(userDto.getEmail())
-                .orElse(null) != null) {
-            throw new DuplicateUserMailException("Already Exists User Mail");
+    public UserDto register(UserDto userDto) throws DuplicatedResoureException {
+
+        // 이메일과 고유 명칭 2차 검증..?
+        // (이미 검증하긴 했는데... 중간에 다른 사람이 그 아이디를 쓸 확률도 있긴 하겠지... 실제로는 어떻게 해결하는 거지?)
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new DuplicatedResoureException("Already Exists User Mail", HttpStatus.CONFLICT);
+        }
+        if (userRepository.existsByName(userDto.getName())) {
+            throw new DuplicatedResoureException("Already Exists User Name", HttpStatus.CONFLICT);
         }
 
         User user = User.builder()
                 .email(userDto.getEmail())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .name(userDto.getName())
+                .nickname(userDto.getNickname()!=null?userDto.getNickname():userDto.getName())
                 .role(RoleType.USER)
                 .build();
         log.info("{}", user);
 
-        boardService.createFirstBoard(user);
         User newUser = userRepository.save(user);
-        return newUser;
+        // TODO 보드와 보드멤버 테이블 관련해서 수정 필요
+        // 사용자 기준 보드를 조회할 때, boardMember에서 사용자가 권한을 가진 모든 보드 아이디를 조회하여
+        // 이를 바탕으로 board 정보 조회를 수행한다.
+        boardService.createFirstBoard(user);
+
+
+        return UserDto.builder()
+                .email(newUser.getEmail())
+                .name(newUser.getName())
+                .nickname(newUser.getNickname())
+                .build();
     }
+
+
 }

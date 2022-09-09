@@ -3,22 +3,21 @@ package me.study.mylog.users.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import me.study.mylog.auth.exception.DuplicateUserMailException;
+import me.study.mylog.common.exception.DuplicatedResoureException;
 import me.study.mylog.auth.utils.JwtUtil;
 import me.study.mylog.common.dto.CommonResult;
-import me.study.mylog.users.domain.User;
 import me.study.mylog.users.dto.SigninReqDto;
 import me.study.mylog.users.dto.SigninResDto;
 import me.study.mylog.users.dto.UserDto;
+import me.study.mylog.users.dto.UserValidationDto;
 import me.study.mylog.users.service.UserService;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -38,21 +37,41 @@ public class UserController {
 
     @PostMapping("/auth/signup")
     public ResponseEntity<CommonResult<?>> signUpNewUser(@Valid @RequestBody UserDto userDto) {
+        UserDto newUserDto;
         try {
-            User user = userService.register(userDto);
-        } catch (DuplicateUserMailException e) {
-            // 에러 핸들링 추가 필요
+            newUserDto = userService.register(userDto);
+        } catch (DuplicatedResoureException e) {
             e.printStackTrace();
             throw e;
         }
-        URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
+        URI location = ServletUriComponentsBuilder.fromCurrentContextPath() //.fromContextPath(request)
                 .path("/users/me")
                 .build()
                 .toUri();
+
         return ResponseEntity.created(location)
-                .body(new CommonResult<>("User Registered Successfully", userDto));
+                .body(new CommonResult<>("User Registered Successfully", newUserDto));
 
     }
+
+    @PostMapping("/auth/duplicatedEmail")
+    public ResponseEntity<CommonResult<?>> checkIfDuplicatedEmail(@Valid @RequestBody UserValidationDto dto) {
+        String email = dto.getEmail();
+        boolean result = userService.checkIfDuplicatedUserByEmail(email); // 항상 false
+        return ResponseEntity.ok()
+                .body(new CommonResult<>("can use", email));
+    }
+
+    @PostMapping("/auth/duplicatedName")
+    public ResponseEntity<CommonResult<?>> checkIfDuplicatedName(@Valid @RequestBody UserValidationDto dto) {
+        String name = dto.getName();
+        if (userService.existsByName(name)) {
+            throw new DuplicatedResoureException("can't use", HttpStatus.CONFLICT);
+        }
+        return ResponseEntity.ok()
+                .body(new CommonResult<>("can use", name));
+    }
+
 
     @PostMapping(value = "/auth/signin")
     public ResponseEntity<CommonResult<SigninResDto>> signIn(@Valid @RequestBody SigninReqDto signinReqDto) {
@@ -81,7 +100,7 @@ public class UserController {
         // 응답 바디에 값을 담아 전송할 수 있으니, 굳이 header에 대한 설정을 변경하지 않고 바디에 담아서 보내기로 결정했더,
         SigninResDto signinResDto = SigninResDto.builder()
                 .email(signinReqDto.getEmail())
-                .Authorization("Bearer " +accessToken)
+                .Authorization("Bearer " + accessToken)
                 .build();
 
         return ResponseEntity
@@ -91,9 +110,9 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/users/me/main-info")
-    public User getCurrentUserInfo(Principal principal) {
-        return userService.getUserByEmail(principal.getName())
-                .orElseThrow(() -> new UsernameNotFoundException(principal.getName()));
+    @GetMapping("/users/me")
+    public CommonResult<UserDto> getCurrentUserInfo(Principal principal) {
+        UserDto userDto = userService.findUserByEmail(principal.getName());
+        return new CommonResult<>("User Info getting by UserEmail", userDto);
     }
 }

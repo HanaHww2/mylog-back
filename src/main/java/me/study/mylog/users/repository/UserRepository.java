@@ -13,6 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
+    boolean existsByName(String name);
 
     @Query("SELECT ur.refreshToken FROM UserRefreshToken ur WHERE ur.userId=:id")
     String getRefreshTokenById(@Param("id") Long id);
@@ -21,4 +22,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE UserRefreshToken ur SET ur.refreshToken=:token WHERE ur.userId=:id")
     void updateRefreshToken(@Param("id") Long id, @Param("token") String token);
+
 }

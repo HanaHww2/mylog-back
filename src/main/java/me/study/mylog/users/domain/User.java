@@ -29,10 +29,9 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, length = 100)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 100)
     private String name;
 
-    @Column(unique = true)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
