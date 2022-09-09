@@ -1,24 +1,48 @@
 package me.study.mylog.post;
 
+import me.study.mylog.board.Board;
+import me.study.mylog.board.BoardType;
+import me.study.mylog.category.Category;
 import me.study.mylog.post.domain.Post;
+import me.study.mylog.users.domain.RoleType;
+import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-
-@SpringBootTest /*SpringBoot에서의 테스트 코드는 메모리 DB인 H2를 기본적으로 사용한다. 따로 설정할 필요가 없다.*/
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
+//@SpringBootTest
 class PostRepositoryTest {
 
     @Autowired
     PostRepository postRepository;
     @Autowired
     UserRepository userRepository;
+
+    @BeforeEach
+    void setUp() {
+        User user = User.builder()
+                .id(1l)
+                .email("test@example.com")
+                .password("1234")
+                .name("hanah")
+                .role(RoleType.USER)
+                .build();
+
+        userRepository.save(user);
+    }
 
     @AfterEach
     void cleanup() {
@@ -27,6 +51,7 @@ class PostRepositoryTest {
         * 테스트 메소드가 끝날 때마다 repository 전체를 비우는 코드
         * */
         postRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test

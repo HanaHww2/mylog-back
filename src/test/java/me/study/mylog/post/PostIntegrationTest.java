@@ -34,7 +34,7 @@ public class PostIntegrationTest {
 
     private final ObjectMapper objectMapper;
     private final MockMvc mockMvc;
-    private DatabaseCleanUp databaseCleanUp;
+    private final DatabaseCleanUp databaseCleanUp;
     private final PostService postService;
     private final InitDBService initDBService;
 
@@ -53,8 +53,8 @@ public class PostIntegrationTest {
 
     @AfterEach
     void tearDown() {
-     //   databaseCleanUp.afterPropertiesSet();
-    //    databaseCleanUp.execute();
+        databaseCleanUp.afterPropertiesSet();
+        databaseCleanUp.execute();
     }
 
     @DisplayName("조건에_맞춰_postList를_조회해_반환하는지_검증")
@@ -62,7 +62,7 @@ public class PostIntegrationTest {
     @WithMockUser
     public void chkGetPostListWell() throws Exception {
 
-        mockMvc.perform(get("/api/v1/posts?page=1&size=3"))
+        mockMvc.perform(get("/api/v1/posts/all?page=1&size=3"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.data").isArray())

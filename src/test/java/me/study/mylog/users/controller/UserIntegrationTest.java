@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -24,6 +25,7 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,7 +42,7 @@ class UserIntegrationTest {
 
     private final MockMvc mockMvc;
     private final UserService userService;
-    private DatabaseCleanUp databaseCleanUp;
+    private final DatabaseCleanUp databaseCleanUp;
     private ObjectMapper objectMapper;
 
     @BeforeEach
@@ -57,7 +59,7 @@ class UserIntegrationTest {
         //objectMapper.configure(MapperFeature.USE_ANNOTATIONS, false);
         objectMapper =  JsonMapper.builder().disable(MapperFeature.USE_ANNOTATIONS).build();
         // deprecated 옵션이 있어서, 다른 해결법을 생각해봐도 좋을 것 같다.
-        // -> 사실 test 용 dto 를 내부 클래스로 두는 게 빠를 듯ㅋ
+        // -> 사실 test 용 dto 를 내부 클래스로 두는 게 빠를 듯
 
         // com.fasterxml.jackson.databind.exc.InvalidDefinitionException:
         // No serializer found for class me.study.userservice.user.dto.UserDto$UserDtoBuilder and no properties discovered to create BeanSerializer
@@ -81,8 +83,8 @@ class UserIntegrationTest {
 
         mockMvc.perform(get("/api/v1/users/me"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(expectedEmail))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.role").value(expectedRole))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.email").value(expectedEmail))
+      //          .andExpect(MockMvcResultMatchers.jsonPath("$.role").value(expectedRole))
                 .andDo(print());
     }
 
@@ -93,15 +95,14 @@ class UserIntegrationTest {
         // given
         String content = objectMapper.writeValueAsString(UserDto.builder()
                 .email("hanah@example.com")
-                .password("1234")
                 .name("하나")
+                .nickname("hanah")
+                .password("1234")
                 .build());
 
-        String location = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/users/me")
-                .build()
-                .toString();
+        String location = "http://localhost/users/me";
 
+        log.debug("================{}==============", location);
         mockMvc.perform(post("/api/v1/auth/signup")
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -128,7 +129,7 @@ class UserIntegrationTest {
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(header().exists("Authorization"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.authorization").exists())
                 .andDo(print());
     }
 

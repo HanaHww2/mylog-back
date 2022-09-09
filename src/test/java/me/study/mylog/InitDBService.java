@@ -11,6 +11,8 @@ import me.study.mylog.users.domain.RoleType;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,11 +27,16 @@ public class InitDBService {
     private final BoardRepository boardRepository;
     private final CategoryRepository categoryRepository;
     private final PostRepository postRepository;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     List<User> userList;
     List<Board> boardList;
     List<Category> categoryList;
     List<Post> postList;
+
+    public void initDBWithOneUser() {
+
+    }
 
 
     public void initDBForIntegration() {
@@ -43,7 +50,7 @@ public class InitDBService {
                 .mapToObj(i -> makeBoard("--"+i))
                 .collect(Collectors.toList());
 
-        boardRepository.saveAll(boardList);
+        List<Board> boardsList = boardRepository.saveAll(boardList);
 
         this.categoryList = IntStream.range(0, 9)
                 .mapToObj(i -> makeCategory("$$"+i, userList.get(i % 3), boardList.get(i%3)))
@@ -52,16 +59,17 @@ public class InitDBService {
         categoryRepository.saveAll(categoryList);
 
         this.postList = IntStream.range(0, 30)
-                .mapToObj( i -> makePost("***" + i, userList.get(i % 3), categoryList.get(i%6)))
+                .mapToObj( i -> makePost("***" + i, userList.get(i % 3), categoryList.get(i%6), boardsList.get(i%3)))
                 .collect(Collectors.toList());
 
         postRepository.saveAll(postList);
     }
 
+
     User makeUser(String randomStr) {
         return User.builder()
                 .email("test"+ randomStr+"@example.com")
-                .password("password" + randomStr)
+                .password(passwordEncoder.encode("password" + randomStr))
                 .name("name"+ randomStr)
                 .role(RoleType.USER)
                 .build();
@@ -81,12 +89,15 @@ public class InitDBService {
                 .name("name"+ randomStr)
                 .build();
     }
-    Post makePost(String randomStr, User user, Category category) {
+    
+    // TODO 보드 정보도 등록해야 함
+    Post makePost(String randomStr, User user, Category category, Board board) {
         return Post.builder()
                 .title("title" + randomStr)
                 .content("content" + randomStr)
                 .category(category)
                 .user(user)
+                .board(board)
                 .build();
     }
 

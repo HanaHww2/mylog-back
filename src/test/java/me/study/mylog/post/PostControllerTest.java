@@ -14,26 +14,26 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 
 //@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@WebMvcTest(PostController.class)
+//@WebMvcTest(PostController.class)
 class PostControllerTest {
-
-    @Autowired
-    MockMvc mvc;
-
-    @MockBean
-    PostService postService;
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    @DisplayName("postList를_잘_반환되는지_검증")
-    public void chkGetPostListWell() {
-
-    }
+//
+//    @Autowired
+//    MockMvc mvc;
+//
+//    @MockBean
+//    PostService postService;
+//
+//    @BeforeEach
+//    void setUp() {
+//    }
+//
+//    @AfterEach
+//    void tearDown() {
+//    }
+//
+//    @Test
+//    @DisplayName("postList를_잘_반환되는지_검증")
+//    public void chkGetPostListWell() {
+//
+//    }
 }
