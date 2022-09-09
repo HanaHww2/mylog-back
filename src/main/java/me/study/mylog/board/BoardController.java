@@ -1,14 +1,11 @@
 package me.study.mylog.board;
 
 import lombok.AllArgsConstructor;
-import me.study.mylog.auth.security.UserPrincipal;
-import me.study.mylog.category.CategoryResponseDto;
-import me.study.mylog.category.CategoryService;
 import me.study.mylog.common.dto.CommonResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +21,13 @@ public class BoardController {
 
     @GetMapping("/v1/boards")
     public ResponseEntity<?> getBoardsByUser(Principal principal) {
-        List<BoardResponseDto> dto = boardService.getBoardsByUserEmail(principal.getName());
+        List<BoardDetailResponseDto> dtoList = boardService.getBoardsByUserEmail(principal.getName());
+        return new ResponseEntity<>(new CommonResult<>("get BoardsList Successfully", dtoList), HttpStatus.OK);
+    }
+
+    @GetMapping("/v1/boards/{boardId}")
+    public ResponseEntity<?> getBoardById(@PathVariable("boardId") Long boardId, Principal principal) {
+        BoardDetailResponseDto dto = boardService.getBoardById(boardId);
         return new ResponseEntity<>(new CommonResult<>("get BoardsList Successfully", dto), HttpStatus.OK);
     }
 }

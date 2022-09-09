@@ -1,10 +1,8 @@
 package me.study.mylog.board;
 
 import lombok.RequiredArgsConstructor;
-import me.study.mylog.category.CategoryResponseDto;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
-import me.study.mylog.users.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +18,7 @@ public class BoardService {
     private final BoardMemberRepository boardMemberRepository;
 
 
-    public List<BoardResponseDto> getBoardsByUserEmail(String userEmail) {
+    public List<BoardDetailResponseDto> getBoardsByUserEmail(String userEmail) {
 //        User user = userRepository.findByEmail(userEmail)
 //                .orElseThrow(() -> new IllegalArgumentException("No Valid User"));
         // 보드 멤버에서 user 기준 사용하는 보드Id를 가져와서 보드 정보를 조회하는 로직으로 수정이 필요하다
@@ -30,16 +28,27 @@ public class BoardService {
         // 카테고리의 자식 카테고리를 가져오는 과정에서 쿼리가 매번 다시 발생한다.
         // 보드마다 카테고리를 가지므로, 보드를 먼저 조회하고 카테고리를 따로 조회하는 방식으로 변경
         // 전체를 한꺼번에 조회하는 jpql 코드도 고려해봐야겠다.
-        return boardRepository.findByUserEmail(userEmail)
-                .stream()
-                .map(BoardResponseDto::new)
-                .collect(Collectors.toList());
+
+        //List<BoardMember> allByUserEmail = boardMemberRepository.findAllByUserEmail(userEmail);
+
+        // 조회 최적화 필요
+        // + 노션이나 디스코드처럼? 카테고리를 보드별로 조회하고, 관련 글 정보를 함께 가져오는게 나을지도
+       return boardMemberRepository.findAllByUserEmail(userEmail).stream()
+              .map(BoardDetailResponseDto::new)
+               .collect(Collectors.toList());
+    }
+
+    public BoardDetailResponseDto getBoardById(Long boardId) {
+        return new BoardDetailResponseDto(boardRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("Not valid boardId")));
     }
 
     // 최초 가입시, 개인 board 생성
-    public Board createFirstBoard(User user) {
+    public void createFirstBoard(User user) {
         String email =  user.getEmail();
         int idx =  user.getEmail().lastIndexOf("@");
+
+        // TODO 보드 uri 생성 규칙 변경!!
         String uri = "/" + user.getEmail().substring(0, idx);
 
         while (boardRepository.existsBoardByUri(uri)) uri += "-" + UUID.randomUUID();
@@ -51,15 +60,39 @@ public class BoardService {
                 .boardType(BoardType.DEFAULT)
                 .build();
 
-//        BoardMember boardMember = BoardMember.builder()
-//                .user(user)
-//                .board(board)
-//                .memberType(MemberType.MANAGER)
-//                .build();
-
         Board savedBoard = boardRepository.save(board);
-        //boardMemberRepository.save(boardMember);
-        return savedBoard;
+        BoardMemberResponseDto boardMemberResponseDto = saveBoardMember(user, savedBoard);
     }
 
+    public BoardMemberResponseDto saveBoardMember(User user, Board board) {
+
+        BoardMember bMember = BoardMember.builder()
+                .memberType(MemberType.MANAGER) // 디폴트
+                .user(user)
+                .board(board)
+                .nickname(user.getNickname()) // 디폴트
+                .build();
+        BoardMember saved = boardMemberRepository.save(bMember);
+
+        return BoardMemberResponseDto.builder()
+                .type(MemberType.MANAGER)
+                .nickname(bMember.getNickname())
+                .build();
+    }
+    // 오버로딩
+    public BoardMemberResponseDto saveBoardMember(User user, Board board, MemberType type, String nickname) {
+
+        BoardMember bMember = BoardMember.builder()
+                .memberType(type)
+                .user(user)
+                .board(board)
+                .nickname(nickname)
+                .build();
+        BoardMember saved = boardMemberRepository.save(bMember);
+        
+        return BoardMemberResponseDto.builder()
+                .type(type)
+                .nickname(nickname)
+                .build();
+    }
 }

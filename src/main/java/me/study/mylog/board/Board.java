@@ -28,11 +28,13 @@ public class Board extends BaseEntity {
     @Column(length = 100)
     private String icon;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private User user;
-
     @Enumerated(EnumType.STRING)
     private BoardType boardType;
+
+    private Integer visitingCount;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
 
     @OneToMany(mappedBy="board", fetch = FetchType.EAGER) // Lazy 전략(디폴트)
     private List<Category> categories;
