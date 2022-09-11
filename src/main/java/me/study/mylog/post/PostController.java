@@ -60,6 +60,18 @@ public class PostController {
 
 
     /**
+     * 게시글 아이디를 이용해 게시글 조회수 업데이트 (일단은 패치 사용하지 않음)
+     * @param postId
+     * @return
+     */
+    @GetMapping ("/v1/posts/{postId}/counting")
+    public ResponseEntity<?> updatePostViewsById(@PathVariable("postId") Long postId) {
+
+        Integer views = postService.updatePostViewsById(postId);
+        return ResponseEntity.ok(new CommonResult<>("success", views));
+    }
+
+    /**
      * 게시판 id를 이용해 게시판의 전체 게시글 목록 조회, jpa 페이징 기능 활용
      * @param boardId
      * @param page

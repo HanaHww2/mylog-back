@@ -2,6 +2,7 @@ package me.study.mylog.post;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.study.mylog.board.Board;
 import me.study.mylog.board.BoardRepository;
 import me.study.mylog.category.Category;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -79,7 +81,7 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("찾는 글이 존재하지 않습니다."));
 
         // 조횟수 추가 (변경 감지 작동으로 자동 업데이트)
-        Integer count = post.addReadingCount();
+        Integer count = post.addViewCount();
         return new PostDetailResponseDto(post);
     }
 
@@ -89,13 +91,15 @@ public class PostService {
      * @return
      */
     @Transactional
-    public Integer updatePostReadingCountById(Long id) {
+    public Integer updatePostViewsById(Long id) {
         // 게시글 조회
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 글이 존재하지 않습니다."));
 
         // 조횟수 추가 (변경 감지 작동으로 자동 업데이트)
-        return post.addReadingCount();
+        Integer counting = post.addViewCount();
+        log.info("+++++++++{}+++++++++", counting.toString());
+        return counting;
     }
 
     /**

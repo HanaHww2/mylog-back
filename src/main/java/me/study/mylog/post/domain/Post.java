@@ -35,7 +35,7 @@ public class Post extends BaseTimeEntity {
     private String hashtagList;
 
     @Builder.Default
-    private Integer readingCount = 0;
+    private Integer views = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
@@ -54,8 +54,8 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<ImageFile> imageFileList = new ArrayList<>();
 
-    public Integer addReadingCount() {
-        return ++this.readingCount;
+    public Integer addViewCount() {
+        return ++this.views;
     };
 
 //    @Builder /* 빌더패턴 클래스 생성, 생성자 상단에 선언시 생성자에 포함된 필드만 빌더에 포함 */

@@ -20,7 +20,7 @@ public class PostDetailResponseDto {
     private String categoryName;
     private String title;
     private String content;
-    private Integer readingCount;
+    private Integer views;
 
     private String email;
     private String authorName;
@@ -38,7 +38,7 @@ public class PostDetailResponseDto {
         email = entity.getUser().getEmail();
         authorName = entity.getUser().getName();
         content = entity.getContent();
-        readingCount = entity.getReadingCount();
+        views = entity.getViews();
         modifiedDate = entity.getModifiedDate();
         hashtagList = entity.getHashtagList();
     }
