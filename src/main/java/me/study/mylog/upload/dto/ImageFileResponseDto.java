@@ -2,6 +2,7 @@ package me.study.mylog.upload.dto;
 
 import lombok.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Getter
@@ -12,6 +13,7 @@ import java.util.UUID;
 public class ImageFileResponseDto {
     private String originFilename;
     private String filename;
+    private String url;
 
     public ImageFileResponseDto(String originFilename) {
         this.originFilename = originFilename;
@@ -19,4 +21,11 @@ public class ImageFileResponseDto {
         // datetime 등 을 활용해 조금 더 난수화 할 예정
         this.filename = UUID.randomUUID().toString() + originFilename.substring(idxForExtension);
     }
+
+    public void assignImageUrl(String url) {
+        if (Optional.ofNullable(this.url).isPresent()) return;
+        this.url = url;
+        return;
+    }
+
 }
