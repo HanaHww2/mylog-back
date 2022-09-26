@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import java.util.Optional;
 import java.util.UUID;
 
-@EnableJpaAuditing // JPA Auditing 활성화
+
 @EnableConfigurationProperties({AuthProperties.class, CorsProperties.class})
 @SpringBootApplication
 public class MyLogApplication {
@@ -21,8 +21,4 @@ public class MyLogApplication {
         SpringApplication.run(MyLogApplication.class, args);
     }
 
-    @Bean
-    public AuditorAware<String> auditorProvider() {
-        return () -> Optional.of(UUID.randomUUID().toString());
-    }
 }

@@ -3,6 +3,8 @@ package me.study.mylog.auth.security;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.study.mylog.auth.utils.JwtUtil;
+import org.hibernate.annotations.Filter;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -19,7 +21,6 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
 
     private final JwtUtil jwtUtil;
 

@@ -21,7 +21,6 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-
     /*
      * security 설정 시, 사용할 인코더 설정
      * */

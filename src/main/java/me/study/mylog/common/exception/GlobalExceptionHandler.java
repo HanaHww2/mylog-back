@@ -1,4 +1,4 @@
-package me.study.mylog.common.exceptionHandler;
+package me.study.mylog.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import me.study.mylog.common.dto.CommonResult;

@@ -37,6 +37,6 @@ out/
 .vscode/
 
 # auth-properties
-application-auth.yml
+config/application-auth.yml
 *.sql
 *.http

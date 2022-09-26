@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -21,17 +22,16 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
-@Service
+@Component
 public class JwtUtil {
-    public static final String AUTHORIZATION_HEADER = "Authorization"; //"X-AUTH-TOKEN"
-
-    //private final UserRepository userRepository;
-    private final AuthProperties authProperties;
     private String SECRET_KEY;
-    private final Long ACCESS_TOKEN_EXPIRE_MS = 1000L * 60 * 60;		// 1hour
-    private final Long REFRESH_TOKEN_EXPIRE_MS = 1000L * 60 * 60 * 24 * 7;	// 1week
     private final String AUTHORITIES_KEY = "role";
     private final String COOKIE_REFRESH_TOKEN_KEY = "refresh";
+    public static final String AUTHORIZATION_HEADER = "Authorization"; //"X-AUTH-TOKEN"
+    private final AuthProperties authProperties;
+    private final Long ACCESS_TOKEN_EXPIRE_MS = 1000L * 60 * 60;		// 1hour
+    private final Long REFRESH_TOKEN_EXPIRE_MS = 1000L * 60 * 60 * 24 * 7;	// 1week
+
 
     @PostConstruct
     public void init() {
