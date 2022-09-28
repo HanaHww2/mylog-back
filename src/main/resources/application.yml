@@ -3,7 +3,7 @@ spring:
   profiles:
     active: local
     group:
-      prod: prod, auth, common, prod-db
+      prod: prod, auth, prod-db
       local: local, auth, common
       test: test, auth, common
 
@@ -101,3 +101,14 @@ logging:
     org:
       springframework:
         security: DEBUG
+
+# cors 설정
+cors:
+  allowedOrigins: 'http://localhost:80'
+  allowedMethods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+  allowedHeaders: '*'
+  maxAgeSec: 3600
+
+# TODO 포트 설정 동적으로 할당 가능하게 변경할 필요
+server:
+  port: 8080
