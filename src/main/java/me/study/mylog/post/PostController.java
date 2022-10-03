@@ -1,8 +1,7 @@
 package me.study.mylog.post;
 
 import lombok.RequiredArgsConstructor;
-import me.study.mylog.auth.security.UserPrincipal;
-import me.study.mylog.common.dto.CommonResult;
+import me.study.mylog.common.dto.CommonResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -43,7 +40,7 @@ public class PostController {
                 .toUri();
 
         return ResponseEntity.created(location)
-                .body(new CommonResult<>("success", responseDto));
+                .body(new CommonResponse<>("success", responseDto));
     }
 
     /**
@@ -55,7 +52,7 @@ public class PostController {
     public ResponseEntity<?> getPostDetailInfoById(@PathVariable("postId") Long postId) {
 
         PostDetailResponseDto responseDto = postService.getPostDetailInfoById(postId);
-        return ResponseEntity.ok(new CommonResult<>("success", responseDto));
+        return ResponseEntity.ok(new CommonResponse<>("success", responseDto));
     }
 
 
@@ -68,7 +65,7 @@ public class PostController {
     public ResponseEntity<?> updatePostViewsById(@PathVariable("postId") Long postId) {
 
         Integer views = postService.updatePostViewsById(postId);
-        return ResponseEntity.ok(new CommonResult<>("success", views));
+        return ResponseEntity.ok(new CommonResponse<>("success", views));
     }
 
     /**
@@ -86,11 +83,11 @@ public class PostController {
         List<PostMainResponseDto> dtoList;
         if (categoryId != null) {
             dtoList =  postService.getAllPostDescByCategoryId(categoryId, pageRequest);
-            return ResponseEntity.ok(new CommonResult<>("success", dtoList));
+            return ResponseEntity.ok(new CommonResponse<>("success", dtoList));
 
         }
         dtoList= postService.getAllPostDescByBoardId(boardId, pageRequest);
-        return ResponseEntity.ok(new CommonResult<>("success", dtoList));
+        return ResponseEntity.ok(new CommonResponse<>("success", dtoList));
     }
 
     /**
@@ -105,6 +102,6 @@ public class PostController {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedDate"));
 
         List<PostMainResponseDto> dtoList = postService.getAllPostDesc(pageRequest);
-        return ResponseEntity.ok(new CommonResult<>("success", dtoList));
+        return ResponseEntity.ok(new CommonResponse<>("success", dtoList));
     }
 }

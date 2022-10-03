@@ -1,8 +1,7 @@
 package me.study.mylog.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import me.study.mylog.common.dto.CommonResult;
-import me.study.mylog.common.exception.CustomApiException;
+import me.study.mylog.common.dto.CommonResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,7 +18,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<?> handleCustomApiException(CustomApiException e, WebRequest request) {
 
         HttpHeaders headers = new HttpHeaders();
-        return handleExceptionInternal(e, new CommonResult<>(e.getMessage(), null), headers, e.getStatus(), request);
+        return handleExceptionInternal(e, new CommonResponse<>(e.getMessage(), null), headers, e.getStatus(), request);
     }
 
     // 나머지 예외 처리는 오버라이드해서 커스텀할 수 있다.

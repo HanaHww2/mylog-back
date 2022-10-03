@@ -44,18 +44,18 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private AuthProviderType authProviderType;
 
-    private Boolean activated; // 사용자 상태 - 수정 필요
+    private UserStatus status; // 사용자 상태 - 수정 필요
     private String githubUrl;
     private String blogUrl;
 
     @OneToMany(mappedBy = "user")
     private List<BoardMember> boardList = new ArrayList<>();
-
-    @PrePersist
-    public void prePersist() {
-        this.activated = this.activated == null ? true : this.activated;
-    }
-
+//
+//    @PrePersist
+//    public void prePersist() {
+//        this.activated = this.activated == null ? true : this.activated;
+//    }
+//
 
 
     public User update(String name, String imageUrl) {

@@ -7,14 +7,14 @@ import org.springframework.lang.Nullable;
 
 @Getter
 @Setter
-public class CommonResult<T> {
+public class CommonResponse<T> {
     //private ResponseType type;
     private String message;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     T data;
 
-    public CommonResult(String message, @Nullable T data) {
+    public CommonResponse(String message, @Nullable T data) {
         this.message = message;
         this.data = data;
     }

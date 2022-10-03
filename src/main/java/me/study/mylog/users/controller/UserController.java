@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import me.study.mylog.common.exception.DuplicatedResoureException;
 import me.study.mylog.auth.utils.JwtUtil;
-import me.study.mylog.common.dto.CommonResult;
+import me.study.mylog.common.dto.CommonResponse;
 import me.study.mylog.users.dto.SigninReqDto;
 import me.study.mylog.users.dto.SigninResDto;
 import me.study.mylog.users.dto.UserDto;
@@ -36,7 +36,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/auth/signup")
-    public ResponseEntity<CommonResult<?>> signUpNewUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<CommonResponse<?>> signUpNewUser(@Valid @RequestBody UserDto userDto) {
         UserDto newUserDto;
         try {
             newUserDto = userService.register(userDto);
@@ -50,31 +50,31 @@ public class UserController {
                 .toUri();
 
         return ResponseEntity.created(location)
-                .body(new CommonResult<>("User Registered Successfully", newUserDto));
+                .body(new CommonResponse<>("User Registered Successfully", newUserDto));
 
     }
 
     @PostMapping("/auth/duplicatedEmail")
-    public ResponseEntity<CommonResult<?>> checkIfDuplicatedEmail(@Valid @RequestBody UserValidationDto dto) {
+    public ResponseEntity<CommonResponse<?>> checkIfDuplicatedEmail(@Valid @RequestBody UserValidationDto dto) {
         String email = dto.getEmail();
         boolean result = userService.checkIfDuplicatedUserByEmail(email); // 항상 false
         return ResponseEntity.ok()
-                .body(new CommonResult<>("can use", email));
+                .body(new CommonResponse<>("can use", email));
     }
 
     @PostMapping("/auth/duplicatedName")
-    public ResponseEntity<CommonResult<?>> checkIfDuplicatedName(@Valid @RequestBody UserValidationDto dto) {
+    public ResponseEntity<CommonResponse<?>> checkIfDuplicatedName(@Valid @RequestBody UserValidationDto dto) {
         String name = dto.getName();
         if (userService.existsByName(name)) {
             throw new DuplicatedResoureException("can't use", HttpStatus.CONFLICT);
         }
         return ResponseEntity.ok()
-                .body(new CommonResult<>("can use", name));
+                .body(new CommonResponse<>("can use", name));
     }
 
 
     @PostMapping(value = "/auth/signin")
-    public ResponseEntity<CommonResult<SigninResDto>> signIn(@Valid @RequestBody SigninReqDto signinReqDto) {
+    public ResponseEntity<CommonResponse<SigninResDto>> signIn(@Valid @RequestBody SigninReqDto signinReqDto) {
 
         // 인증 매니저를 통해서 입력받은 아이디와 비밀번호를 바탕으로 사용자 정보를 검증한다.
         // 아래와 같이 기본 아이디/비밀번호 인증의 경우에는
@@ -106,13 +106,13 @@ public class UserController {
         return ResponseEntity
                 .ok()
                 //.headers(httpHeaders)
-                .body(new CommonResult<>("Signed in Successfully", signinResDto));
+                .body(new CommonResponse<>("Signed in Successfully", signinResDto));
     }
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/users/me")
-    public CommonResult<UserDto> getCurrentUserInfo(Principal principal) {
+    public CommonResponse<UserDto> getCurrentUserInfo(Principal principal) {
         UserDto userDto = userService.findUserByEmail(principal.getName());
-        return new CommonResult<>("User Info getting by UserEmail", userDto);
+        return new CommonResponse<>("User Info getting by UserEmail", userDto);
     }
 }
