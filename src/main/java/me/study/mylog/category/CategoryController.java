@@ -19,10 +19,10 @@ import java.util.List;
 @RequestMapping("/api")
 public class CategoryController {
 
-    CategoryService categoryService;
-    @GetMapping("/v1/categories")
-    public ResponseEntity<?> getCategoriesByUser(Principal principal) {
-        List<CategoryResponseDto> dto = categoryService.getCategoriesByUserEmail(principal.getName());
-        return new ResponseEntity<>(dto, HttpStatus.OK);
-    }
+//    CategoryService categoryService;
+//    @GetMapping("/v1/categories")
+//    public ResponseEntity<?> getCategoriesByUser(Principal principal) {
+//        List<CategoryResponseDto> dto = categoryService.getCategoriesByUserEmail(principal.getName());
+//        return new ResponseEntity<>(dto, HttpStatus.OK);
+//    }
 }

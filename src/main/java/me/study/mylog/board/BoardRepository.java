@@ -9,10 +9,10 @@ import java.util.List;
 
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    List<Board> findByUser(User user);
+    //List<Board> findByUser(User user);
 
-    @EntityGraph(attributePaths = "categories")
-   // @Query("SELECT b, u FROM Board b JOIN b.user u WHERE u.email = :userEmail JOIN fetch b.categories")
-    List<Board> findByUserEmail(String userEmail);
+    //@EntityGraph(attributePaths = "categories") LEFT JOIN fetch b.categories
+    @Query("SELECT b FROM Board b JOIN fetch b.boardMembers m WHERE m.user = :user ")
+    List<Board> findByUser(User user);
     boolean existsBoardByUri(String uri);
 }

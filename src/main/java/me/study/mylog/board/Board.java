@@ -33,20 +33,20 @@ public class Board extends BaseEntity {
 
     private Integer visitingCount;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private User user;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    private User user;
 
     @OneToMany(mappedBy="board", fetch = FetchType.EAGER) // Lazy 전략(디폴트)
     private List<Category> categories;
 
-//    @Builder.Default
-//    @OneToMany(mappedBy = "board")
-//    private List<BoardMember> boardMembers = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "board")
+    private List<BoardMember> boardMembers = new ArrayList<>();
 
     @Builder /* 빌더패턴 클래스 생성, 생성자 상단에 선언시 생성자에 포함된 필드만 빌더에 포함 */
     public Board(String name, String uri) {
         this.name = name;
         this.uri = uri;
-        this.user = user;
+//        this.user = user;
     }
 }

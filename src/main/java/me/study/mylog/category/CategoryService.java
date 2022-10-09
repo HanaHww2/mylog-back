@@ -17,14 +17,14 @@ public class CategoryService {
     private final UserService userService;
     private final CategoryRepository logCateRepo;
 
-    @Transactional(readOnly=true)
-    public List<CategoryResponseDto> getCategoriesByUserEmail(String userEmail) {
-
-      //  UserDto userdto = userService.findUserByEmail(userEmail);
-
-        return logCateRepo.findByUserEmail(userEmail)
-                .stream()
-                .map(CategoryResponseDto::new)
-                .collect(Collectors.toList());
-    }
+//    @Transactional(readOnly=true)
+//    public List<CategoryResponseDto> getCategoriesByUserEmail(String userEmail) {
+//
+//      //  UserDto userdto = userService.findUserByEmail(userEmail);
+//
+//        return logCateRepo.findByUserEmail(userEmail)
+//                .stream()
+//                .map(CategoryResponseDto::new)
+//                .collect(Collectors.toList());
+//    }
 }

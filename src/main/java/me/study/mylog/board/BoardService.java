@@ -56,7 +56,7 @@ public class BoardService {
         Board board = Board.builder()
                 .name("MyLog")
                 .uri(uri)
-                .user(user)
+                //.user(user)
                 .boardType(BoardType.DEFAULT)
                 .build();
 
