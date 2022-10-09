@@ -4,6 +4,7 @@ import com.google.common.base.CaseFormat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Profile("test")
-@Service
+@Component
 @RequiredArgsConstructor
 public class DatabaseCleanUp { //implements InitializingBean {
 

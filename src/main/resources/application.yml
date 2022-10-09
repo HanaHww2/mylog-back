@@ -1,7 +1,7 @@
 # default
 spring:
   profiles:
-    active: local
+#    active: local
     group:
       prod: prod, auth, prod-db
       local: local, auth, common
