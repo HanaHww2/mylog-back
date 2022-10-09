@@ -15,12 +15,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
     boolean existsByName(String name);
 
-    @Query("SELECT ur.refreshToken FROM UserRefreshToken ur WHERE ur.userId=:id")
-    String getRefreshTokenById(@Param("id") Long id);
+    @Query("SELECT ur.refreshToken FROM UserRefreshToken ur WHERE ur.user=:user")
+    String getRefreshTokenById(User user);
 
     @Transactional
     @Modifying
-    @Query("UPDATE UserRefreshToken ur SET ur.refreshToken=:token WHERE ur.userId=:id")
-    void updateRefreshToken(@Param("id") Long id, @Param("token") String token);
+    @Query("UPDATE UserRefreshToken ur SET ur.refreshToken=:token WHERE ur.user=:user") //ur.userId=:id")
+    void updateRefreshToken(@Param("user") User user, @Param("token") String token);
 
 }

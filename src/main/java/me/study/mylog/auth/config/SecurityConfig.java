@@ -27,7 +27,7 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final OAuth2CookieAuthorizationRequestRepository oAuth2CookieAuthorizationRequestRepository;
+ //   private final OAuth2CookieAuthorizationRequestRepository oAuth2CookieAuthorizationRequestRepository;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -73,7 +73,7 @@ public class SecurityConfig {
                 )
                 .oauth2Login()
                 .authorizationEndpoint()
-                .authorizationRequestRepository(oAuth2CookieAuthorizationRequestRepository)
+     //           .authorizationRequestRepository(oAuth2CookieAuthorizationRequestRepository)
                 .and()
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)

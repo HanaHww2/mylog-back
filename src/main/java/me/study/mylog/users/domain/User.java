@@ -26,7 +26,7 @@ public class User extends BaseTimeEntity {
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String password;
 
     @Column(nullable = false, unique = true, length = 100)
@@ -56,8 +56,6 @@ public class User extends BaseTimeEntity {
 //        this.activated = this.activated == null ? true : this.activated;
 //    }
 //
-
-
     public User update(String name, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;

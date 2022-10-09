@@ -6,6 +6,7 @@ import me.study.mylog.users.domain.User;
 import me.study.mylog.users.domain.UserStatus;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class OAuth2UserInfo {
 
@@ -42,7 +43,9 @@ public class OAuth2UserInfo {
 
     public User toEntity() {
         return User.builder()
-                .name(name)
+                .status(UserStatus.Normal)
+                .name(name+ UUID.randomUUID()) // TODO 해당 속성은 유니크이므로, 선검증이 추가로 필요하다.
+                .nickname(name)
                 .email(email)
                 .imageUrl(imageUrl)
                 .role(RoleType.USER)

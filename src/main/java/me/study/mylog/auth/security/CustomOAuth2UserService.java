@@ -36,6 +36,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private OAuth2User process(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
 
         AuthProviderType authProviderType = AuthProviderType.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase());
+
+        // 이왕 팩토리패턴을 적용하니, 인터페이스나 추상 클래스를 사용하는 게 나을 것 같다.
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(authProviderType, oAuth2User.getAttributes());
 
         if (userInfo.getEmail().isEmpty()) {
