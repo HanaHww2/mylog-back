@@ -1,6 +1,6 @@
 package me.study.mylog.auth.oauth;
 
-import lombok.Builder;
+import me.study.mylog.users.domain.AuthProviderType;
 import me.study.mylog.users.domain.RoleType;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.domain.UserStatus;
@@ -8,55 +8,37 @@ import me.study.mylog.users.domain.UserStatus;
 import java.util.Map;
 import java.util.UUID;
 
-public class OAuth2UserInfo {
+public abstract class OAuth2UserInfo {
+  Map<String, Object> attributes;
 
-    Map<String, Object> attributes;
-    String nameAttributeKey;
-    String id;
-    String name;
-    String email;
-    String imageUrl;
+  public OAuth2UserInfo(Map<String, Object> attributes) {
+      this.attributes = attributes;
+  }
 
-    public OAuth2UserInfo(Map<String, Object> attributes) {
-        this.attributes = attributes;
-    }
+  public Map<String, Object> getAttributes() {
+      return attributes;
+  }
 
-    public Map<String, Object> getAttributes () { return attributes; }
+  public abstract AuthProviderType getProviderType();
 
-    public String getId () { return id; }
+  public abstract String getId();
 
-    public String getName() { return name; }
+  public abstract String getName();
 
-    public String getEmail() { return email; }
+  public abstract String getEmail();
 
-    public String getImageUrl() { return imageUrl; }
+  public abstract String getImageUrl();
 
-    @Builder
-    public OAuth2UserInfo(Map<String, Object> attributes, String nameAttributeKey, String name,
-                           String email, String imageUrl) {
-        this.attributes = attributes;
-        this.nameAttributeKey= nameAttributeKey;
-        this.name = name;
-        this.email = email;
-        this.imageUrl = imageUrl;
-    }
+  public User toEntity(String tempName) {
 
-    public User toEntity() {
-        return User.builder()
-                .status(UserStatus.Normal)
-                .name(name+ UUID.randomUUID()) // TODO 해당 속성은 유니크이므로, 선검증이 추가로 필요하다.
-                .nickname(name)
-                .email(email)
-                .imageUrl(imageUrl)
-                .role(RoleType.USER)
-                .status(UserStatus.Normal)
-                .build();
-    }
-
-//    /* 구현체에 객체 생성 처리를 맡긴다. 팩토리 패턴이라고 볼 수 있나? */
-//    public abstract void createUserInfo(AuthProvider authProvider);
-//    public OAuth2UserInfo(AuthProvider authProvider, Map<String, Object> attributes) {
-//        this.attributes = attributes;
-//        createUserInfo(authProvider);
-//    }
+    return User.builder()
+            .name(tempName) // TODO 해당 속성은 유니크이므로, 선검증이 추가로 필요하다.
+            .nickname(getName())
+            .email(getEmail())
+            .imageUrl(getImageUrl())
+            .role(RoleType.USER)
+            .status(UserStatus.Normal)
+            .authProviderType(getProviderType())
+            .build();
+  }
 }

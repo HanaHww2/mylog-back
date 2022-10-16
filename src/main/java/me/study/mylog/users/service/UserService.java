@@ -2,9 +2,12 @@ package me.study.mylog.users.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.study.mylog.auth.oauth.OAuth2UserInfo;
 import me.study.mylog.common.exception.DuplicatedResoureException;
 import me.study.mylog.board.BoardService;
+import me.study.mylog.users.domain.AuthProviderType;
 import me.study.mylog.users.domain.User;
+import me.study.mylog.users.domain.UserStatus;
 import me.study.mylog.users.dto.UserDto;
 import me.study.mylog.users.repository.UserRepository;
 import me.study.mylog.users.domain.RoleType;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @AllArgsConstructor
@@ -79,6 +83,8 @@ public class UserService {
                 .name(userDto.getName())
                 .nickname(userDto.getNickname()!=null?userDto.getNickname():userDto.getName())
                 .role(RoleType.USER)
+                .authProviderType(AuthProviderType.DEFAULT)
+                .status(UserStatus.NeedValidate)
                 .build();
         log.info("{}", user);
 
@@ -96,5 +102,24 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
+    public User registerForOauth2(OAuth2UserInfo oAuth2UserInfo) throws DuplicatedResoureException {
 
+        StringBuffer name = new StringBuffer(oAuth2UserInfo.getName());
+        String tempName = name.toString();
+
+        // TODO unique 이름 생성하기 고민, 유사한 이름 전부 조회해서 피하기?ㅠ, 트랜잭션 고민, 리트라이?
+        while (userRepository.existsByName(tempName)) {
+            tempName = name.append('-')
+                    .append(UUID.randomUUID()) // 좀 더 짧게 랜덤화
+                    .toString();
+        }
+
+        User user = oAuth2UserInfo.toEntity(tempName);
+        log.info("{}", user);
+        User newUser = userRepository.save(user);
+        boardService.createFirstBoard(user);
+
+        return newUser;
+    }
 }

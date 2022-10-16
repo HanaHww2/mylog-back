@@ -3,7 +3,7 @@ package me.study.mylog.post;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.study.mylog.board.Board;
+import me.study.mylog.board.domain.Board;
 import me.study.mylog.board.BoardRepository;
 import me.study.mylog.category.Category;
 import me.study.mylog.category.CategoryRepository;

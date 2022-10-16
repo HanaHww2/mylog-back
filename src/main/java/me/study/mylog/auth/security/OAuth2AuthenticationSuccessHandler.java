@@ -1,9 +1,7 @@
-package me.study.mylog.auth.handler;
+package me.study.mylog.auth.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import me.study.mylog.auth.properties.AuthProperties;
-import me.study.mylog.auth.security.OAuth2CookieAuthorizationRequestRepository;
+import me.study.mylog.auth.config.AuthProperties;
 import me.study.mylog.auth.utils.CookieUtil;
 import me.study.mylog.auth.utils.JwtUtil;
 import me.study.mylog.common.exception.BadRequestException;
@@ -18,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -28,7 +24,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private final AuthProperties authProperties;
     private final JwtUtil jwtUtil;
-//    private final OAuth2CookieAuthorizationRequestRepository OAuth2AuthorizationRequestWithCookieRepository;
+    private final OAuth2CookieAuthorizationRequestRepository OAuth2AuthorizationRequestWithCookieRepository;
 
 
     //oauth2인증이 성공적으로 이뤄졌을 때 실행된다
@@ -44,7 +40,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             return;
         }
 
-        //clearAuthenticationAttributes(request, response);
+        clearAuthenticationAttributes(request, response);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
@@ -53,41 +49,32 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) {
 
-        Optional<String> redirectUri = Optional.ofNullable(request.getParameter("redirect_uri"));
-//        Optional<String> redirectUri = CookieUtil.getCookie(request,
-//                        OAuth2AuthorizationRequestWithCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
-//                .map(Cookie::getValue);
+        Optional<String> redirectUri = CookieUtil.getCookie(request,
+                        OAuth2AuthorizationRequestWithCookieRepository.REDIRECT_URI_COOKIE_NAME)
+                .map(Cookie::getValue);
 
         if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
             throw new BadRequestException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
         }
 
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
-
-
         jwtUtil.createRefreshToken(authentication, response);
         String accessToken = jwtUtil.createAccessToken(authentication);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, String> tempMap = new HashMap<>();
-        tempMap.put("accessToken", accessToken);
-
-        try {
-            String accessTokenPayLoad = objectMapper.writeValueAsString(tempMap);
-            response.getOutputStream().print(accessTokenPayLoad);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return targetUrl;
-//        return UriComponentsBuilder.fromUriString(targetUrl)
-//                .queryParam("accessToken", accessToken)
-//                .build().toUriString();
+        // TODO 리다이렉트를 사용하므로, 바디에 담기가 애매함.
+        // 어차피 json으로 응답값만 보낼 건데...!
+        // 응답을 꼭 리디렉션해야 되는지, 리디렉션이 아닌 방식으로 응답을 구현한 경우도 서치해둠
+        // 시큐리티를 공부하면서 어려움을 느끼고 있으며
+        // 한편으로는 내가 프레임워크에 너무 의존적인 게 아닌가 하는 생각도 든다.
+        return UriComponentsBuilder.fromUriString(targetUrl)
+                .queryParam("accessToken", accessToken)
+                .build().toUriString();
     }
 
-    //인증정보 요청 내역을 쿠키에서 삭제한다.
-//    protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
-//        OAuth2AuthorizationRequestWithCookieRepository.removeAuthorizationRequestCookies(request, response);
-//    }
+    //인증정보를 요청한 uri 내역을 쿠키에서 삭제한다.
+    protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
+        OAuth2AuthorizationRequestWithCookieRepository.removeAuthorizationRequestCookies(request, response);
+    }
 
     //application.properties에 등록해놓은 Redirect uri가 맞는지 확인한다. (app.redirect-uris)
     private boolean isAuthorizedRedirectUri(String uri) {

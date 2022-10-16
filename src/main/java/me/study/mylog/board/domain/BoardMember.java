@@ -1,9 +1,10 @@
-package me.study.mylog.board;
+package me.study.mylog.board.domain;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.study.mylog.board.BoardMemberType;
 import me.study.mylog.common.domain.BaseEntity;
 import me.study.mylog.users.domain.User;
 
@@ -27,21 +28,21 @@ public class BoardMember extends BaseEntity {
     private Board board;
 
     @Enumerated(EnumType.STRING)
-    private MemberType memberType;
+    private BoardMemberType boardMemberType;
 
     @Column(length = 50)
     private String nickname;
 
     @PrePersist
     public void prePersist() {
-        this.memberType = this.memberType == null ? MemberType.GENERAL : this.memberType;
+        this.boardMemberType = this.boardMemberType == null ? BoardMemberType.GENERAL : this.boardMemberType;
     }
 
     @Builder /* 빌더패턴 클래스 생성, 생성자 상단에 선언시 생성자에 포함된 필드만 빌더에 포함 */
-    public BoardMember(User user, String nickname, Board board, MemberType memberType) {
+    public BoardMember(User user, String nickname, Board board, BoardMemberType boardMemberType) {
         this.user = user;
         this.board = board; //setBoardRelation(board)
-        this.memberType = memberType;
+        this.boardMemberType = boardMemberType;
         if (nickname==null) nickname = user.getName();
         this.nickname = nickname;
     }

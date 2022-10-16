@@ -1,7 +1,7 @@
 package me.study.mylog.post.domain;
 
 import lombok.*;
-import me.study.mylog.board.Board;
+import me.study.mylog.board.domain.Board;
 import me.study.mylog.category.Category;
 import me.study.mylog.common.domain.BaseTimeEntity;
 import me.study.mylog.upload.domain.ImageFile;

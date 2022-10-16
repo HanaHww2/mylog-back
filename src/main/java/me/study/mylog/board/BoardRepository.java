@@ -1,7 +1,7 @@
 package me.study.mylog.board;
 
+import me.study.mylog.board.domain.Board;
 import me.study.mylog.users.domain.User;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,8 +1,5 @@
 package me.study.mylog.post;
 
-import me.study.mylog.board.Board;
-import me.study.mylog.board.BoardType;
-import me.study.mylog.category.Category;
 import me.study.mylog.post.domain.Post;
 import me.study.mylog.users.domain.RoleType;
 import me.study.mylog.users.domain.User;
@@ -15,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;

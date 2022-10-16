@@ -3,7 +3,7 @@ package me.study.mylog.auth.utils;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.study.mylog.auth.properties.AuthProperties;
+import me.study.mylog.auth.config.AuthProperties;
 import me.study.mylog.auth.security.UserPrincipal;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Component
 public class JwtUtil {
+
     private String SECRET_KEY;
     private final String AUTHORITIES_KEY = "role";
     private final String COOKIE_REFRESH_TOKEN_KEY = "refresh";
@@ -31,7 +31,6 @@ public class JwtUtil {
     private final AuthProperties authProperties;
     private final Long ACCESS_TOKEN_EXPIRE_MS = 1000L * 60 * 60;		// 1hour
     private final Long REFRESH_TOKEN_EXPIRE_MS = 1000L * 60 * 60 * 24 * 7;	// 1week
-
 
     @PostConstruct
     public void init() {
@@ -56,7 +55,7 @@ public class JwtUtil {
                 .setSubject(userEmail)
                 .claim("userId", userId)
                 .claim(AUTHORITIES_KEY, role)
-                .setIssuer("salmal")
+                .setIssuer("mylog")
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .compact();
@@ -68,7 +67,7 @@ public class JwtUtil {
 
         String refreshToken = Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-                .setIssuer("salmal")
+                .setIssuer("mylog")
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .compact();
@@ -132,6 +131,7 @@ public class JwtUtil {
         }
         return false;
     }
+
     private void saveRefreshToken(Authentication authentication, String refreshToken) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         String email = userPrincipal.getName();

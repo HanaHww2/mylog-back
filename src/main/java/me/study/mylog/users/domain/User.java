@@ -2,8 +2,9 @@ package me.study.mylog.users.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import me.study.mylog.board.BoardMember;
+import me.study.mylog.board.domain.BoardMember;
 import me.study.mylog.common.domain.BaseTimeEntity;
+import org.hibernate.annotations.CollectionId;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,8 +23,11 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 100) // 유니크... 같은 메일이면서 다른 소셜 로그인 활용하는 경우라면?
+    @Column(unique = true, length = 100) // 유니크... 같은 메일이면서 다른 소셜 로그인 활용하는 경우라면?
     private String email;
+
+    @Column(unique = true) // 유니크... 같은 메일이면서 다른 소셜 로그인 활용하는 경우라면?
+    private String oauthId;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(length = 100)
@@ -50,12 +54,12 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user")
     private List<BoardMember> boardList = new ArrayList<>();
-//
+
 //    @PrePersist
 //    public void prePersist() {
-//        this.activated = this.activated == null ? true : this.activated;
+//        this.status = this.status == null ? UserStatus.Normal : this.status;
 //    }
-//
+
     public User update(String name, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;

@@ -1,8 +1,8 @@
 package me.study.mylog.post;
 
-import me.study.mylog.board.Board;
+import me.study.mylog.board.domain.Board;
 import me.study.mylog.board.BoardRepository;
-import me.study.mylog.board.BoardType;
+import me.study.mylog.board.domain.BoardType;
 import me.study.mylog.category.Category;
 import me.study.mylog.category.CategoryRepository;
 import me.study.mylog.post.domain.Post;
@@ -18,10 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;

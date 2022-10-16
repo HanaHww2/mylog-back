@@ -3,6 +3,8 @@ package me.study.mylog.board;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.study.mylog.board.domain.Board;
+import me.study.mylog.board.domain.BoardMember;
 import me.study.mylog.category.Category;
 import me.study.mylog.category.CategoryResponseDto;
 
@@ -20,7 +22,7 @@ public class BoardDetailResponseDto {
     private List<CategoryResponseDto> categories; // 카테고리 정보를 포함한 응답값
 
     private String nickname;
-    private MemberType memberType;
+    private BoardMemberType boardMemberType;
 
     public BoardDetailResponseDto(BoardMember boardMember) {
         Board board = boardMember.getBoard();
@@ -31,7 +33,7 @@ public class BoardDetailResponseDto {
         this.uri = board.getUri();
 
         this.nickname = boardMember.getNickname();
-        this.memberType = boardMember.getMemberType();
+        this.boardMemberType = boardMember.getBoardMemberType();
 
         List<Category> categories = board.getCategories();
         this.categories = categories

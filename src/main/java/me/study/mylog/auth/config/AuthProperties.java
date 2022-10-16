@@ -1,4 +1,4 @@
-package me.study.mylog.auth.properties;
+package me.study.mylog.auth.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,12 +25,12 @@ public class AuthProperties {
 
         private List<String> authorizedRedirectUris = new ArrayList<>();
 
-        public List<String> getAuthorizedRedirectUris() {
-            return authorizedRedirectUris;
-        }
         public OAuth2 authorizedRedirectUris(List<String> authorizedRedirectUris) {
             this.authorizedRedirectUris = authorizedRedirectUris;
             return this;
+        }
+        public List<String> getAuthorizedRedirectUris() {
+            return authorizedRedirectUris;
         }
     }
 

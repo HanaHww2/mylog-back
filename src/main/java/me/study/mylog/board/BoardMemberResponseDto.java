@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardMemberResponseDto {
-    private MemberType type;
+    private BoardMemberType type;
     private String nickname;
 }

@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum AuthProviderType {
-    LOCAL, GOOGLE, NAVER, KAKAO, GITHUB
+    DEFAULT, GOOGLE, NAVER, KAKAO, GITHUB
 }

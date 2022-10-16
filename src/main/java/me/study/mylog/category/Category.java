@@ -1,10 +1,8 @@
 package me.study.mylog.category;
 
 import lombok.*;
-import me.study.mylog.board.Board;
+import me.study.mylog.board.domain.Board;
 import me.study.mylog.common.domain.BaseTimeEntity;
-import me.study.mylog.post.domain.Post;
-import me.study.mylog.users.domain.User;
 
 import javax.persistence.*;
 import java.util.List;

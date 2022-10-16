@@ -28,24 +28,24 @@ public class UserPrincipal implements UserDetails, OAuth2User {
         this.authorities = authorities;
     }
 
-    /* local login */
+    /* default login */
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = Collections.
                 singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode()));
 
-        return new UserPrincipal(
-                user.getId(),
-                user.getEmail(),
-                user.getPassword(),
-                authorities
-        );
+        return UserPrincipal.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .authorities(authorities)
+                .build();
     }
 
     /* oauth login */
     public static UserPrincipal create(User user, Map<String, Object> attributes) {
-        UserPrincipal userDetails = UserPrincipal.create(user);
-        userDetails.setAttributes(attributes);
-        return userDetails;
+        UserPrincipal userPrincipal = UserPrincipal.create(user);
+        userPrincipal.setAttributes(attributes);
+        return userPrincipal;
     }
 
     // UserDetail Override

@@ -1,4 +1,4 @@
-package me.study.mylog.board;
+package me.study.mylog.board.domain;
 
 public enum BoardType {
     DEFAULT,

@@ -1,6 +1,6 @@
 package me.study.mylog.board;
 
-public enum MemberType {
+public enum BoardMemberType {
     MANAGER,
     GENERAL,
     GUEST

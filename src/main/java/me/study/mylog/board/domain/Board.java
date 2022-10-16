@@ -1,9 +1,8 @@
-package me.study.mylog.board;
+package me.study.mylog.board.domain;
 
 import lombok.*;
 import me.study.mylog.category.Category;
 import me.study.mylog.common.domain.BaseEntity;
-import me.study.mylog.users.domain.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;

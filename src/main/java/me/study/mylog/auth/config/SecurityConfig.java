@@ -1,13 +1,7 @@
 package me.study.mylog.auth.config;
 
 import lombok.RequiredArgsConstructor;
-import me.study.mylog.auth.handler.JwtAccessDeniedHandler;
-import me.study.mylog.auth.handler.JwtAuthenticationEntryPoint;
-import me.study.mylog.auth.handler.OAuth2AuthenticationFailureHandler;
-import me.study.mylog.auth.handler.OAuth2AuthenticationSuccessHandler;
-import me.study.mylog.auth.security.CustomOAuth2UserService;
-import me.study.mylog.auth.security.JwtAuthenticationFilter;
-import me.study.mylog.auth.security.OAuth2CookieAuthorizationRequestRepository;
+import me.study.mylog.auth.security.*;
 import me.study.mylog.users.domain.RoleType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,9 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
+    //private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final CustomOAuth2UserService customOAuth2UserService;
- //   private final OAuth2CookieAuthorizationRequestRepository oAuth2CookieAuthorizationRequestRepository;
+    private final OAuth2CookieAuthorizationRequestRepository oAuth2CookieAuthorizationRequestRepository;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -73,13 +67,13 @@ public class SecurityConfig {
                 )
                 .oauth2Login()
                 .authorizationEndpoint()
-     //           .authorizationRequestRepository(oAuth2CookieAuthorizationRequestRepository)
+                .authorizationRequestRepository(oAuth2CookieAuthorizationRequestRepository)
                 .and()
                 .userInfoEndpoint()
-                .userService(customOAuth2UserService)
+                //.userService(customOAuth2UserService)
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler)
-                .failureHandler(oAuth2AuthenticationFailureHandler)
+             //   .failureHandler(oAuth2AuthenticationFailureHandler)
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 401
