@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.study.mylog.board.domain.Board;
 import me.study.mylog.board.domain.BoardMember;
+import me.study.mylog.board.domain.BoardMemberType;
 import me.study.mylog.category.Category;
 import me.study.mylog.category.CategoryResponseDto;
 

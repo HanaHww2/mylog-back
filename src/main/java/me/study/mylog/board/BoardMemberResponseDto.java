@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.study.mylog.board.domain.BoardMemberType;
 
 @Getter
 @Builder

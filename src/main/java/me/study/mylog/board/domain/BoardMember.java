@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.study.mylog.board.BoardMemberType;
 import me.study.mylog.common.domain.BaseEntity;
 import me.study.mylog.users.domain.User;
 
@@ -28,6 +27,7 @@ public class BoardMember extends BaseEntity {
     private Board board;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE")
     private BoardMemberType boardMemberType;
 
     @Column(length = 50)

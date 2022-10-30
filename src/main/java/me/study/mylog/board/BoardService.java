@@ -3,6 +3,7 @@ package me.study.mylog.board;
 import lombok.RequiredArgsConstructor;
 import me.study.mylog.board.domain.Board;
 import me.study.mylog.board.domain.BoardMember;
+import me.study.mylog.board.domain.BoardMemberType;
 import me.study.mylog.board.domain.BoardType;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
@@ -51,14 +52,21 @@ public class BoardService {
         String email =  user.getEmail();
         int idx =  user.getEmail().lastIndexOf("@");
 
-        // TODO 보드 uri 생성 규칙 변경!!
-        String uri = "/" + user.getEmail().substring(0, idx);
+        // TODO 보드 uri 생성 규칙 짧게 변경!!
+        // 버퍼 사용으로 변경 ( 당장 여러 스레드에서 접근할 일은 없더라도 )
+        StringBuffer uri = new StringBuffer("/").append(user.getEmail().substring(0, idx));
+        String tempUri = uri.toString();
+//        String uri = "/" + user.getEmail().substring(0, idx);
 
-        while (boardRepository.existsBoardByUri(uri)) uri += "-" + UUID.randomUUID();
+        while (boardRepository.existsBoardByUri(tempUri)) {
+            tempUri = uri.append('-')
+                    .append(UUID.randomUUID())
+                    .toString();
+        }
 
         Board board = Board.builder()
                 .name("MyLog")
-                .uri(uri)
+                .uri(tempUri)
                 //.user(user)
                 .boardType(BoardType.DEFAULT)
                 .build();

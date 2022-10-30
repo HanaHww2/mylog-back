@@ -28,9 +28,10 @@ public class Board extends BaseEntity {
     private String icon;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE")
     private BoardType boardType;
 
-    private Integer visitingCount;
+    private Long views;
 
 //    @OneToOne(fetch = FetchType.LAZY)
 //    private User user;
