@@ -35,7 +35,7 @@ public class Post extends BaseTimeEntity {
     private String hashtagList;
 
     @Builder.Default
-    private Integer views = 0;
+    private Long views = 0L;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
@@ -54,7 +54,7 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<ImageFile> imageFileList = new ArrayList<>();
 
-    public Integer addViewCount() {
+    public Long addViewCount() {
         return ++this.views;
     };
 

@@ -54,6 +54,7 @@ public class PostService {
                 .build();
 
         Post saved = postRepository.save(post);
+
         Optional<List<ImageFileRequestDto>> imageListDto = Optional.ofNullable(dto.getImageListDto());
         if (imageListDto.isEmpty()) return new PostDetailResponseDto(saved);
 
@@ -81,7 +82,7 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("찾는 글이 존재하지 않습니다."));
 
         // 조횟수 추가 (변경 감지 작동으로 자동 업데이트)
-        Integer count = post.addViewCount();
+        Long count = post.addViewCount();
         return new PostDetailResponseDto(post);
     }
 
@@ -91,13 +92,13 @@ public class PostService {
      * @return
      */
     @Transactional
-    public Integer updatePostViewsById(Long id) {
+    public Long updatePostViewsById(Long id) {
         // 게시글 조회
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 글이 존재하지 않습니다."));
 
         // 조횟수 추가 (변경 감지 작동으로 자동 업데이트)
-        Integer counting = post.addViewCount();
+        Long counting = post.addViewCount();
         log.info("+++++++++{}+++++++++", counting.toString());
         return counting;
     }

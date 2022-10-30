@@ -20,7 +20,7 @@ public class PostDetailResponseDto {
     private String categoryName;
     private String title;
     private String content;
-    private Integer views;
+    private Long views;
 
     private String email;
     private String authorName;

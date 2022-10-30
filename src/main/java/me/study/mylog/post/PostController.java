@@ -64,7 +64,7 @@ public class PostController {
     @GetMapping ("/v1/posts/{postId}/counting")
     public ResponseEntity<?> updatePostViewsById(@PathVariable("postId") Long postId) {
 
-        Integer views = postService.updatePostViewsById(postId);
+        Long views = postService.updatePostViewsById(postId);
         return ResponseEntity.ok(new CommonResponse<>("success", views));
     }
 
