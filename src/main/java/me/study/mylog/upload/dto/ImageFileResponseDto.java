@@ -19,7 +19,7 @@ public class ImageFileResponseDto {
         this.originFilename = originFilename;
         int idxForExtension = originFilename.lastIndexOf('.');
         // datetime 등 을 활용해 조금 더 난수화 할 예정
-        this.filename = UUID.randomUUID().toString() + originFilename.substring(idxForExtension);
+        this.filename = UUID.randomUUID() + originFilename.substring(idxForExtension);
     }
 
     public void assignImageUrl(String url) {

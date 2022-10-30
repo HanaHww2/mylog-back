@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-//@CrossOrigin(origins = {"http://localhost:3000"})
 //@RequiredArgsConstructor
 @RestController
 public class ImageFileController {
@@ -34,6 +33,7 @@ public class ImageFileController {
     public ImageFileController(ImageFileService imageFileService, S3ImageHandler imgHandler) {
         this.imageFileService = imageFileService;
         this.imgHandler = imgHandler;
+        //LocalImageHandler
     }
 
     /*
@@ -46,7 +46,7 @@ public class ImageFileController {
     * 이 로직은 차후 상황에 따라 변경 가능할 것이다.
     * */
     // TODO 로컬 파일 시스템 활용과 S3 활용에서 이미지 도메인? 구조 차이가 있음 -> 확인하여 통일하고 로직 수정 필요
-    @PostMapping("/api/local/uploadImage")
+    @PostMapping("/api/images/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("imgFiles") List<MultipartFile> multipartFiles) {
 
         List<Optional<ImageFileResponseDto>> dtoList = imgHandler.saveFiles(multipartFiles);
@@ -63,11 +63,11 @@ public class ImageFileController {
 //            localImageHandler.saveFiles(failedList);
 //        }
 
-        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+        return new ResponseEntity<>(dtoList, HttpStatus.CREATED);
     }
 
 
-    @GetMapping("/images/{filename}")
+    @GetMapping("/api/images/local/{filename}")
     public ResponseEntity<Resource> showImage(@PathVariable String filename) {
 
         Resource resource = new FileSystemResource(LocalFileProperties.UPLOAD_PATH + filename);
