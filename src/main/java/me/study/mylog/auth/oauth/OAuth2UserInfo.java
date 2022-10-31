@@ -32,7 +32,7 @@ public abstract class OAuth2UserInfo {
   public User toEntity(String tempName) {
 
     return User.builder()
-            .name(tempName) // TODO 해당 속성은 유니크이므로, 선검증이 추가로 필요하다.
+            .name(tempName) // 유니크 속성을 위해 선검증 후, 중복이 있다면 난수를 붙인 값
             .nickname(getName())
             .email(getEmail())
             .imageUrl(getImageUrl())

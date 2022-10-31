@@ -19,11 +19,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    //private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OAuth2CookieAuthorizationRequestRepository oAuth2CookieAuthorizationRequestRepository;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+//    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -56,9 +55,9 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authz) -> authz
                         // TODO 아래 접근에 대해서 관리자만 접근 가능하도록 제한 설정을 해둘 필요성!
-                        .antMatchers("/actuator/health", "/h2-console/**").permitAll()
+                        .antMatchers("/actuator/health", "/h2-console/**", "/docs/**").permitAll()
 
-                        .antMatchers("/", "/css/**", "/images/**").permitAll()
+                        .antMatchers("/", "/css/**", "/api/images/local/**").permitAll()
                         .antMatchers("/api/v1/boards", "/api/v1/boards/**", "/api/v1/auth/**").permitAll()
                         .antMatchers(HttpMethod.GET,"/api/v1/posts/**").permitAll()
 
@@ -70,7 +69,7 @@ public class SecurityConfig {
                 .authorizationRequestRepository(oAuth2CookieAuthorizationRequestRepository)
                 .and()
                 .userInfoEndpoint()
-                //.userService(customOAuth2UserService)
+                //.userService(customOAuth2UserService) 명시하지 않아도 빈에 등록되어 우선적으로 활용된다.
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler)
              //   .failureHandler(oAuth2AuthenticationFailureHandler)

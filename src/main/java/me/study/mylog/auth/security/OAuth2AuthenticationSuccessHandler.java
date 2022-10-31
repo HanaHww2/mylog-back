@@ -1,11 +1,14 @@
 package me.study.mylog.auth.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import me.study.mylog.auth.config.AuthProperties;
 import me.study.mylog.auth.utils.CookieUtil;
 import me.study.mylog.auth.utils.JwtUtil;
 import me.study.mylog.common.exception.BadRequestException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Optional;
 
 @Component
@@ -26,7 +30,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final JwtUtil jwtUtil;
     private final OAuth2CookieAuthorizationRequestRepository OAuth2AuthorizationRequestWithCookieRepository;
 
-
     //oauth2인증이 성공적으로 이뤄졌을 때 실행된다
     //token을 포함한 uri을 생성 후 인증요청 쿠키를 비워주고 redirect 한다.
     @Override
@@ -36,15 +39,16 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String targetUrl = determineTargetUrl(request, response, authentication);
 
         if (response.isCommitted()) {
-            logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
+            logger.debug("Response has been committed. Unable to redirect to " + targetUrl);
             return;
         }
 
         clearAuthenticationAttributes(request, response);
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        //getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
     //token을 생성하고 이를 포함한 프론트엔드로의 uri를 생성한다.
+    @SneakyThrows
     @Override
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) {
@@ -61,11 +65,13 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         jwtUtil.createRefreshToken(authentication, response);
         String accessToken = jwtUtil.createAccessToken(authentication);
 
-        // TODO 리다이렉트를 사용하므로, 바디에 담기가 애매함.
-        // 어차피 json으로 응답값만 보낼 건데...!
-        // 응답을 꼭 리디렉션해야 되는지, 리디렉션이 아닌 방식으로 응답을 구현한 경우도 서치해둠
-        // 시큐리티를 공부하면서 어려움을 느끼고 있으며
-        // 한편으로는 내가 프레임워크에 너무 의존적인 게 아닌가 하는 생각도 든다.
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("accessToken", accessToken);
+        response.getWriter().write(objectMapper.writeValueAsString(map)); // 바디에 담기는지 확인
+
+        // TODO 리다이렉트 로직에 대해서 고민해보기
+        // forwarding을 먼저 할지 고민
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("accessToken", accessToken)
                 .build().toUriString();

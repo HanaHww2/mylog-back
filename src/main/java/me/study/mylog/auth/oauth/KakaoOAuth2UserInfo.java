@@ -1,6 +1,8 @@
 package me.study.mylog.auth.oauth;
 
 import me.study.mylog.users.domain.AuthProviderType;
+import me.study.mylog.users.domain.User;
+
 import java.util.Map;
 
 public class KakaoOAuth2UserInfo extends OAuth2UserInfo {

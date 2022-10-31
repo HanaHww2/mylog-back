@@ -31,6 +31,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
+
         // 써드파티에 OAuth2UserRequest 를 보내고 받은 응답값에 있는 Access Token으로 유저정보 get
         OAuth2User oAuth2User = delegate.loadUser(oAuth2UserRequest);
 
@@ -41,7 +42,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     // 획득한 유저정보를 Java Model과 매핑하고 프로세스 진행
     @Transactional
     OAuth2User process(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
-
         AuthProviderType authProviderType = AuthProviderType.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase());
 
         // 이왕 팩토리패턴을 적용하니, 인터페이스를 사용
