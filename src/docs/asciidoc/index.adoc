@@ -1,0 +1,21 @@
+= Spring REST Docs
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+[[introduction]]
+== 소개
+
+[[resources-users]]
+== User
+
+[[resources-users-create]]
+=== User 생성
+
+==== HTTP request
+
+
+operation::user-register[sn ippets='request-fields,curl-request,http-request, request-headers, http-response, response-headers, response-fields, links']

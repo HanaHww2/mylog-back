@@ -1,7 +1,7 @@
 package me.study.mylog;
 
 import lombok.RequiredArgsConstructor;
-import me.study.mylog.board.Board;
+import me.study.mylog.board.domain.Board;
 import me.study.mylog.board.BoardRepository;
 import me.study.mylog.category.Category;
 import me.study.mylog.category.CategoryRepository;
@@ -84,7 +84,7 @@ public class InitDBService {
 
     Category makeCategory(String randomStr, User user, Board board) {
         return Category.builder()
-                .user(user)
+                //.user(user)
                 .board(board)
                 .name("name"+ randomStr)
                 .build();
