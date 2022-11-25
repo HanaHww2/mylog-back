@@ -92,6 +92,7 @@ class PostServiceTest {
         //when
         PostDetailResponseDto responseDto = postService.save(requestDto, userEmail);
         System.out.println(responseDto.getHashtagList());
+
         //then
         Assertions.assertThat(responseDto.getEmail()).isEqualTo(userEmail);
         Assertions.assertThat(responseDto.getContent()).isEqualTo(requestDto.getContent());

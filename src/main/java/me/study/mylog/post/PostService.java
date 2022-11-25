@@ -13,6 +13,7 @@ import me.study.mylog.upload.repository.ImageFileRepository;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -105,13 +106,11 @@ public class PostService {
 
     /**
      * 특정 게시판 내 전체 게시글 조회
-     * @param pageRequest
-     * @return
      */
     /* readOnly 사용시, 트랜잭션 범위는 유지하되, 조회 기능만 남겨두어 조회 속도 개선 */
     @Transactional(readOnly=true)
-    public List<PostMainResponseDto> getAllPostDescByBoardId(Long boardId, PageRequest pageRequest) {
-        return postRepository.findAllByBoardId(boardId, pageRequest)
+    public List<PostMainResponseDto> getAllPostDescByBoardId(Long boardId, Pageable pageable) {
+        return postRepository.findAllByBoardId(boardId, pageable)
                 .stream()
                 .map(PostMainResponseDto::new)
                 .collect(Collectors.toList());
@@ -119,16 +118,16 @@ public class PostService {
 
     // 특정 카테코리 게시글 조회
     @Transactional(readOnly=true)
-    public List<PostMainResponseDto> getAllPostDescByCategoryId(Long categoryId, PageRequest pageRequest) {
-        return postRepository.findAllByCategoryId(categoryId, pageRequest)
+    public List<PostMainResponseDto> getAllPostDescByCategoryId(Long categoryId, Pageable pageable) {
+        return postRepository.findAllByCategoryId(categoryId, pageable)
                 .stream()
                 .map(PostMainResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     // 기본 전체 게시글 조회
-    public List<PostMainResponseDto> getAllPostDesc(PageRequest pageRequest) {
-        return postRepository.findAll(pageRequest)
+    public List<PostMainResponseDto> getAllPostDesc(Pageable pageable) {
+        return postRepository.findAll(pageable)
                 .stream()
                 .map(PostMainResponseDto::new)
                 .collect(Collectors.toList());

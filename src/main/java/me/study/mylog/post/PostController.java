@@ -3,7 +3,9 @@ package me.study.mylog.post;
 import lombok.RequiredArgsConstructor;
 import me.study.mylog.common.dto.CommonResponse;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -76,32 +78,27 @@ public class PostController {
      * @return
      */
     @GetMapping("/v1/posts")
-    public ResponseEntity<?> getAllPostByBoardId(@RequestParam(value ="boardId", required = false) Long boardId, @RequestParam(value ="categoryId", required = false) Long categoryId,
-                                                 @RequestParam(value ="page", required = false, defaultValue = "0") Integer page, @RequestParam(value ="size", required = false, defaultValue = "10") Integer size) {
+    public ResponseEntity<?> getAllPostByBoardId(@RequestParam(value ="boardId", required = false) Long boardId,
+                                                 @RequestParam(value ="categoryId", required = false) Long categoryId,
+                                                 @PageableDefault(sort="modifiedDate", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedDate"));
         List<PostMainResponseDto> dtoList;
         if (categoryId != null) {
-            dtoList =  postService.getAllPostDescByCategoryId(categoryId, pageRequest);
+            dtoList =  postService.getAllPostDescByCategoryId(categoryId, pageable);
             return ResponseEntity.ok(new CommonResponse<>("success", dtoList));
 
         }
-        dtoList= postService.getAllPostDescByBoardId(boardId, pageRequest);
+        dtoList= postService.getAllPostDescByBoardId(boardId, pageable);
         return ResponseEntity.ok(new CommonResponse<>("success", dtoList));
     }
 
     /**
-     * 전체 게시글 목록 조회, jpa 페이징 기능 활용, 임시 개발용
-     * @param page
-     * @param size
-     * @return
+     * 전체 게시글 목록 조회, jpa 페이징 기능 활용
      */
     @GetMapping("/v1/posts/all")
-    public ResponseEntity<?> getAllPosts(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page, @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
+    public ResponseEntity<?> getAllPosts(@PageableDefault(sort="modifiedDate", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedDate"));
-
-        List<PostMainResponseDto> dtoList = postService.getAllPostDesc(pageRequest);
+        List<PostMainResponseDto> dtoList = postService.getAllPostDesc(pageable);
         return ResponseEntity.ok(new CommonResponse<>("success", dtoList));
     }
 }
