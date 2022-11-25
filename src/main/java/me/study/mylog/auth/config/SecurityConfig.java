@@ -54,7 +54,8 @@ public class SecurityConfig {
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authz) -> authz
-                        // TODO 아래 접근에 대해서 관리자만 접근 가능하도록 제한 설정을 해둘 필요성!
+                        // TODO 아래 두 접근에 대해서 관리자만 접근 가능하도록 제한 설정을 해둘 필요성!
+                        .antMatchers("/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .antMatchers("/actuator/health", "/h2-console/**", "/docs/**").permitAll()
 
                         .antMatchers("/", "/css/**", "/api/images/local/**").permitAll()

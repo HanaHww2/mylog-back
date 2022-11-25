@@ -56,7 +56,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         if (userOptional.isPresent()) {	// 이미 가입된 경우
             user = userOptional.get();
-            if (authProviderType.equals(user.getAuthProviderType())) {
+            if (!authProviderType.equals(user.getAuthProviderType())) {
                 throw new OAuthProcessingException("Wrong Match Auth Provider");
             }
         } else { // 가입되지 않은 경우
@@ -64,6 +64,5 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         }
         return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
-
 
 }
