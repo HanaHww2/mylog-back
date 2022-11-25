@@ -1,0 +1,7 @@
+[[Post-API]]
+== Post-API
+
+[[Post-List-Search]]
+=== Post 리스트 조회
+
+operation::all-post-list[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']

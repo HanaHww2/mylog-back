@@ -9,13 +9,5 @@
 [[introduction]]
 == 소개
 
-[[resources-users]]
-== User
-
-[[resources-users-create]]
-=== User 생성
-
-==== HTTP request
-
-
-operation::user-register[sn ippets='request-fields,curl-request,http-request, request-headers, http-response, response-headers, response-fields, links']
+include::users.adoc[]
+include::post.adoc[]

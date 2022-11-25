@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Spring REST Docs</title>
+<title>Post-API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,28 +435,455 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="book toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>Spring REST Docs</h1>
-<div class="details">
-<span id="revnumber">version 0.0.1-SNAPSHOT</span>
-</div>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#introduction">소개</a></li>
-</ul>
-</div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="introduction"><a class="link" href="#introduction">소개</a></h2>
+<h2 id="Post-API">Post-API</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::resources-users.adoc[]
-Unresolved directive in index.adoc - include::post.adoc[]</p>
+<div class="sect2">
+<h3 id="Post-List-Search">Post 리스트 조회</h3>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="sect4">
+<h5 id="_http_request_curl_request">Curl request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/v1/posts/all?page=1&amp;size=10' -i -X GET</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_http_request_http_request">HTTP request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/v1/posts/all?page=1&amp;size=10 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_http_request_http_response">HTTP response</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Content-Length: 7195
+
+{
+  "message" : "success",
+  "data" : [ {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "gZgVIAipVWVtUORDsYKQgQGC",
+    "boardUri" : "nBBkMuLIgIYwkwNyoTdPmoDgJtCFmWJFsGKqkUZRckyThIPxQqACWHiXgEjeehMgEkRiXZNzzsvFZPgpdrIkWGVQsXdVABZ",
+    "categoryId" : null,
+    "categoryName" : "dKolGXtNcHyGAlKytlvMOQkkalJdDqaBVfZgcyLJbSpftGJbiDiIuiunRpEI",
+    "email" : "OZyKMxAdYWgvaoeYQuYdhJJOEDaOpSKnYgVhFTddpVgPLOmBJNcbiWrxYXrAzC",
+    "authorName" : "AOHZHqClOwqNIKolkcOstBpQZfJuXEjjrjZQPTgXrTrJjCwYVGHsqcXeRyNkbFIBbmqKilCiTubnRJemRDsp",
+    "title" : "kyQScMFMgWxUCHANMcyxZPXnDbDNZOawUwviwxMHYOnsYkMdGvuUDfVvpqqnBavQRNJGICmRtlhJLQGI",
+    "content" : "qCIOwSNAGCwdRpCxWzvfWTpOgbbMVMokthsezngBzPARSMFTET",
+    "hashtagList" : "FHNxItUYPgAOQTqkVsyjAPkJAdGCDgeZPUonMbKwjIaK",
+    "modifiedDate" : "2022-10-26T14:10:31.610049711"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "yYGhdnMZGXUHjjOpKcNhleTYtA",
+    "boardUri" : "LoGJtRoqxnBsMSyiQAvMWYIfDMKdVQXNAyigZvjHxknJjOfpGcotjaArLowBzJhUUmAtfryjTQxaGCTJtQVEMZnAj",
+    "categoryId" : null,
+    "categoryName" : "bmMjoeEhkOoIOHdtJgEIMUZfuIIGdXsvEATICEfsPabSPUvSaEemafDFoVjYiIwJSHmtozrRDdTmBRfOqgH",
+    "email" : "GfUzstIOaYXVCFHMIRKTmbIY",
+    "authorName" : "GfQeQgmhuSRTKSLYazfdCHrfOyxIZedJAVZmHKYOWTsGdDDmWIiKLDRoptjoGfdkYSSGLGnzxEmvuNZj",
+    "title" : "hdJJyDkRaUbgMkgbzJfvdzaWDSmRWYZw",
+    "content" : "yLpWOFVlLSHiKvDNRYeLKpjmBCHHntXcrptYZzLWeiHWcNZXWx",
+    "hashtagList" : "SUYtvupGSOiwRFJfKkifiSqujpFoMMGJfIblHLelXakkwzshDVjPbogsiarpuVQTMPufxLKnCOzLOWmAewjYIEqYRypsecMrC",
+    "modifiedDate" : "2022-10-12T15:58:12.478667109"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "ErKUBEqCrhrtgxJ",
+    "boardUri" : "kjHewSlMWOIVYZjIEBetqguztlWtKhlfZzDZxlpKnXmsjfwUTYgfExSOnqwXgwbUXmExZAqYdJStFJtVTQqOCjYYKFPwjvFKL",
+    "categoryId" : null,
+    "categoryName" : "mxBtJpbqEfQgWhKXmKMICCEUYIvewgAhbiAslSgvGJGP",
+    "email" : "DGspDbQvBQYuxiXXVytGCxzVllpgTJKhRQqqszYLYdvDhtAsLghPXAgtbprXP",
+    "authorName" : "bBkUOVdwprLNbgNvZUMpqAXLJbjETiQaUNWftniOAotnzWvkQtWruzGVyIdgFUYNdkFYkkj",
+    "title" : "eOMtThyhVNLWUZNRcBaQKxIyedUsFwdkelQbxeTeQOvaScfqIOOmaaJxkyvRnLRYtGKbgicZ",
+    "content" : "aHCBRQDSxVLhpfQGTMDYpsBZxvfBoeygjbUMaAIKKIkknjWEXJUfPxxQHeWKEJdpHYZGhtgdntugzvvKAXLhMLlNgNfZBdyFGRa",
+    "hashtagList" : "jVfJNonEnOinZjUfzQhdgLLfDT",
+    "modifiedDate" : "2013-12-25T14:03:56.561673066"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "dTBGekxiOKesleAVkNopHIQgYGLlIATFrAvxsxbMLeWsiFKoH",
+    "boardUri" : "URsAEFZObrvYcJZUdQpkNMRWMnuqMZjGmbGpqIfdzlCGXKU",
+    "categoryId" : null,
+    "categoryName" : "biWSSSRpRXLAURzytlmbnRTFArBmCsVoOcCJNSiiARGiEvtzMXGjrOkbSWTmyDBSi",
+    "email" : "bkYtnUGVo",
+    "authorName" : "nYyFolqwISJOtzCNOSxfoRrtAfJCbmCImLHIRhFVIjiziEduCgomzdXP",
+    "title" : "vZfJTLmESNnapFhNsJpgFePnOynsXVySnCsapwmbCYBGeeyfZrJFBNaEuifCNkszyiEoQgZMLCkOPXmdXNjxJYWitjSodgEy",
+    "content" : "QYcIOkvAhLTcmYrOLszOqwGlmyzrhupKjZNKuuiOPAgFhomWJfRGWaenLOfnn",
+    "hashtagList" : "bsvVUNOIIkGfcJxDJJZJbEarRLyuorIWNQOnyxEhUZUSQTAwirgqwyeMkANvTRlyuhxQOVP",
+    "modifiedDate" : "2016-03-28T21:40:48.955135942"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "hWY",
+    "boardUri" : "lTPHCQQegzbjNOmMdHxJLKqkRmLoBqM",
+    "categoryId" : null,
+    "categoryName" : "LDfiFFjwMneyLdXmJDGKKKAacCjFBTLGlKguNumLDdzHithvWZKnKFMxmdbqsbrgrLIymUVdj",
+    "email" : "LZJBVpqrgYEfgBQZscwWwvexJVjoBNJoDKyqXGsYnOlEVto",
+    "authorName" : "xFeeOcjHTrYJPUxjLQDAVLmNXveokBitqjWigvdgAxlFyCL",
+    "title" : "UoVBrrgqnsgUP",
+    "content" : "YKbtttVXQngBcThqpVNqODawSpTcRveWPmvjZxWszSmMbuIa",
+    "hashtagList" : "Fe",
+    "modifiedDate" : "2025-10-21T11:18:08.025106931"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "vJICJCauMjpIktrEvSURvpTAfhvDXpAHENtgMGCGqk",
+    "boardUri" : "uNrlkfGmUrpKSypPydvieNlHFrVi",
+    "categoryId" : null,
+    "categoryName" : "aFiVhEWHbIzjOKeXJRXyyCViIyhsrmBGqTHfhCsgtfXXCaPXEHEztDGcmtjTVvoYoOoshoeLxzUmKIpVZ",
+    "email" : "tGFuKWynEPzeFCCKFAcsaJIxljHCOfDDSwwgCAHQBnLXuqmDwUcLyMwhLQMytjnFOfGU",
+    "authorName" : "JbCTX",
+    "title" : "XhyFICpyunUrkoPeJBtlxTOxVisbhKQG",
+    "content" : "oELBkzEtgtoATcpcCThLdmiToVA",
+    "hashtagList" : "odmTZjFPZQRnUUlhTnhQsyUvSXkVWKQjIIxSltbwROAOQWFuaGMQhFFSwNAeCIxQTvsMrlAABhbSYJbFmvQhpWKEYiWCi",
+    "modifiedDate" : "2021-01-11T19:02:43.172821407"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "dKUeAsNSzoYeRVHJVwBDAubxCtehtXEfTfyauCrSTOaytzhhIcISexOAyeLRkeCvMyiJniplMXMrUAlFdXaKxU",
+    "boardUri" : "gcofuTQSJtinsAVJbTFPNTuZbrUGhDlrcWmKujSwDKjdQdzCmdQNUccVLcFpQRZunBmJjhJUhlkdbxCtmnrCoYCoUionXkVOhu",
+    "categoryId" : null,
+    "categoryName" : "MoGHmWeAInmEdonvAPuvPYHeFkFZTBkSOuPkVXdEPrrghePGmBgSXleuuIFUSACTWWey",
+    "email" : "VKFFACMshpRuIAMPXHICTTqFfrmyJKuJZMwJ",
+    "authorName" : "baUvSwdeWWzAQLsKfMOceUPgKWYQMdN",
+    "title" : "Pbyqv",
+    "content" : "YblbRy",
+    "hashtagList" : "mQGusOogDGCNjVbFSLopclOdsDSeAtVGeFBHlutoTVlgYNtZBNzpgtqxI",
+    "modifiedDate" : "2023-02-22T13:57:59.084080874"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "BfDwyyEImzSlUKkItQaTWiKKEkeULPisMaklIMZqfimMGVjidyBepCeRRvACooKAjpTXB",
+    "boardUri" : "mtohuJJLNbdEiosLLAApkOSRrCEFHvtHQWIvZrbmhvLPAfsurYSDDwWIexFzoJMjdnReNwWRCFCUWJiAgfinggmADzVwl",
+    "categoryId" : null,
+    "categoryName" : "HILJDQpBUujwXFJxTUoeBcivODRNvwsxQjFXTKDQRdo",
+    "email" : "hKfUBUAnDzTKqTWaONLUwIqAoNPPSyuhlvffXVtHzOfOYplvOihCLfOisofMbZAepKlNxPMsfVmpIFbNX",
+    "authorName" : "RNXWiglvTREDPXntbRdYwxSghZYJ",
+    "title" : "SEB",
+    "content" : "DNzGDOqBrgLRciHtCFrenHMJipPFwczdeNMcNmxSeaiEGcgzGzPuxvtWHndVLVLHNKEnhjhSHlsNPskmZM",
+    "hashtagList" : "TCDJbalyIoKYsYNldEhnRCBnpJlQwyjJeNsAZMaEIk",
+    "modifiedDate" : "2023-12-13T06:21:59.999376414"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "jTVjhcKjkQzqNKqPkrkxwaNupLbgF",
+    "boardUri" : "mgTPZKLaaUKvyPRrGjBEVwAjMdAmCkjnXEAhfJCbVPadCyNrxMJRYEZbZHvhwelJcwYpeOJFQhTN",
+    "categoryId" : null,
+    "categoryName" : "UDjgRhUlvCzjGkjsOdpyHxSLCUQVdPwhgvSlYjZ",
+    "email" : "si",
+    "authorName" : "GgaYLnmdm",
+    "title" : "wFFhDtJIFIDIJPgQHkEpJWAuZCefSONkmCkMaVIPFdmRs",
+    "content" : "jcibtMrRiDxiWvWbvgFAgSvdlYwGUiHoXooZOiABgEOzqbcv",
+    "hashtagList" : "AHMehFaNyINUyfrKxmxhjCmXkgHoTCJIwFwNHvKWDMckTBXScBGEEXLsPeNEF",
+    "modifiedDate" : "2016-05-21T07:21:47.149148101"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "cBuvMHvvCjAaIvQmErJAjoukpwRntQJqLiui",
+    "boardUri" : "VxbuaeqRUvrJKDXNFozUMJkmqDOtgIuJZjLwBbQKbGYUDCaQINnRcufCUEDOXmWxwwLiMiLMCGFghUqecvgMNfrplvGtNhRqJg",
+    "categoryId" : null,
+    "categoryName" : "DQipV",
+    "email" : "CkAqtBOaTRoanYsEoPZAOquLCpurTwTkAKkEIDqGAXnijTzEHfRbsFUMHQLflVGYakRIpE",
+    "authorName" : "HOPVWDcqFMXfPsPKHrOpcQMsN",
+    "title" : "V",
+    "content" : "iVdfDursanifOdNmzhseweuUuSvXSMFpUhGOjJYspzrHXmoNxamsMubcRqyEEQMqfyuEEHtthJVaaq",
+    "hashtagList" : "gZGnrDDvPDhepmqXrDznIRjPsvwEdQrfuYeVZXCVRtISjOQXKRIUtYrzbrJpK",
+    "modifiedDate" : "2010-03-22T17:32:19.094163256"
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_http_request_httpie_request">HTTPie request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ http GET 'http://localhost:8080/api/v1/posts/all?page=1&amp;size=10'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_http_request_request_body">Request body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code></code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_http_request_request_parameters">Request parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 사이즈</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_http_request_response_body">Response body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "message" : "success",
+  "data" : [ {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "gZgVIAipVWVtUORDsYKQgQGC",
+    "boardUri" : "nBBkMuLIgIYwkwNyoTdPmoDgJtCFmWJFsGKqkUZRckyThIPxQqACWHiXgEjeehMgEkRiXZNzzsvFZPgpdrIkWGVQsXdVABZ",
+    "categoryId" : null,
+    "categoryName" : "dKolGXtNcHyGAlKytlvMOQkkalJdDqaBVfZgcyLJbSpftGJbiDiIuiunRpEI",
+    "email" : "OZyKMxAdYWgvaoeYQuYdhJJOEDaOpSKnYgVhFTddpVgPLOmBJNcbiWrxYXrAzC",
+    "authorName" : "AOHZHqClOwqNIKolkcOstBpQZfJuXEjjrjZQPTgXrTrJjCwYVGHsqcXeRyNkbFIBbmqKilCiTubnRJemRDsp",
+    "title" : "kyQScMFMgWxUCHANMcyxZPXnDbDNZOawUwviwxMHYOnsYkMdGvuUDfVvpqqnBavQRNJGICmRtlhJLQGI",
+    "content" : "qCIOwSNAGCwdRpCxWzvfWTpOgbbMVMokthsezngBzPARSMFTET",
+    "hashtagList" : "FHNxItUYPgAOQTqkVsyjAPkJAdGCDgeZPUonMbKwjIaK",
+    "modifiedDate" : "2022-10-26T14:10:31.610049711"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "yYGhdnMZGXUHjjOpKcNhleTYtA",
+    "boardUri" : "LoGJtRoqxnBsMSyiQAvMWYIfDMKdVQXNAyigZvjHxknJjOfpGcotjaArLowBzJhUUmAtfryjTQxaGCTJtQVEMZnAj",
+    "categoryId" : null,
+    "categoryName" : "bmMjoeEhkOoIOHdtJgEIMUZfuIIGdXsvEATICEfsPabSPUvSaEemafDFoVjYiIwJSHmtozrRDdTmBRfOqgH",
+    "email" : "GfUzstIOaYXVCFHMIRKTmbIY",
+    "authorName" : "GfQeQgmhuSRTKSLYazfdCHrfOyxIZedJAVZmHKYOWTsGdDDmWIiKLDRoptjoGfdkYSSGLGnzxEmvuNZj",
+    "title" : "hdJJyDkRaUbgMkgbzJfvdzaWDSmRWYZw",
+    "content" : "yLpWOFVlLSHiKvDNRYeLKpjmBCHHntXcrptYZzLWeiHWcNZXWx",
+    "hashtagList" : "SUYtvupGSOiwRFJfKkifiSqujpFoMMGJfIblHLelXakkwzshDVjPbogsiarpuVQTMPufxLKnCOzLOWmAewjYIEqYRypsecMrC",
+    "modifiedDate" : "2022-10-12T15:58:12.478667109"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "ErKUBEqCrhrtgxJ",
+    "boardUri" : "kjHewSlMWOIVYZjIEBetqguztlWtKhlfZzDZxlpKnXmsjfwUTYgfExSOnqwXgwbUXmExZAqYdJStFJtVTQqOCjYYKFPwjvFKL",
+    "categoryId" : null,
+    "categoryName" : "mxBtJpbqEfQgWhKXmKMICCEUYIvewgAhbiAslSgvGJGP",
+    "email" : "DGspDbQvBQYuxiXXVytGCxzVllpgTJKhRQqqszYLYdvDhtAsLghPXAgtbprXP",
+    "authorName" : "bBkUOVdwprLNbgNvZUMpqAXLJbjETiQaUNWftniOAotnzWvkQtWruzGVyIdgFUYNdkFYkkj",
+    "title" : "eOMtThyhVNLWUZNRcBaQKxIyedUsFwdkelQbxeTeQOvaScfqIOOmaaJxkyvRnLRYtGKbgicZ",
+    "content" : "aHCBRQDSxVLhpfQGTMDYpsBZxvfBoeygjbUMaAIKKIkknjWEXJUfPxxQHeWKEJdpHYZGhtgdntugzvvKAXLhMLlNgNfZBdyFGRa",
+    "hashtagList" : "jVfJNonEnOinZjUfzQhdgLLfDT",
+    "modifiedDate" : "2013-12-25T14:03:56.561673066"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "dTBGekxiOKesleAVkNopHIQgYGLlIATFrAvxsxbMLeWsiFKoH",
+    "boardUri" : "URsAEFZObrvYcJZUdQpkNMRWMnuqMZjGmbGpqIfdzlCGXKU",
+    "categoryId" : null,
+    "categoryName" : "biWSSSRpRXLAURzytlmbnRTFArBmCsVoOcCJNSiiARGiEvtzMXGjrOkbSWTmyDBSi",
+    "email" : "bkYtnUGVo",
+    "authorName" : "nYyFolqwISJOtzCNOSxfoRrtAfJCbmCImLHIRhFVIjiziEduCgomzdXP",
+    "title" : "vZfJTLmESNnapFhNsJpgFePnOynsXVySnCsapwmbCYBGeeyfZrJFBNaEuifCNkszyiEoQgZMLCkOPXmdXNjxJYWitjSodgEy",
+    "content" : "QYcIOkvAhLTcmYrOLszOqwGlmyzrhupKjZNKuuiOPAgFhomWJfRGWaenLOfnn",
+    "hashtagList" : "bsvVUNOIIkGfcJxDJJZJbEarRLyuorIWNQOnyxEhUZUSQTAwirgqwyeMkANvTRlyuhxQOVP",
+    "modifiedDate" : "2016-03-28T21:40:48.955135942"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "hWY",
+    "boardUri" : "lTPHCQQegzbjNOmMdHxJLKqkRmLoBqM",
+    "categoryId" : null,
+    "categoryName" : "LDfiFFjwMneyLdXmJDGKKKAacCjFBTLGlKguNumLDdzHithvWZKnKFMxmdbqsbrgrLIymUVdj",
+    "email" : "LZJBVpqrgYEfgBQZscwWwvexJVjoBNJoDKyqXGsYnOlEVto",
+    "authorName" : "xFeeOcjHTrYJPUxjLQDAVLmNXveokBitqjWigvdgAxlFyCL",
+    "title" : "UoVBrrgqnsgUP",
+    "content" : "YKbtttVXQngBcThqpVNqODawSpTcRveWPmvjZxWszSmMbuIa",
+    "hashtagList" : "Fe",
+    "modifiedDate" : "2025-10-21T11:18:08.025106931"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "vJICJCauMjpIktrEvSURvpTAfhvDXpAHENtgMGCGqk",
+    "boardUri" : "uNrlkfGmUrpKSypPydvieNlHFrVi",
+    "categoryId" : null,
+    "categoryName" : "aFiVhEWHbIzjOKeXJRXyyCViIyhsrmBGqTHfhCsgtfXXCaPXEHEztDGcmtjTVvoYoOoshoeLxzUmKIpVZ",
+    "email" : "tGFuKWynEPzeFCCKFAcsaJIxljHCOfDDSwwgCAHQBnLXuqmDwUcLyMwhLQMytjnFOfGU",
+    "authorName" : "JbCTX",
+    "title" : "XhyFICpyunUrkoPeJBtlxTOxVisbhKQG",
+    "content" : "oELBkzEtgtoATcpcCThLdmiToVA",
+    "hashtagList" : "odmTZjFPZQRnUUlhTnhQsyUvSXkVWKQjIIxSltbwROAOQWFuaGMQhFFSwNAeCIxQTvsMrlAABhbSYJbFmvQhpWKEYiWCi",
+    "modifiedDate" : "2021-01-11T19:02:43.172821407"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "dKUeAsNSzoYeRVHJVwBDAubxCtehtXEfTfyauCrSTOaytzhhIcISexOAyeLRkeCvMyiJniplMXMrUAlFdXaKxU",
+    "boardUri" : "gcofuTQSJtinsAVJbTFPNTuZbrUGhDlrcWmKujSwDKjdQdzCmdQNUccVLcFpQRZunBmJjhJUhlkdbxCtmnrCoYCoUionXkVOhu",
+    "categoryId" : null,
+    "categoryName" : "MoGHmWeAInmEdonvAPuvPYHeFkFZTBkSOuPkVXdEPrrghePGmBgSXleuuIFUSACTWWey",
+    "email" : "VKFFACMshpRuIAMPXHICTTqFfrmyJKuJZMwJ",
+    "authorName" : "baUvSwdeWWzAQLsKfMOceUPgKWYQMdN",
+    "title" : "Pbyqv",
+    "content" : "YblbRy",
+    "hashtagList" : "mQGusOogDGCNjVbFSLopclOdsDSeAtVGeFBHlutoTVlgYNtZBNzpgtqxI",
+    "modifiedDate" : "2023-02-22T13:57:59.084080874"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "BfDwyyEImzSlUKkItQaTWiKKEkeULPisMaklIMZqfimMGVjidyBepCeRRvACooKAjpTXB",
+    "boardUri" : "mtohuJJLNbdEiosLLAApkOSRrCEFHvtHQWIvZrbmhvLPAfsurYSDDwWIexFzoJMjdnReNwWRCFCUWJiAgfinggmADzVwl",
+    "categoryId" : null,
+    "categoryName" : "HILJDQpBUujwXFJxTUoeBcivODRNvwsxQjFXTKDQRdo",
+    "email" : "hKfUBUAnDzTKqTWaONLUwIqAoNPPSyuhlvffXVtHzOfOYplvOihCLfOisofMbZAepKlNxPMsfVmpIFbNX",
+    "authorName" : "RNXWiglvTREDPXntbRdYwxSghZYJ",
+    "title" : "SEB",
+    "content" : "DNzGDOqBrgLRciHtCFrenHMJipPFwczdeNMcNmxSeaiEGcgzGzPuxvtWHndVLVLHNKEnhjhSHlsNPskmZM",
+    "hashtagList" : "TCDJbalyIoKYsYNldEhnRCBnpJlQwyjJeNsAZMaEIk",
+    "modifiedDate" : "2023-12-13T06:21:59.999376414"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "jTVjhcKjkQzqNKqPkrkxwaNupLbgF",
+    "boardUri" : "mgTPZKLaaUKvyPRrGjBEVwAjMdAmCkjnXEAhfJCbVPadCyNrxMJRYEZbZHvhwelJcwYpeOJFQhTN",
+    "categoryId" : null,
+    "categoryName" : "UDjgRhUlvCzjGkjsOdpyHxSLCUQVdPwhgvSlYjZ",
+    "email" : "si",
+    "authorName" : "GgaYLnmdm",
+    "title" : "wFFhDtJIFIDIJPgQHkEpJWAuZCefSONkmCkMaVIPFdmRs",
+    "content" : "jcibtMrRiDxiWvWbvgFAgSvdlYwGUiHoXooZOiABgEOzqbcv",
+    "hashtagList" : "AHMehFaNyINUyfrKxmxhjCmXkgHoTCJIwFwNHvKWDMckTBXScBGEEXLsPeNEF",
+    "modifiedDate" : "2016-05-21T07:21:47.149148101"
+  }, {
+    "id" : null,
+    "boardId" : null,
+    "boardName" : "cBuvMHvvCjAaIvQmErJAjoukpwRntQJqLiui",
+    "boardUri" : "VxbuaeqRUvrJKDXNFozUMJkmqDOtgIuJZjLwBbQKbGYUDCaQINnRcufCUEDOXmWxwwLiMiLMCGFghUqecvgMNfrplvGtNhRqJg",
+    "categoryId" : null,
+    "categoryName" : "DQipV",
+    "email" : "CkAqtBOaTRoanYsEoPZAOquLCpurTwTkAKkEIDqGAXnijTzEHfRbsFUMHQLflVGYakRIpE",
+    "authorName" : "HOPVWDcqFMXfPsPKHrOpcQMsN",
+    "title" : "V",
+    "content" : "iVdfDursanifOdNmzhseweuUuSvXSMFpUhGOjJYspzrHXmoNxamsMubcRqyEEQMqfyuEEHtthJVaaq",
+    "hashtagList" : "gZGnrDDvPDhepmqXrDznIRjPsvwEdQrfuYeVZXCVRtISjOQXKRIUtYrzbrJpK",
+    "modifiedDate" : "2010-03-22T17:32:19.094163256"
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_http_request_response_fields">Response fields</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].boardName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].boardUri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].categoryName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자 이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].hashtagList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 해시태그 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].modifiedDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 수정일자</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -464,11 +891,8 @@ Unresolved directive in index.adoc - include::post.adoc[]</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-23 18:06:06 +0900
+Last updated 2022-11-23 18:08:01 +0900
 </div>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>
