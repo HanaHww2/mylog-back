@@ -52,6 +52,7 @@ public class User extends BaseTimeEntity {
     private String githubUrl;
     private String blogUrl;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<BoardMember> boardList = new ArrayList<>();
 
@@ -70,15 +71,4 @@ public class User extends BaseTimeEntity {
         return this.role.getCode();
     }
 
-//    @Getter
-//    @RequiredArgsConstructor
-//    public enum RoleType {
-//
-//        ADMIN("ROLE_ADMIN", "관리자"),
-//        USER("ROLE_USER", "일반 사용자"),
-//        GUEST("ROLE_GUEST", "게스트 권한");
-//
-//        private final String code;
-//        private final String displayName;
-//    }
 }

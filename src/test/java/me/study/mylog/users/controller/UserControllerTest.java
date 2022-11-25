@@ -8,8 +8,10 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
 import me.study.mylog.auth.config.SecurityConfig;
 import me.study.mylog.auth.utils.JwtUtil;
+import me.study.mylog.post.domain.Post;
 import me.study.mylog.users.dto.UserDto;
 import me.study.mylog.users.service.UserService;
+import me.study.mylog.util.PostFixtureFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +38,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -65,8 +72,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
 //})
 class UserControllerTest {
-    private ObjectMapper objectMapper;
 
+    private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
     @MockBean

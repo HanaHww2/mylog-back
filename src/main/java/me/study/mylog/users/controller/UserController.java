@@ -97,7 +97,9 @@ public class UserController {
 
         // 헤더보다는 body에 담는 것이 더 제너럴한 방식이라고 한다.
         // 게다가 클라이언트 스크립트에서는 기본적으로 header에 대한 접근을 막는 편인 것 같다.
-        // 응답 바디에 값을 담아 전송할 수 있으니, 굳이 header에 대한 설정을 변경하지 않고 바디에 담아서 보내기로 결정했더,
+        // 응답 바디에 값을 담아 전송할 수 있으니, 굳이 header에 대한 설정을 변경하지 않고 바디에 담아서 보내기로 결정했다. 그러나...
+        // 시큐리티의 oauth success handling에서 기본적으로 리다이렉트 전략을 사용하고 있어서 많이들 쿠키에 토큰을  담아서 보내는 듯하다..
+        // 응답을 보내는 방식을 통일하면 좋겠는데... 고민이 된다.
         SigninResDto signinResDto = SigninResDto.builder()
                 .email(signinReqDto.getEmail())
                 .Authorization("Bearer " + accessToken)

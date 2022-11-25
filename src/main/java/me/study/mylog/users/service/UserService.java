@@ -89,6 +89,7 @@ public class UserService {
         log.info("{}", user);
 
         User newUser = userRepository.save(user);
+
         // TODO 보드와 보드멤버 테이블 관련해서 수정 필요
         // 사용자 기준 보드를 조회할 때, boardMember에서 사용자가 권한을 가진 모든 보드 아이디를 조회하여
         // 이를 바탕으로 board 정보 조회를 수행한다.
