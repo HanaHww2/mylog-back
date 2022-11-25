@@ -13,5 +13,5 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @EntityGraph(attributePaths = "children")
     List<Category> findByBoardId(Long boardId);
 
-    //List<Category> findByUserEmail(String userEmail);
+    List<Category> findByBoardIdOrderByCreatedAt(Long boardId);
 }

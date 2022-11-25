@@ -2,6 +2,7 @@ package me.study.mylog.category;
 
 import lombok.AllArgsConstructor;
 import me.study.mylog.auth.security.UserPrincipal;
+import me.study.mylog.common.dto.CommonResponse;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -16,13 +17,14 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class CategoryController {
 
-//    CategoryService categoryService;
-//    @GetMapping("/v1/categories")
-//    public ResponseEntity<?> getCategoriesByUser(Principal principal) {
-//        List<CategoryResponseDto> dto = categoryService.getCategoriesByUserEmail(principal.getName());
-//        return new ResponseEntity<>(dto, HttpStatus.OK);
-//    }
+    CategoryService categoryService;
+
+    @GetMapping("/boards/{boardId}/categories")
+    public ResponseEntity<?> getCategoriesByUser(Principal principal, @PathVariable Long boardId) {
+        List<CategoryResponseDto> dto = categoryService.getCategoriesByBoardId(boardId);
+        return ResponseEntity.ok(new CommonResponse("SUCCESS", dto));
+    }
 }

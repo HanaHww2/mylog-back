@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.dto.UserDto;
 import me.study.mylog.users.service.UserService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +18,13 @@ public class CategoryService {
     private final UserService userService;
     private final CategoryRepository logCateRepo;
 
-//    @Transactional(readOnly=true)
-//    public List<CategoryResponseDto> getCategoriesByUserEmail(String userEmail) {
-//
-//      //  UserDto userdto = userService.findUserByEmail(userEmail);
-//
-//        return logCateRepo.findByUserEmail(userEmail)
-//                .stream()
-//                .map(CategoryResponseDto::new)
-//                .collect(Collectors.toList());
-//    }
+    @Transactional(readOnly=true)
+    public List<CategoryResponseDto> getCategoriesByBoardId(Long boardId) {
+
+        // TODO orderby 추가
+        return logCateRepo.findByBoardIdOrderByCreatedAt(boardId)
+                .stream()
+                .map(CategoryResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }

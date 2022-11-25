@@ -14,18 +14,18 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class BoardController {
 
     BoardService boardService;
 
-    @GetMapping("/v1/boards")
+    @GetMapping("/boards")
     public ResponseEntity<?> getBoardsByUser(Principal principal) {
         List<BoardDetailResponseDto> dtoList = boardService.getBoardsByUserEmail(principal.getName());
         return new ResponseEntity<>(new CommonResponse<>("get BoardsList Successfully", dtoList), HttpStatus.OK);
     }
 
-    @GetMapping("/v1/boards/{boardId}")
+    @GetMapping("/boards/{boardId}")
     public ResponseEntity<?> getBoardById(@PathVariable("boardId") Long boardId, Principal principal) {
         BoardDetailResponseDto dto = boardService.getBoardById(boardId);
         return new ResponseEntity<>(new CommonResponse<>("get BoardsList Successfully", dto), HttpStatus.OK);
