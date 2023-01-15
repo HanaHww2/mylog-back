@@ -1,7 +1,8 @@
-package me.study.mylog.category;
+package me.study.mylog.category.entity;
 
 import lombok.*;
-import me.study.mylog.board.domain.Board;
+import me.study.mylog.board.entity.Board;
+import me.study.mylog.category.dto.CategoryModifyRequest;
 import me.study.mylog.common.domain.BaseTimeEntity;
 
 import javax.persistence.*;
@@ -40,6 +41,10 @@ public class Category extends BaseTimeEntity {
 
     @OneToMany(mappedBy="parent", fetch = FetchType.EAGER)
     private List<Category> children;
+
+    public void modifyValue(CategoryModifyRequest dto) {
+        this.name = dto.name();
+    }
 
 //    @OneToMany(mappedBy = "category")
 //    private List<Post> postList;

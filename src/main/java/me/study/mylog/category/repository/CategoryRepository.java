@@ -1,17 +1,17 @@
-package me.study.mylog.category;
+package me.study.mylog.category.repository;
 
-import me.study.mylog.users.domain.User;
+import me.study.mylog.category.entity.Category;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    //List<Category> findByUser(User user);
+
+    List<Category> findByBoardIdOrderByCreatedAt(Long boardId);
 
     @EntityGraph(attributePaths = "children")
     List<Category> findByBoardId(Long boardId);
-
-    List<Category> findByBoardIdOrderByCreatedAt(Long boardId);
+    Optional<Category> findByIdAndBoardId(Long categoryId, Long boardId);
 }

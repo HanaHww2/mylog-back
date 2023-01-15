@@ -1,4 +1,4 @@
-package me.study.mylog.category;
+package me.study.mylog.category.entity;
 
 /*
 
