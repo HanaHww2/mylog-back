@@ -1,9 +1,8 @@
-package me.study.mylog.util;
+package me.study.mylog.util.fixture;
 
-import me.study.mylog.post.domain.Post;
+import me.study.mylog.post.entity.Post;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.randomizers.range.LocalDateRangeRandomizer;
 import org.jeasy.random.randomizers.range.LongRangeRandomizer;
 
 import java.lang.reflect.Field;
@@ -26,11 +25,26 @@ public class PostFixtureFactory {
                 .randomize(Long.class, new LongRangeRandomizer(1L, 100000L));
     }
 
+    private static EasyRandomParameters getEasyRandomParametersWithId() {
+        return new EasyRandomParameters()
+                .stringLengthRange(1, 100)
+                .randomize(Long.class, new LongRangeRandomizer(1L, 100000L));
+    }
+
     public static EasyRandom get(Long memberId) { //, LocalDateTime start, LocalDateTime end) {
         EasyRandomParameters parameter = getEasyRandomParameters();
         parameter
                 .randomize(memberId(), () -> memberId);
                 //.randomize(createdDate(), new LocalDateRangeRandomizer(start, end));
+
+        return new EasyRandom(parameter);
+    }
+
+    public static EasyRandom getWithId(Long memberId) { //, LocalDateTime start, LocalDateTime end) {
+        EasyRandomParameters parameter = getEasyRandomParametersWithId();
+        parameter
+                .randomize(memberId(), () -> memberId);
+        //.randomize(createdDate(), new LocalDateRangeRandomizer(start, end));
 
         return new EasyRandom(parameter);
     }

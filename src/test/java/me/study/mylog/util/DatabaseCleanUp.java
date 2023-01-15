@@ -1,11 +1,9 @@
-package me.study.mylog;
+package me.study.mylog.util;
 
 import com.google.common.base.CaseFormat;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
@@ -13,13 +11,12 @@ import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
-import javax.persistence.metamodel.EntityType;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Profile("test")
-@Component
 @RequiredArgsConstructor
+@Component
 public class DatabaseCleanUp { //implements InitializingBean {
 
     @PersistenceContext
@@ -56,10 +53,11 @@ public class DatabaseCleanUp { //implements InitializingBean {
         for (String tableName : tableNames) {
             // 테이블 이름을 순회하면서, TRUNCATE 수행
             entityManager.createNativeQuery("TRUNCATE TABLE " + tableName).executeUpdate();
+           // entityManager.createNativeQuery("ALTER TABLE " + tableName + " ALTER COLUMN ID RESTART WITH 1").executeUpdate();
         }
         entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 
-        //    entityManager.flush();
+//        entityManager.flush();
 //        entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
 //
 //        for (String tableName : tableNames) {
