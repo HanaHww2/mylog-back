@@ -1,6 +1,7 @@
 package me.study.mylog.auth.security;
 
 import lombok.RequiredArgsConstructor;
+import me.study.mylog.common.exception.BadRequestException;
 import me.study.mylog.users.domain.UserStatus;
 import me.study.mylog.users.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,12 +18,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) {
         Optional<UserPrincipal> userPrincipal = userRepository.findByEmail(email)
                 .map(user -> {
-                    if (user.getStatus() == UserStatus.Normal) {
-                        throw new RuntimeException(email + "-> 활성화되어 있지 않습니다.");
+                    if (user.getStatus() == UserStatus.NORMAL) {
+                        throw new BadRequestException(email + "-> 활성화되어 있지 않습니다.");
                     } else {
                         return UserPrincipal.create(user);
                     }

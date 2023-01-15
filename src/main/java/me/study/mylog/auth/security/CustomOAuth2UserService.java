@@ -8,11 +8,10 @@ import me.study.mylog.common.exception.OAuthProcessingException;
 import me.study.mylog.users.domain.AuthProviderType;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
-import me.study.mylog.users.service.UserService;
+import me.study.mylog.users.service.UserWriteService;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ import java.util.Optional;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final UserRepository userRepository;
-    private final UserService userService;
+    private final UserWriteService userWriteService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -60,7 +59,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 throw new OAuthProcessingException("Wrong Match Auth Provider");
             }
         } else { // 가입되지 않은 경우
-            user = userService.registerForOauth2(userInfo);
+            user = userWriteService.registerForOauth2(userInfo);
         }
         return UserPrincipal.create(user, oAuth2User.getAttributes());
     }

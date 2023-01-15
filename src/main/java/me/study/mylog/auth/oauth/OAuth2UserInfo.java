@@ -37,7 +37,7 @@ public abstract class OAuth2UserInfo {
             .email(getEmail())
             .imageUrl(getImageUrl())
             .role(RoleType.USER)
-            .status(UserStatus.Normal)
+            .status(UserStatus.NORMAL)
             .authProviderType(getProviderType())
             .build();
   }

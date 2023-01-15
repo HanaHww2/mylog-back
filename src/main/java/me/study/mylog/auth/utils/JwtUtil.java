@@ -98,7 +98,7 @@ public class JwtUtil {
                         .collect(Collectors.toList());
 
         UserPrincipal userPrincipal = UserPrincipal.builder()
-                .id(((Number)claims.get("userId")).longValue())
+                .id(((Number) claims.get("userId")).longValue())
                 .email(claims.getSubject())
                 .password("")
                 .authorities(authorities)

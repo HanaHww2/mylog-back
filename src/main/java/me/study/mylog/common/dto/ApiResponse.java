@@ -1,21 +1,22 @@
 package me.study.mylog.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nimbusds.oauth2.sdk.ResponseType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 @Getter
 @Setter
-public class CommonResponse<T> {
-    //private ResponseType type;
+public class ApiResponse<T> {
+//    private ResponseType type;
     private String message;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    T data;
+    T result;
 
-    public CommonResponse(String message, @Nullable T data) {
+    public ApiResponse(String message, @Nullable T result) {
         this.message = message;
-        this.data = data;
+        this.result = result;
     }
 }
