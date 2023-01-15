@@ -10,4 +10,6 @@
 == 소개
 
 include::users.adoc[]
+include::board.adoc[]
+include::category.adoc[]
 include::post.adoc[]

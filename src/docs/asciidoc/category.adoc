@@ -1,0 +1,13 @@
+[[Category-API]]
+== Category-API
+
+[[Category-List]]
+=== Category 리스트 조회
+
+operation::create-category[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
+operation::modify-category-value[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
+operation::category-info-by-id[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
+operation::category-list-by-board[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']

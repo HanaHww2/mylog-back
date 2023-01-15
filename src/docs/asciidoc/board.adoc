@@ -1,0 +1,10 @@
+[[Board-API]]
+== Board-API
+
+[[Board-List]]
+=== Board 리스트 조회
+
+operation::get-board-info-by-id[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
+operation::get-board-list[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
