@@ -1,7 +1,8 @@
-package me.study.mylog.board.domain;
+package me.study.mylog.board.entity;
 
 import lombok.*;
-import me.study.mylog.category.Category;
+import me.study.mylog.board.dto.ModifyBoardRequest;
+import me.study.mylog.category.entity.Category;
 import me.study.mylog.common.domain.BaseEntity;
 
 import javax.persistence.*;
@@ -36,7 +37,7 @@ public class Board extends BaseEntity {
 //    @OneToOne(fetch = FetchType.LAZY)
 //    private User user;
 
-    @OneToMany(mappedBy="board", fetch = FetchType.EAGER) // Lazy 전략(디폴트)
+    @OneToMany(mappedBy="board", fetch = FetchType.LAZY) // Lazy 전략(디폴트)
     private List<Category> categories;
 
     @Builder.Default
@@ -48,5 +49,12 @@ public class Board extends BaseEntity {
         this.name = name;
         this.uri = uri;
 //        this.user = user;
+    }
+
+    public void modifyValues(ModifyBoardRequest modifyBoardRequest) {
+        this.name = modifyBoardRequest.name();
+        this.uri = modifyBoardRequest.uri();
+        this.icon = modifyBoardRequest.icon();
+        this.boardType = modifyBoardRequest.boardType();
     }
 }

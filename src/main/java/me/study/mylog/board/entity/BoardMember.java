@@ -1,4 +1,4 @@
-package me.study.mylog.board.domain;
+package me.study.mylog.board.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -47,10 +47,4 @@ public class BoardMember extends BaseEntity {
         this.nickname = nickname;
     }
 
-//    // 연관관계 편의 메소드
-//    private Board setBoardRelation(Board board) {
-//        if (board.getBoardMembers().contains(this)) return board;
-//        board.getBoardMembers().add(this);
-//        return board;
-//    }
 }
