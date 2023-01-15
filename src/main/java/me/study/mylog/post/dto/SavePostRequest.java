@@ -1,11 +1,10 @@
-package me.study.mylog.post;
+package me.study.mylog.post.dto;
 
 import lombok.*;
-import me.study.mylog.post.domain.Post;
-import me.study.mylog.users.domain.User;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /*
 * Controller에서 @RequestBody로 외부에서 데이터를 받는 경우엔
@@ -19,14 +18,14 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostSaveRequestDto {
+public class SavePostRequest {
+    // 사용자 정보는 토큰으로 확인한다.
     //private String email;
     private Long boardId;
     private Long categoryId;
     private String title;
     private String content;
     @Builder.Default
-    private List<String> tagList = new ArrayList<>();
-    private List<ImageFileRequestDto> imageListDto;
-
+    private Set<String> tagList = new HashSet<>();
+    private List<ImageFileRequest> imageListDto;
 }

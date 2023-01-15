@@ -1,17 +1,18 @@
-package me.study.mylog.post;
+package me.study.mylog.post.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import me.study.mylog.post.domain.Post;
+import me.study.mylog.post.entity.Post;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
+@Builder
+@AllArgsConstructor
 @Getter
-public class PostDetailResponseDto {
+public class PostDetailResponse {
     private Long id;
     private Long boardId;
     private String boardName;
@@ -21,13 +22,12 @@ public class PostDetailResponseDto {
     private String title;
     private String content;
     private Long views;
-
     private String email;
     private String authorName;
-    private String hashtagList;
-    private LocalDateTime modifiedDate;
+    private Set<String> hashtagList;
+    private LocalDateTime modifiedAt;
 
-    public PostDetailResponseDto(Post entity) {
+    public PostDetailResponse(Post entity) {
         id = entity.getId();
         boardId = entity.getBoard().getId();
         boardName = entity.getBoard().getName();
@@ -39,7 +39,7 @@ public class PostDetailResponseDto {
         authorName = entity.getUser().getName();
         content = entity.getContent();
         views = entity.getViews();
-        modifiedDate = entity.getModifiedDate();
+        modifiedAt = entity.getModifiedAt();
         hashtagList = entity.getHashtagList();
     }
 

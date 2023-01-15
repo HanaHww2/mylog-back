@@ -1,13 +1,13 @@
-package me.study.mylog.post;
+package me.study.mylog.post.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.study.mylog.post.domain.Post;
+import me.study.mylog.post.entity.Post;
 import me.study.mylog.upload.domain.ImageFile;
 
 @Getter
 @NoArgsConstructor
-public class ImageFileRequestDto {
+public class ImageFileRequest {
 
     private String originFilename;
     private String filename;

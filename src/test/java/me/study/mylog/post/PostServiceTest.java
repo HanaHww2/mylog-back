@@ -1,11 +1,15 @@
 package me.study.mylog.post;
 
-import me.study.mylog.board.domain.Board;
-import me.study.mylog.board.BoardRepository;
-import me.study.mylog.board.domain.BoardType;
-import me.study.mylog.category.Category;
-import me.study.mylog.category.CategoryRepository;
-import me.study.mylog.post.domain.Post;
+import me.study.mylog.board.entity.Board;
+import me.study.mylog.board.repository.BoardRepository;
+import me.study.mylog.board.entity.BoardType;
+import me.study.mylog.category.entity.Category;
+import me.study.mylog.category.repository.CategoryRepository;
+import me.study.mylog.post.entity.Post;
+import me.study.mylog.post.dto.PostDetailResponse;
+import me.study.mylog.post.dto.SavePostRequest;
+import me.study.mylog.post.service.PostReadService;
+import me.study.mylog.post.service.PostWriteService;
 import me.study.mylog.upload.repository.ImageFileRepository;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
@@ -18,8 +22,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -36,8 +40,11 @@ class PostServiceTest {
     private ImageFileRepository imageFileRepository;
     @Mock
     private UserRepository userRepository;
+
     @InjectMocks
-    private PostService postService;
+    private PostReadService postReadService;
+    @InjectMocks
+    private PostWriteService postWriteService;
 
     User user;
     Board board;
@@ -46,7 +53,7 @@ class PostServiceTest {
     @BeforeEach
     void setUp() {
         this.user = User.builder()
-                .id(1l)
+                .id(1L)
                 .email("test@example.com")
                 .build();
         this.board = Board.builder()
@@ -55,24 +62,27 @@ class PostServiceTest {
                 .boardType(BoardType.DEFAULT)
                 .build();
         this.category = Category.builder()
-                .id(2l)
+                .id(2L)
                 .board(board)
                 .name("test")
                 .build();
     }
 
-    @Test
     @DisplayName("Dto_데이터가_MYLOG_테이블에_잘_저장되는지_검증")
+    @Test
     public void chkDtoDataSavedWell() {
         //given
-        PostSaveRequestDto requestDto = PostSaveRequestDto.builder()
+        Long userId = 1L;
+        String userEmail = "test@example.com";
+
+        SavePostRequest requestDto = SavePostRequest.builder()
 //                .email("hanah@example.com")
                 .content("테스트 본문")
                 .title("테스트 타이틀")
                 .boardId(1l)
                 .categoryId(2l)
                 .build();
-        String userEmail = "test@example.com";
+
         Post post = Post.builder()
                 .id(3L)
                 .user(user)
@@ -80,22 +90,21 @@ class PostServiceTest {
                 .category(category)
                 .title("테스트 타이틀")
                 .content("테스트 본문")
-                .hashtagList(Arrays.asList(new String[]{"one", "two"}).toString())
+                .hashtagList(Set.of("1", "2", "3"))
                // .imageFileList()
                         .build();
 
-        given(userRepository.findByEmail(userEmail)).willReturn(Optional.of(this.user));
-        given(boardRepository.findById(requestDto.getBoardId())).willReturn(Optional.ofNullable(this.board));
-        given(categoryRepository.findById(requestDto.getCategoryId())).willReturn(Optional.ofNullable(this.category));
+//        given(userRepository.findById(userId)).willReturn(Optional.of(this.user));
+//        given(boardRepository.findById(requestDto.getBoardId())).willReturn(Optional.ofNullable(this.board));
+//        given(categoryRepository.findById(requestDto.getCategoryId())).willReturn(Optional.ofNullable(this.category));
         given(postRepository.save(any())).willReturn(post);
 
         //when
-        PostDetailResponseDto responseDto = postService.save(requestDto, userEmail);
-        System.out.println(responseDto.getHashtagList());
+        Post saved = postWriteService.save(requestDto, userId);
+        System.out.println(saved.getHashtagList());
 
         //then
-        Assertions.assertThat(responseDto.getEmail()).isEqualTo(userEmail);
-        Assertions.assertThat(responseDto.getContent()).isEqualTo(requestDto.getContent());
-        Assertions.assertThat(responseDto.getTitle()).isEqualTo(requestDto.getTitle());
+        Assertions.assertThat(saved.getContent()).isEqualTo(requestDto.getContent());
+        Assertions.assertThat(saved.getTitle()).isEqualTo(requestDto.getTitle());
     }
 }

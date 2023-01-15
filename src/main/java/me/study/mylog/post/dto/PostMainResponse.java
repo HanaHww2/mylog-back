@@ -1,13 +1,19 @@
-package me.study.mylog.post;
+package me.study.mylog.post.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import me.study.mylog.post.domain.Post;
+import me.study.mylog.post.entity.Post;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 
 @Getter
-public class PostMainResponseDto {
+@Builder
+@AllArgsConstructor
+public class PostMainResponse {
     private Long id;
     private Long boardId;
     private String boardName;
@@ -18,11 +24,12 @@ public class PostMainResponseDto {
     private String authorName;
     private String title;
     private String content;
-    private String hashtagList;
-    private LocalDateTime modifiedDate;
+    private Set<String> hashtagList;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime modifiedAt;
 
 
-    public PostMainResponseDto(Post entity) {
+    public PostMainResponse(Post entity) {
         id = entity.getId();
         boardId = entity.getBoard().getId();
         boardName = entity.getBoard().getName();
@@ -31,7 +38,7 @@ public class PostMainResponseDto {
         email = entity.getUser().getEmail();
         authorName = entity.getUser().getName();
         content = entity.getContent();
-        modifiedDate = entity.getModifiedDate();
+        modifiedAt = entity.getModifiedAt();
         hashtagList = entity.getHashtagList();
 
         if (Optional.ofNullable(entity.getCategory()).isPresent()) {

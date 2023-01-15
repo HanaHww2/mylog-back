@@ -1,6 +1,7 @@
-package me.study.mylog.post;
+package me.study.mylog.post.repository;
 
-import me.study.mylog.post.domain.Post;
+import me.study.mylog.post.PostRepository;
+import me.study.mylog.post.entity.Post;
 import me.study.mylog.users.domain.RoleType;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
@@ -26,6 +27,7 @@ class PostRepositoryTest {
     PostRepository postRepository;
     @Autowired
     UserRepository userRepository;
+
 
     @BeforeEach
     void setUp() {
@@ -83,7 +85,7 @@ class PostRepositoryTest {
 
         //then
         Post post = postList.get(0);
-        Assertions.assertThat(post.getCreatedDate()).isAfterOrEqualTo(now);
-        Assertions.assertThat(post.getModifiedDate()).isAfterOrEqualTo(now);
+        Assertions.assertThat(post.getCreatedAt()).isAfterOrEqualTo(now);
+        Assertions.assertThat(post.getModifiedAt()).isAfterOrEqualTo(now);
     }
 }
