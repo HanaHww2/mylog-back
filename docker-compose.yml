@@ -3,21 +3,15 @@ services:
   mylog-b:
     container_name: mylog-b
     image: mylog:0.0.1-b
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#      args:
-#        - PROFILE=local
     ports:
-      - "8080:8080"
+        - "8080:8080"
     volumes:
-     - ./config:/config
+        - ./config:/config
     restart: always
-#    networks:
-#      - mylog
 networks:
   default:
     external:
       name: mylog # docker network create mylog 외부에 미리 생성해둔 네트워크
+
 # 디폴트 네트워크를 외부에 존재하는 네트워크에 가입시킨다.
 # docker compose를 재실행하더라도 외부 네트워크는 유지된다.

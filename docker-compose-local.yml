@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  mylog-db:
+    container_name: mylog-db
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: mylog
+      MYSQL_ROOT_PASSWORD: 1234
+    ports:
+      - 33006:3306
+
+  mylog-b:
+    container_name: mylog-b
+    image: hanahww2/mylog:0.0.1-b
+#     build:
+#       context: .
+#      dockerfile: Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      SPRING_DATASOURCE_URL: jdbc:mysql://mylog-db:3306/mylog?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#       SPRING_DATASOURCE_USERNAME: root
+#       SPRING_DATASOURCE_PASSWORD: 1234
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config:/config
+    depends_on:
+      - mylog-db
+
+# networks
+#   default:
+#     external:
+#       name: mylog # docker network create mylog 외부에 미리 생성해둔 네트워크
+# 디폴트 네트워크를 외부에 존재하는 네트워크에 가입시킨다.
+# docker compose를 재실행하더라도 외부 네트워크는 유지된다.
