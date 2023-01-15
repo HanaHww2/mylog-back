@@ -1,16 +1,15 @@
-package me.study.mylog.users.controller;
+package me.study.mylog.users;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.study.mylog.DatabaseCleanUp;
+import me.study.mylog.util.DatabaseCleanUp;
 import me.study.mylog.users.dto.SigninReqDto;
 import me.study.mylog.users.dto.UserDto;
-import me.study.mylog.users.service.UserService;
+import me.study.mylog.users.service.UserWriteService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +20,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -33,22 +31,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ActiveProfiles("test")
 @Slf4j
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+//@RequiredArgsConstructor
+//@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @AutoConfigureMockMvc
 @SpringBootTest
-@RequiredArgsConstructor
 class UserIntegrationTest {
 
-    private final MockMvc mockMvc;
-    private final UserService userService;
     @Autowired
-    private final DatabaseCleanUp databaseCleanUp;
+    private MockMvc mockMvc;
+    @Autowired
+    private DatabaseCleanUp databaseCleanUp;
+    @Autowired
+    private UserWriteService userWriteService;
+
     private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
         log.debug("---------------- setUP 실행 ------------------");
-        userService.register(UserDto
+        userWriteService.register(UserDto
                 .builder()
                 .email("test@example.com")
                 .name("테스트")
@@ -57,9 +58,9 @@ class UserIntegrationTest {
 
         // JsonProperty.Access.WRITE_ONLY 혹은 JsonIgnore와 같은 접근 제한 해제를 위해
         //objectMapper.configure(MapperFeature.USE_ANNOTATIONS, false);
-        objectMapper =  JsonMapper.builder().disable(MapperFeature.USE_ANNOTATIONS).build();
         // deprecated 옵션이 있어서, 다른 해결법을 생각해봐도 좋을 것 같다.
         // -> 사실 test 용 dto 를 내부 클래스로 두는 게 빠를 듯
+        objectMapper =  JsonMapper.builder().disable(MapperFeature.USE_ANNOTATIONS).build();
 
         // com.fasterxml.jackson.databind.exc.InvalidDefinitionException:
         // No serializer found for class me.study.userservice.user.dto.UserDto$UserDtoBuilder and no properties discovered to create BeanSerializer
@@ -83,7 +84,7 @@ class UserIntegrationTest {
 
         mockMvc.perform(get("/api/v1/users/me"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.email").value(expectedEmail))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result.email").value(expectedEmail))
       //          .andExpect(MockMvcResultMatchers.jsonPath("$.role").value(expectedRole))
                 .andDo(print());
     }
@@ -106,10 +107,8 @@ class UserIntegrationTest {
         mockMvc.perform(post("/api/v1/auth/signup")
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status()
-                        .isCreated())
-                .andExpect(header()
-                        .string("location", location))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("location", location))
                 .andDo(print());
     }
 
@@ -129,7 +128,7 @@ class UserIntegrationTest {
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.authorization").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result.authorization").exists())
                 .andDo(print());
     }
 

@@ -5,12 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import me.study.mylog.common.exception.DuplicatedResoureException;
 import me.study.mylog.auth.utils.JwtUtil;
-import me.study.mylog.common.dto.CommonResponse;
+import me.study.mylog.common.dto.ApiResponse;
 import me.study.mylog.users.dto.SigninReqDto;
 import me.study.mylog.users.dto.SigninResDto;
 import me.study.mylog.users.dto.UserDto;
 import me.study.mylog.users.dto.UserValidationDto;
-import me.study.mylog.users.service.UserService;
+import me.study.mylog.users.service.UserReadService;
+import me.study.mylog.users.service.UserWriteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,13 +34,14 @@ public class UserController {
 
     private final JwtUtil jwtUtil;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final UserService userService;
+    private final UserWriteService userWriteService;
+    private final UserReadService userReadService;
 
     @PostMapping("/auth/signup")
-    public ResponseEntity<CommonResponse<?>> signUpNewUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<ApiResponse<?>> signUpNewUser(@Valid @RequestBody UserDto userDto) {
         UserDto newUserDto;
         try {
-            newUserDto = userService.register(userDto);
+            newUserDto = userWriteService.register(userDto);
         } catch (DuplicatedResoureException e) {
             e.printStackTrace();
             throw e;
@@ -50,31 +52,33 @@ public class UserController {
                 .toUri();
 
         return ResponseEntity.created(location)
-                .body(new CommonResponse<>("User Registered Successfully", newUserDto));
+                .body(new ApiResponse<>("User Registered Successfully", newUserDto));
 
     }
 
-    @PostMapping("/auth/duplicatedEmail")
-    public ResponseEntity<CommonResponse<?>> checkIfDuplicatedEmail(@Valid @RequestBody UserValidationDto dto) {
+    // TODO 수정 겟 매핑 방식으로, url 파람
+    @GetMapping("/auth/duplicatedEmail")
+    public ResponseEntity<ApiResponse<?>> checkIfDuplicatedEmail(@Valid @RequestBody UserValidationDto dto) {
         String email = dto.getEmail();
-        boolean result = userService.checkIfDuplicatedUserByEmail(email); // 항상 false
+        boolean result = userReadService.checkIfDuplicatedUserByEmail(email); // 항상 false
         return ResponseEntity.ok()
-                .body(new CommonResponse<>("can use", email));
+                .body(new ApiResponse<>("Able to use", email));
     }
-
-    @PostMapping("/auth/duplicatedName")
-    public ResponseEntity<CommonResponse<?>> checkIfDuplicatedName(@Valid @RequestBody UserValidationDto dto) {
+    
+    // TODO 수정 겟 매핑 방식으로, url 파람
+    @GetMapping("/auth/duplicatedName")
+    public ResponseEntity<ApiResponse<?>> checkIfDuplicatedName(@Valid @RequestBody UserValidationDto dto) {
         String name = dto.getName();
-        if (userService.existsByName(name)) {
-            throw new DuplicatedResoureException("can't use", HttpStatus.CONFLICT);
+        if (userReadService.existsByName(name)) {
+            throw new DuplicatedResoureException("Not able to use", HttpStatus.CONFLICT);
         }
         return ResponseEntity.ok()
-                .body(new CommonResponse<>("can use", name));
+                .body(new ApiResponse<>("Able to use", name));
     }
 
 
     @PostMapping(value = "/auth/signin")
-    public ResponseEntity<CommonResponse<SigninResDto>> signIn(@Valid @RequestBody SigninReqDto signinReqDto) {
+    public ResponseEntity<ApiResponse<SigninResDto>> signIn(@Valid @RequestBody SigninReqDto signinReqDto) {
 
         // 인증 매니저를 통해서 입력받은 아이디와 비밀번호를 바탕으로 사용자 정보를 검증한다.
         // 아래와 같이 기본 아이디/비밀번호 인증의 경우에는
@@ -108,13 +112,13 @@ public class UserController {
         return ResponseEntity
                 .ok()
                 //.headers(httpHeaders)
-                .body(new CommonResponse<>("Signed in Successfully", signinResDto));
+                .body(new ApiResponse<>("Signed in Successfully", signinResDto));
     }
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/users/me")
-    public CommonResponse<UserDto> getCurrentUserInfo(Principal principal) {
-        UserDto userDto = userService.findUserByEmail(principal.getName());
-        return new CommonResponse<>("User Info getting by UserEmail", userDto);
+    public ApiResponse<UserDto> getCurrentUserInfo(Principal principal) {
+        UserDto userDto = userReadService.getUserDtoByEmail(principal.getName());
+        return new ApiResponse<>("User Info getting by UserEmail", userDto);
     }
 }

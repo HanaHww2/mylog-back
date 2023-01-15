@@ -6,43 +6,23 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
-import me.study.mylog.auth.config.SecurityConfig;
+import me.study.mylog.util.DatabaseCleanUp;
 import me.study.mylog.auth.utils.JwtUtil;
-import me.study.mylog.post.domain.Post;
 import me.study.mylog.users.dto.UserDto;
-import me.study.mylog.users.service.UserService;
-import me.study.mylog.util.PostFixtureFactory;
+import me.study.mylog.users.service.UserReadService;
+import me.study.mylog.users.service.UserWriteService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.servlet.*;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.config.annotation.AbstractSecurityBuilder;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -54,8 +34,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @AutoConfigureRestDocs
+//@RequiredArgsConstructor
+//@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 //@Import(SecurityConfig.class)
 @AutoConfigureMockMvc(addFilters = false) // @WebMvcTest 로 시큐리티를 다루는 게 쉽지 않은 것 같다..ㅜ
 @WebMvcTest(controllers = UserController.class)//,
@@ -73,11 +54,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //})
 class UserControllerTest {
 
-    private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
+    private ObjectMapper objectMapper;
+
     @MockBean
-    private UserService userService;
+    private UserWriteService userWriteService;
+    @MockBean
+    private UserReadService userReadService;
     @MockBean
     private JwtUtil jwtUtil;
 
@@ -98,6 +82,10 @@ class UserControllerTest {
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
     }
 
+    @AfterEach
+    void tearDown() {
+    }
+
     @DisplayName("새로운_회원_등록_201_성공_필요")
     @Test
     void registerNewUser() throws Exception {
@@ -113,7 +101,7 @@ class UserControllerTest {
         String location = "http://localhost:8080/users/me"; // 포트 정보가 보이지 않음.
 
         //given(userService.register(any())).willReturn(response); 중첩 구조여서 에러 발생
-        BDDMockito.willReturn(dto).given(userService).register(any());
+        BDDMockito.willReturn(dto).given(userWriteService).register(any());
 
         // when, then
         mockMvc.perform(post("/api/v1/auth/signup")

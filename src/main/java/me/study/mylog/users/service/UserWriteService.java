@@ -3,8 +3,9 @@ package me.study.mylog.users.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.study.mylog.auth.oauth.OAuth2UserInfo;
+import me.study.mylog.board.service.BoardWriteService;
 import me.study.mylog.common.exception.DuplicatedResoureException;
-import me.study.mylog.board.BoardService;
+import me.study.mylog.board.service.BoardReadService;
 import me.study.mylog.users.domain.AuthProviderType;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.domain.UserStatus;
@@ -22,48 +23,10 @@ import java.util.UUID;
 @Slf4j
 @AllArgsConstructor
 @Service
-public class UserService {
+public class UserWriteService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final BoardService boardService;
-
-    public User findUserById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(()-> new IllegalArgumentException("찾는 사용자가 존재하지 않습니다."));
-    }
-
-    @Transactional(readOnly = true)
-    public UserDto findUserByEmail(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Not Registered User Mail"));
-
-        return UserDto.builder()
-                .email(user.getEmail())
-                .name(user.getName())
-                .nickname(user.getNickname())
-                .build();
-    }
-
-    @Transactional(readOnly = true)
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
-
-    }
-
-    @Transactional(readOnly = true)
-    public boolean existsByName(String name) {
-        return userRepository.existsByName(name);
-    }
-
-    @Transactional(readOnly = true)
-    public boolean checkIfDuplicatedUserByEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) {
-            throw new DuplicatedResoureException(
-                    "Already Exists User Mail with " + user.get().getAuthProviderType(), HttpStatus.CONFLICT);
-        }
-        return false;
-    }
+    private final BoardWriteService boardWriteService;
 
     @Transactional
     public UserDto register(UserDto userDto) throws DuplicatedResoureException {
@@ -84,7 +47,7 @@ public class UserService {
                 .nickname(userDto.getNickname()!=null?userDto.getNickname():userDto.getName())
                 .role(RoleType.USER)
                 .authProviderType(AuthProviderType.DEFAULT)
-                .status(UserStatus.NeedValidate)
+                .status(UserStatus.NEED_VALIDATION)
                 .build();
         log.info("{}", user);
 
@@ -93,7 +56,7 @@ public class UserService {
         // TODO 보드와 보드멤버 테이블 관련해서 수정 필요
         // 사용자 기준 보드를 조회할 때, boardMember에서 사용자가 권한을 가진 모든 보드 아이디를 조회하여
         // 이를 바탕으로 board 정보 조회를 수행한다.
-        boardService.createFirstBoard(user);
+        boardWriteService.createFirstBoard(user);
 
 
         return UserDto.builder()
@@ -119,7 +82,7 @@ public class UserService {
         User user = oAuth2UserInfo.toEntity(tempName);
         log.info("{}", user);
         User newUser = userRepository.save(user);
-        boardService.createFirstBoard(user);
+        boardWriteService.createFirstBoard(user);
 
         return newUser;
     }
