@@ -1,12 +1,9 @@
 package me.study.mylog.upload.controller;
 
-import lombok.RequiredArgsConstructor;
-import me.study.mylog.common.exception.CustomFileUploadException;
 import me.study.mylog.common.properties.LocalFileProperties;
 import me.study.mylog.upload.dto.ImageFileResponseDto;
-import me.study.mylog.upload.service.ImageFileService;
+import me.study.mylog.upload.service.ImageFileWriteService;
 import me.study.mylog.upload.utils.ImageHandler;
-import me.study.mylog.upload.utils.LocalImageHandler;
 import me.study.mylog.upload.utils.S3ImageHandler;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -22,16 +19,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 //@RequiredArgsConstructor
 @RestController
 public class ImageFileController {
-    private final ImageFileService imageFileService;
+    private final ImageFileWriteService imageFileWriteService;
     private final ImageHandler imgHandler;
 
-    public ImageFileController(ImageFileService imageFileService, S3ImageHandler imgHandler) {
-        this.imageFileService = imageFileService;
+    public ImageFileController(ImageFileWriteService imageFileWriteService, S3ImageHandler imgHandler) {
+        this.imageFileWriteService = imageFileWriteService;
         this.imgHandler = imgHandler;
         //LocalImageHandler
     }
