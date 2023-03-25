@@ -4,8 +4,7 @@ import lombok.*;
 import me.study.mylog.board.entity.Board;
 import me.study.mylog.category.entity.Category;
 import me.study.mylog.common.domain.BaseEntity;
-import me.study.mylog.common.domain.BaseTimeEntity;
-import me.study.mylog.common.jpa_converter.StringSetConverter;
+import me.study.mylog.common.jpaConverter.StringSetConverter;
 import me.study.mylog.post.dto.ModifyPostRequest;
 import me.study.mylog.post.dto.PostMainResponse;
 import me.study.mylog.upload.domain.ImageFile;
@@ -66,6 +65,12 @@ public class Post extends BaseEntity {
     @ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "CATE_ID", insertable=false, updatable=false) // default는 CATEGORY_ID
     private Category category;
+
+    @Builder.Default
+    @Column(name="IS_DELETED")
+    private Boolean isDeleted = Boolean.FALSE;
+
+    public void softDelete() { this.isDeleted = Boolean.TRUE; }
 
     public Long addViewCount() {
         return ++this.views;

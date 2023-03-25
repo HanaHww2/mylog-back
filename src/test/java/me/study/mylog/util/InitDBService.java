@@ -9,7 +9,7 @@ import me.study.mylog.board.repository.BoardRepository;
 import me.study.mylog.category.entity.Category;
 import me.study.mylog.category.repository.CategoryRepository;
 import me.study.mylog.post.entity.Post;
-import me.study.mylog.post.PostRepository;
+import me.study.mylog.post.repository.PostRepository;
 import me.study.mylog.users.domain.RoleType;
 import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;

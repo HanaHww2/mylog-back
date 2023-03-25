@@ -30,6 +30,27 @@ public class BoardController {
     private final BoardReadService boardReadService;
     private final BoardMemberReadService boardMemberReadService;
 
+    @PostMapping("/boards")
+    public ResponseEntity<?> createNewBoard(@AuthenticationPrincipal UserPrincipal userPrincipal, CreateBoardRequest createBoardRequest) {
+
+        var dto = createBoardUsecase.execute(userPrincipal.getId(), createBoardRequest);
+        return new ResponseEntity<>(new ApiResponse<>("SUCCESS", dto), HttpStatus.OK);
+    }
+
+    @PutMapping("/boards")
+    public ResponseEntity<?> modifyBoard(@AuthenticationPrincipal UserPrincipal userPrincipal, ModifyBoardRequest modifyBoardRequest) {
+
+        BoardDetailResponse dto = modifyBoardUsecase.execute(userPrincipal.getId(), modifyBoardRequest);
+        return new ResponseEntity<>(new ApiResponse<>("SUCCESS", dto), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/boards/{boardId}")
+    public ResponseEntity<?> deleteBoard(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Long boardId) {
+
+        deleteBoardUsecase.execute(userPrincipal.getId(), boardId);
+        return new ResponseEntity<>(new ApiResponse<>("SUCCESS", Boolean.TRUE), HttpStatus.OK);
+    }
+
     @GetMapping("/boards")
     public ResponseEntity<ApiResponse<List<BoardDetailResponse>>> getBoardsByUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
 
@@ -47,28 +68,9 @@ public class BoardController {
     @GetMapping("/boards/@{boardName}")
     public ResponseEntity<ApiResponse<BoardDetailResponse>> getBoardsByUri(@PathVariable String boardName) {
 
-        BoardDetailResponse dto = boardReadService.getBoardsByUri(boardName);
+        BoardDetailResponse dto = boardReadService.getBoardByUri(boardName);
         return new ResponseEntity<>(new ApiResponse<>("get Board Detail Successfully", dto), HttpStatus.OK);
     }
 
-    @PostMapping("/boards")
-    public ResponseEntity<?> createNewBoard(@AuthenticationPrincipal UserPrincipal userPrincipal, CreateBoardRequest createBoardRequest) {
-
-        var dto = createBoardUsecase.execute(userPrincipal.getId(), createBoardRequest);
-        return new ResponseEntity<>(new ApiResponse<>("get BoardsList Successfully", dto), HttpStatus.OK);
-    }
-
-    @PutMapping("/boards")
-    public ResponseEntity<?> modifyBoard(@AuthenticationPrincipal UserPrincipal userPrincipal, ModifyBoardRequest modifyBoardRequest) {
-
-        BoardDetailResponse dto = modifyBoardUsecase.execute(userPrincipal.getId(), modifyBoardRequest);
-        return new ResponseEntity<>(new ApiResponse<>("get BoardsList Successfully", dto), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/boards/{boardId}")
-    public ResponseEntity<?> deleteBoard(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Long boardId) {
-
-        deleteBoardUsecase.execute(userPrincipal.getId(), boardId);
-        return new ResponseEntity<>(new ApiResponse<>("get BoardsList Successfully", null), HttpStatus.OK);
-    }
+    // TODO 게시판 방문수
 }

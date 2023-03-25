@@ -8,11 +8,11 @@ import me.study.mylog.common.domain.BaseTimeEntity;
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Entity
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class Category extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,10 +49,4 @@ public class Category extends BaseTimeEntity {
 //    @OneToMany(mappedBy = "category")
 //    private List<Post> postList;
 
-//    @Builder /* 빌더패턴 클래스 생성, 생성자 상단에 선언시 생성자에 포함된 필드만 빌더에 포함 */
-//    public Category(String name, User user, Board board) {
-//        this.name = name;
-//        this.board = board;
-//        this.user = user;
-//    }
 }

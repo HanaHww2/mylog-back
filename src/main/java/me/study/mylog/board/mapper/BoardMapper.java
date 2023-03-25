@@ -14,7 +14,7 @@ public class BoardMapper {
     public static Board toEntity(CreateBoardRequest createBoardRequest) {
         return Board.builder()
                 .name(createBoardRequest.name())
-                .uri(createBoardRequest.uri())
+                .uri("/" + createBoardRequest.name())
                 .views(0L)
                 .boardType(createBoardRequest.boardType())
                 .icon(createBoardRequest.icon())

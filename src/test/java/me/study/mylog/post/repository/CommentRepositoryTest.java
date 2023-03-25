@@ -1,6 +1,5 @@
 package me.study.mylog.post.repository;
 
-import me.study.mylog.post.PostRepository;
 import me.study.mylog.post.entity.Post;
 import me.study.mylog.users.domain.RoleType;
 import me.study.mylog.users.domain.User;
@@ -21,7 +20,7 @@ import java.util.List;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 //@SpringBootTest
-class PostRepositoryTest {
+class CommentRepositoryTest {
 
     @Autowired
     PostRepository postRepository;

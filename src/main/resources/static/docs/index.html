@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Spring REST Docs</title>
+<title>MyLog API DOCS</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Spring REST Docs</h1>
+<h1>MyLog API DOCS</h1>
 <div class="details">
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
 </div>
@@ -447,6 +447,26 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#introduction">소개</a></li>
+<li><a href="#User-API">User-API</a>
+<ul class="sectlevel2">
+<li><a href="#User-create">User 생성</a></li>
+</ul>
+</li>
+<li><a href="#Board-API">Board-API</a>
+<ul class="sectlevel2">
+<li><a href="#Board-List">Board 리스트 조회</a></li>
+</ul>
+</li>
+<li><a href="#Category-API">Category-API</a>
+<ul class="sectlevel2">
+<li><a href="#Category-List">Category 리스트 조회</a></li>
+</ul>
+</li>
+<li><a href="#Post-API">Post-API</a>
+<ul class="sectlevel2">
+<li><a href="#Post-List-Search">Post 리스트 조회</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -454,11 +474,3205 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="introduction"><a class="link" href="#introduction">소개</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::users.adoc[]
-Unresolved directive in index.adoc - include::board.adoc[]
-Unresolved directive in index.adoc - include::category.adoc[]
-Unresolved directive in index.adoc - include::post.adoc[]</p>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="User-API"><a class="link" href="#User-API">User-API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="User-create"><a class="link" href="#User-create">User 생성</a></h3>
+<div class="sect3">
+<h4 id="User-create_curl_request"><a class="link" href="#User-create_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/auth/signup' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -d '{"email":"test@example.com","password":"1234","name":"hanah","nickname":"hanah"}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="User-create_http_request"><a class="link" href="#User-create_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/auth/signup HTTP/1.1
+Content-Type: application/json
+Content-Length: 80
+Host: localhost:8080
+
+{"email":"test@example.com","password":"1234","name":"hanah","nickname":"hanah"}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="User-create_http_response"><a class="link" href="#User-create_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/users/me
+Content-Type: application/json
+Content-Length: 114
+
+{"message":"User Registered Successfully","result":{"email":"test@example.com","name":"hanah","nickname":"hanah"}}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="User-create_httpie_request"><a class="link" href="#User-create_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ echo '{"email":"test@example.com","password":"1234","name":"hanah","nickname":"hanah"}' | http POST 'http://localhost:8080/api/v1/auth/signup' \
+    'Content-Type:application/json'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="User-create_request_body"><a class="link" href="#User-create_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{"email":"test@example.com","password":"1234","name":"hanah","nickname":"hanah"}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="User-create_request_fields"><a class="link" href="#User-create_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User 이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User 고유한 명칭</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User 별칭</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User 비밀번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="User-create_response_body"><a class="link" href="#User-create_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{"message":"User Registered Successfully","result":{"email":"test@example.com","name":"hanah","nickname":"hanah"}}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_참고_사항"><a class="link" href="#_참고_사항">참고 사항</a></h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Board-API"><a class="link" href="#Board-API">Board-API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="Board-List"><a class="link" href="#Board-List">Board 리스트 조회</a></h3>
+<div class="sect3">
+<h4 id="Board-List_curl_request"><a class="link" href="#Board-List_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/boards' -i -X POST \
+    -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+    -d '{
+  "name" : "new_board",
+  "icon" : "\uD83D\uDC4F",
+  "boardType" : "DEFAULT",
+  "nickname" : "hanah"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_request"><a class="link" href="#Board-List_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/boards HTTP/1.1
+Authorization: Bearer {ACCESS_TOKEN}
+Content-Length: 109
+Host: localhost:8080
+
+{
+  "name" : "new_board",
+  "icon" : "\uD83D\uDC4F",
+  "boardType" : "DEFAULT",
+  "nickname" : "hanah"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_response"><a class="link" href="#Board-List_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 275
+
+{
+  "message" : "get BoardsList Successfully",
+  "result" : {
+    "id" : 14,
+    "name" : "new_board",
+    "uri" : "new_board",
+    "views" : 0,
+    "categories" : [ ],
+    "icon" : "\uD83D\uDC4F",
+    "nickname" : "hanah",
+    "boardMemberType" : "MANAGER"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_httpie_request"><a class="link" href="#Board-List_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ echo '{
+  "name" : "new_board",
+  "icon" : "\uD83D\uDC4F",
+  "boardType" : "DEFAULT",
+  "nickname" : "hanah"
+}' | http POST 'http://localhost:8080/api/v1/boards' \
+    'Authorization:Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_request_body"><a class="link" href="#Board-List_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "name" : "new_board",
+  "icon" : "\uD83D\uDC4F",
+  "boardType" : "DEFAULT",
+  "nickname" : "hanah"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_request_fields"><a class="link" href="#Board-List_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 타입</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 아이콘</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자가 게시판에서 활용할 닉네임</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_body"><a class="link" href="#Board-List_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "get BoardsList Successfully",
+  "result" : {
+    "id" : 14,
+    "name" : "new_board",
+    "uri" : "new_board",
+    "views" : 0,
+    "categories" : [ ],
+    "icon" : "\uD83D\uDC4F",
+    "nickname" : "hanah",
+    "boardMemberType" : "MANAGER"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_fields"><a class="link" href="#Board-List_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board uri</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.views</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board views</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardMemberType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 멤버 타입</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 멤버 닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 아이콘</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.categories</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board의 Category 리스트</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Board-List_curl_request"><a class="link" href="#Board-List_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/boards' -i -X PUT \
+    -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+    -d '{
+  "boardId" : 14,
+  "name" : "modified_board",
+  "icon" : "\uD83D\uDC4F",
+  "boardType" : "GROUP_BOARD"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_request"><a class="link" href="#Board-List_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/v1/boards HTTP/1.1
+Authorization: Bearer {ACCESS_TOKEN}
+Content-Length: 112
+Host: localhost:8080
+
+{
+  "boardId" : 14,
+  "name" : "modified_board",
+  "icon" : "\uD83D\uDC4F",
+  "boardType" : "GROUP_BOARD"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_response"><a class="link" href="#Board-List_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 285
+
+{
+  "message" : "get BoardsList Successfully",
+  "result" : {
+    "id" : 14,
+    "name" : "modified_board",
+    "uri" : "modified_board",
+    "views" : 0,
+    "categories" : [ ],
+    "icon" : "\uD83D\uDC4F",
+    "nickname" : "hanah",
+    "boardMemberType" : "MANAGER"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_httpie_request"><a class="link" href="#Board-List_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ echo '{
+  "boardId" : 14,
+  "name" : "modified_board",
+  "icon" : "\uD83D\uDC4F",
+  "boardType" : "GROUP_BOARD"
+}' | http PUT 'http://localhost:8080/api/v1/boards' \
+    'Authorization:Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_request_body"><a class="link" href="#Board-List_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "boardId" : 14,
+  "name" : "modified_board",
+  "icon" : "\uD83D\uDC4F",
+  "boardType" : "GROUP_BOARD"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_request_fields"><a class="link" href="#Board-List_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 타입</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 아이콘</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_body"><a class="link" href="#Board-List_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "get BoardsList Successfully",
+  "result" : {
+    "id" : 14,
+    "name" : "modified_board",
+    "uri" : "modified_board",
+    "views" : 0,
+    "categories" : [ ],
+    "icon" : "\uD83D\uDC4F",
+    "nickname" : "hanah",
+    "boardMemberType" : "MANAGER"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_fields"><a class="link" href="#Board-List_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board uri</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.views</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board views</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardMemberType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 멤버 타입</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 멤버 닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 아이콘</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.categories</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board의 Category 리스트</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Board-List_curl_request"><a class="link" href="#Board-List_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/boards/14' -i -X DELETE \
+    -H 'Authorization: Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_request"><a class="link" href="#Board-List_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/v1/boards/14 HTTP/1.1
+Authorization: Bearer {ACCESS_TOKEN}
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_response"><a class="link" href="#Board-List_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 69
+
+{
+  "message" : "get BoardsList Successfully",
+  "result" : true
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_httpie_request"><a class="link" href="#Board-List_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ http DELETE 'http://localhost:8080/api/v1/boards/14' \
+    'Authorization:Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_path_parameters"><a class="link" href="#Board-List_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/v1/boards/{boardId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">보드 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Board-List_request_body"><a class="link" href="#Board-List_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_request_parameters"><a class="link" href="#Board-List_request_parameters">Request parameters</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_body"><a class="link" href="#Board-List_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "get BoardsList Successfully",
+  "result" : true
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_fields"><a class="link" href="#Board-List_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Board-List_curl_request"><a class="link" href="#Board-List_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/boards/13' -i -X GET \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_request"><a class="link" href="#Board-List_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/boards/13 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer {ACCESS_TOKEN}
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_response"><a class="link" href="#Board-List_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 285
+
+{
+  "message" : "get Board Detail Successfully",
+  "result" : {
+    "id" : 13,
+    "name" : "test_board",
+    "uri" : "test-board-uri",
+    "views" : 145,
+    "categories" : [ ],
+    "icon" : "\uD83D\uDC4F",
+    "nickname" : "hanah",
+    "boardMemberType" : "MANAGER"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_httpie_request"><a class="link" href="#Board-List_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ http GET 'http://localhost:8080/api/v1/boards/13' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Authorization:Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_path_parameters"><a class="link" href="#Board-List_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/v1/boards/{boardId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">보드 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Board-List_request_body"><a class="link" href="#Board-List_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_body"><a class="link" href="#Board-List_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "get Board Detail Successfully",
+  "result" : {
+    "id" : 13,
+    "name" : "test_board",
+    "uri" : "test-board-uri",
+    "views" : 145,
+    "categories" : [ ],
+    "icon" : "\uD83D\uDC4F",
+    "nickname" : "hanah",
+    "boardMemberType" : "MANAGER"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_fields"><a class="link" href="#Board-List_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과값</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시판 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시판명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시판 URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.views</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시판 조회수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시판 아이콘</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.categories</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">유저 닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardMemberType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">유저 역할</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Board-List_curl_request"><a class="link" href="#Board-List_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/boards' -i -X GET \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_request"><a class="link" href="#Board-List_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/boards HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer {ACCESS_TOKEN}
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_http_response"><a class="link" href="#Board-List_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 287
+
+{
+  "message" : "get BoardsList Successfully",
+  "result" : [ {
+    "id" : 13,
+    "name" : "test_board",
+    "uri" : "test-board-uri",
+    "views" : 145,
+    "categories" : [ ],
+    "icon" : "\uD83D\uDC4F",
+    "nickname" : "hanah",
+    "boardMemberType" : "MANAGER"
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_httpie_request"><a class="link" href="#Board-List_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ http GET 'http://localhost:8080/api/v1/boards' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Authorization:Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_request_body"><a class="link" href="#Board-List_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_body"><a class="link" href="#Board-List_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "get BoardsList Successfully",
+  "result" : [ {
+    "id" : 13,
+    "name" : "test_board",
+    "uri" : "test-board-uri",
+    "views" : 145,
+    "categories" : [ ],
+    "icon" : "\uD83D\uDC4F",
+    "nickname" : "hanah",
+    "boardMemberType" : "MANAGER"
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Board-List_response_fields"><a class="link" href="#Board-List_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과값</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시판 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시판명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시판 URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].categories</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시판 아이콘</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Category-API"><a class="link" href="#Category-API">Category-API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="Category-List"><a class="link" href="#Category-List">Category 리스트 조회</a></h3>
+<div class="sect3">
+<h4 id="Category-List_curl_request"><a class="link" href="#Category-List_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/categories' -i -X POST \
+    -d '{
+  "categoryId" : null,
+  "name" : "name_test",
+  "uri" : "/name/1",
+  "parentId" : 4,
+  "boardId" : 1
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_http_request"><a class="link" href="#Category-List_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/categories HTTP/1.1
+Content-Length: 111
+Host: localhost:8080
+
+{
+  "categoryId" : null,
+  "name" : "name_test",
+  "uri" : "/name/1",
+  "parentId" : 4,
+  "boardId" : 1
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_http_response"><a class="link" href="#Category-List_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 181
+
+{
+  "message" : "SUCCESS",
+  "result" : {
+    "id" : 14,
+    "name" : "name_test",
+    "uri" : "/name/1",
+    "parentId" : 4,
+    "boardId" : 1,
+    "children" : [ ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_httpie_request"><a class="link" href="#Category-List_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ echo '{
+  "categoryId" : null,
+  "name" : "name_test",
+  "uri" : "/name/1",
+  "parentId" : 4,
+  "boardId" : 1
+}' | http POST 'http://localhost:8080/api/v1/categories'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_request_body"><a class="link" href="#Category-List_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "categoryId" : null,
+  "name" : "name_test",
+  "uri" : "/name/1",
+  "parentId" : 4,
+  "boardId" : 1
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_request_fields"><a class="link" href="#Category-List_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category Uri</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>parentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 부모 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 가 등록된 게시판 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Category-List_response_body"><a class="link" href="#Category-List_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "SUCCESS",
+  "result" : {
+    "id" : 14,
+    "name" : "name_test",
+    "uri" : "/name/1",
+    "parentId" : 4,
+    "boardId" : 1,
+    "children" : [ ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_response_fields"><a class="link" href="#Category-List_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.parentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 부모 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.children</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 자식 리스트</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Category-List_curl_request"><a class="link" href="#Category-List_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/categories' -i -X PUT \
+    -d '{
+  "categoryId" : 12,
+  "boardId" : null,
+  "name" : "name_test12"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_http_request"><a class="link" href="#Category-List_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/v1/categories HTTP/1.1
+Content-Length: 73
+Host: localhost:8080
+
+{
+  "categoryId" : 12,
+  "boardId" : null,
+  "name" : "name_test12"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_http_response"><a class="link" href="#Category-List_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 183
+
+{
+  "message" : "SUCCESS",
+  "result" : {
+    "id" : 12,
+    "name" : "name_test12",
+    "uri" : "/name/1",
+    "parentId" : 4,
+    "boardId" : 1,
+    "children" : [ ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_httpie_request"><a class="link" href="#Category-List_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ echo '{
+  "categoryId" : 12,
+  "boardId" : null,
+  "name" : "name_test12"
+}' | http PUT 'http://localhost:8080/api/v1/categories'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_request_body"><a class="link" href="#Category-List_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "categoryId" : 12,
+  "boardId" : null,
+  "name" : "name_test12"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_request_fields"><a class="link" href="#Category-List_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 이름</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Category-List_response_body"><a class="link" href="#Category-List_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "SUCCESS",
+  "result" : {
+    "id" : 12,
+    "name" : "name_test12",
+    "uri" : "/name/1",
+    "parentId" : 4,
+    "boardId" : 1,
+    "children" : [ ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_response_fields"><a class="link" href="#Category-List_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.parentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 부모 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.children</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 자식 리스트</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Category-List_curl_request"><a class="link" href="#Category-List_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/categories/1/14' -i -X GET</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_http_request"><a class="link" href="#Category-List_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/categories/1/14 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_http_response"><a class="link" href="#Category-List_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 184
+
+{
+  "message" : "SUCCESS",
+  "result" : {
+    "id" : 14,
+    "name" : "name_test",
+    "uri" : "/name/1",
+    "parentId" : 4,
+    "boardId" : null,
+    "children" : [ ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_httpie_request"><a class="link" href="#Category-List_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ http GET 'http://localhost:8080/api/v1/categories/1/14'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_path_parameters"><a class="link" href="#Category-List_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/v1/categories/{boardId}/{categoryId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">보드 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Category-List_request_body"><a class="link" href="#Category-List_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_request_fields"><a class="link" href="#Category-List_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category Uri</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>parentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 부모 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 가 등록된 게시판 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Category-List_response_body"><a class="link" href="#Category-List_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "SUCCESS",
+  "result" : {
+    "id" : 14,
+    "name" : "name_test",
+    "uri" : "/name/1",
+    "parentId" : 4,
+    "boardId" : null,
+    "children" : [ ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_response_fields"><a class="link" href="#Category-List_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.parentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.children</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 자식 분류 리스트</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Category-List_curl_request"><a class="link" href="#Category-List_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/categories?boardId=1' -i -X GET</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_http_request"><a class="link" href="#Category-List_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/categories?boardId=1 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_http_response"><a class="link" href="#Category-List_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 1422
+
+{
+  "message" : "SUCCESS",
+  "result" : [ {
+    "id" : 0,
+    "name" : "name0",
+    "uri" : "/name/0",
+    "parentId" : 1,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 1,
+    "name" : "name1",
+    "uri" : "/name/1",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 2,
+    "name" : "name2",
+    "uri" : "/name/2",
+    "parentId" : 3,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 3,
+    "name" : "name3",
+    "uri" : "/name/3",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 4,
+    "name" : "name4",
+    "uri" : "/name/4",
+    "parentId" : 5,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 5,
+    "name" : "name5",
+    "uri" : "/name/5",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 6,
+    "name" : "name6",
+    "uri" : "/name/6",
+    "parentId" : 7,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 7,
+    "name" : "name7",
+    "uri" : "/name/7",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 8,
+    "name" : "name8",
+    "uri" : "/name/8",
+    "parentId" : 9,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 9,
+    "name" : "name9",
+    "uri" : "/name/9",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_httpie_request"><a class="link" href="#Category-List_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ http GET 'http://localhost:8080/api/v1/categories?boardId=1'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_request_body"><a class="link" href="#Category-List_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_request_parameters"><a class="link" href="#Category-List_request_parameters">Request parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">보드 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Category-List_response_body"><a class="link" href="#Category-List_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "SUCCESS",
+  "result" : [ {
+    "id" : 0,
+    "name" : "name0",
+    "uri" : "/name/0",
+    "parentId" : 1,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 1,
+    "name" : "name1",
+    "uri" : "/name/1",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 2,
+    "name" : "name2",
+    "uri" : "/name/2",
+    "parentId" : 3,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 3,
+    "name" : "name3",
+    "uri" : "/name/3",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 4,
+    "name" : "name4",
+    "uri" : "/name/4",
+    "parentId" : 5,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 5,
+    "name" : "name5",
+    "uri" : "/name/5",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 6,
+    "name" : "name6",
+    "uri" : "/name/6",
+    "parentId" : 7,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 7,
+    "name" : "name7",
+    "uri" : "/name/7",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 8,
+    "name" : "name8",
+    "uri" : "/name/8",
+    "parentId" : 9,
+    "boardId" : null,
+    "children" : [ ]
+  }, {
+    "id" : 9,
+    "name" : "name9",
+    "uri" : "/name/9",
+    "parentId" : null,
+    "boardId" : null,
+    "children" : [ ]
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Category-List_response_fields"><a class="link" href="#Category-List_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].parentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result[].children</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category 자식 분류 리스트</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Post-API"><a class="link" href="#Post-API">Post-API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="Post-List-Search"><a class="link" href="#Post-List-Search">Post 리스트 조회</a></h3>
+<div class="sect3">
+<h4 id="Post-List-Search_curl_request"><a class="link" href="#Post-List-Search_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/posts' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+    -d '{
+  "id" : 11,
+  "boardId" : 1,
+  "boardName" : null,
+  "boardUri" : null,
+  "categoryId" : 1,
+  "categoryName" : null,
+  "title" : "제목",
+  "content" : "내용입니다.",
+  "views" : null,
+  "email" : null,
+  "authorName" : null,
+  "hashtagList" : [ "다", "가", "나" ],
+  "modifiedAt" : null
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_http_request"><a class="link" href="#Post-List-Search_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/posts HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {ACCESS_TOKEN}
+Content-Length: 315
+Host: localhost:8080
+
+{
+  "id" : 11,
+  "boardId" : 1,
+  "boardName" : null,
+  "boardUri" : null,
+  "categoryId" : 1,
+  "categoryName" : null,
+  "title" : "제목",
+  "content" : "내용입니다.",
+  "views" : null,
+  "email" : null,
+  "authorName" : null,
+  "hashtagList" : [ "다", "가", "나" ],
+  "modifiedAt" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_http_response"><a class="link" href="#Post-List-Search_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/api/v1/posts/id
+Content-Type: application/json
+Content-Length: 388
+
+{
+  "message" : "success",
+  "result" : {
+    "id" : 11,
+    "boardId" : 1,
+    "boardName" : null,
+    "boardUri" : null,
+    "categoryId" : 1,
+    "categoryName" : null,
+    "title" : "제목",
+    "content" : "내용입니다.",
+    "views" : null,
+    "email" : null,
+    "authorName" : null,
+    "hashtagList" : [ "다", "가", "나" ],
+    "modifiedAt" : null
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_httpie_request"><a class="link" href="#Post-List-Search_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ echo '{
+  "id" : 11,
+  "boardId" : 1,
+  "boardName" : null,
+  "boardUri" : null,
+  "categoryId" : 1,
+  "categoryName" : null,
+  "title" : "제목",
+  "content" : "내용입니다.",
+  "views" : null,
+  "email" : null,
+  "authorName" : null,
+  "hashtagList" : [ "다", "가", "나" ],
+  "modifiedAt" : null
+}' | http POST 'http://localhost:8080/api/v1/posts' \
+    'Content-Type:application/json' \
+    'Authorization:Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_request_body"><a class="link" href="#Post-List-Search_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "id" : 11,
+  "boardId" : 1,
+  "boardName" : null,
+  "boardUri" : null,
+  "categoryId" : 1,
+  "categoryName" : null,
+  "title" : "제목",
+  "content" : "내용입니다.",
+  "views" : null,
+  "email" : null,
+  "authorName" : null,
+  "hashtagList" : [ "다", "가", "나" ],
+  "modifiedAt" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_request_fields"><a class="link" href="#Post-List-Search_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardUri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categoryName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자 이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hashtagList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 해시태그 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>views</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 조회수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>modifiedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 수정일자</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_response_body"><a class="link" href="#Post-List-Search_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "success",
+  "result" : {
+    "id" : 11,
+    "boardId" : 1,
+    "boardName" : null,
+    "boardUri" : null,
+    "categoryId" : 1,
+    "categoryName" : null,
+    "title" : "제목",
+    "content" : "내용입니다.",
+    "views" : null,
+    "email" : null,
+    "authorName" : null,
+    "hashtagList" : [ "다", "가", "나" ],
+    "modifiedAt" : null
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_response_fields"><a class="link" href="#Post-List-Search_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardUri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.categoryName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자 이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.hashtagList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 해시태그 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.views</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 조회수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.modifiedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 수정일자</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_curl_request"><a class="link" href="#Post-List-Search_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/posts' -i -X PUT \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+    -d '{
+  "postId" : 13,
+  "boardId" : null,
+  "categoryId" : 3,
+  "title" : "post 수정하기",
+  "content" : "test 데이터입니다.",
+  "tagList" : [ "tag2", "tag1" ]
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_http_request"><a class="link" href="#Post-List-Search_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/v1/posts HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {ACCESS_TOKEN}
+Content-Length: 175
+Host: localhost:8080
+
+{
+  "postId" : 13,
+  "boardId" : null,
+  "categoryId" : 3,
+  "title" : "post 수정하기",
+  "content" : "test 데이터입니다.",
+  "tagList" : [ "tag2", "tag1" ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_http_response"><a class="link" href="#Post-List-Search_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Content-Length: 390
+
+{
+  "message" : "success",
+  "result" : {
+    "id" : null,
+    "boardId" : 1,
+    "boardName" : null,
+    "boardUri" : null,
+    "categoryId" : 1,
+    "categoryName" : null,
+    "title" : "제목",
+    "content" : "내용입니다.",
+    "views" : null,
+    "email" : null,
+    "authorName" : null,
+    "hashtagList" : [ "다", "가", "나" ],
+    "modifiedAt" : null
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_httpie_request"><a class="link" href="#Post-List-Search_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ echo '{
+  "postId" : 13,
+  "boardId" : null,
+  "categoryId" : 3,
+  "title" : "post 수정하기",
+  "content" : "test 데이터입니다.",
+  "tagList" : [ "tag2", "tag1" ]
+}' | http PUT 'http://localhost:8080/api/v1/posts' \
+    'Content-Type:application/json' \
+    'Authorization:Bearer {ACCESS_TOKEN}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_request_body"><a class="link" href="#Post-List-Search_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "postId" : 13,
+  "boardId" : null,
+  "categoryId" : 3,
+  "title" : "post 수정하기",
+  "content" : "test 데이터입니다.",
+  "tagList" : [ "tag2", "tag1" ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_request_fields"><a class="link" href="#Post-List-Search_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>postId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tagList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 해시태그 리스트</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_response_body"><a class="link" href="#Post-List-Search_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "success",
+  "result" : {
+    "id" : null,
+    "boardId" : 1,
+    "boardName" : null,
+    "boardUri" : null,
+    "categoryId" : 1,
+    "categoryName" : null,
+    "title" : "제목",
+    "content" : "내용입니다.",
+    "views" : null,
+    "email" : null,
+    "authorName" : null,
+    "hashtagList" : [ "다", "가", "나" ],
+    "modifiedAt" : null
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_response_fields"><a class="link" href="#Post-List-Search_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardUri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.categoryName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자 이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.hashtagList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 해시태그 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.views</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 조회수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.modifiedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 수정일자</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_curl_request"><a class="link" href="#Post-List-Search_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/posts/14' -i -X GET</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_http_request"><a class="link" href="#Post-List-Search_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/posts/14 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_http_response"><a class="link" href="#Post-List-Search_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Content-Length: 390
+
+{
+  "message" : "success",
+  "result" : {
+    "id" : null,
+    "boardId" : 1,
+    "boardName" : null,
+    "boardUri" : null,
+    "categoryId" : 1,
+    "categoryName" : null,
+    "title" : "제목",
+    "content" : "내용입니다.",
+    "views" : null,
+    "email" : null,
+    "authorName" : null,
+    "hashtagList" : [ "다", "가", "나" ],
+    "modifiedAt" : null
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_httpie_request"><a class="link" href="#Post-List-Search_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ http GET 'http://localhost:8080/api/v1/posts/14'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_path_parameters"><a class="link" href="#Post-List-Search_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/v1/posts/{postId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>postId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_request_body"><a class="link" href="#Post-List-Search_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_response_body"><a class="link" href="#Post-List-Search_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "success",
+  "result" : {
+    "id" : null,
+    "boardId" : 1,
+    "boardName" : null,
+    "boardUri" : null,
+    "categoryId" : 1,
+    "categoryName" : null,
+    "title" : "제목",
+    "content" : "내용입니다.",
+    "views" : null,
+    "email" : null,
+    "authorName" : null,
+    "hashtagList" : [ "다", "가", "나" ],
+    "modifiedAt" : null
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_response_fields"><a class="link" href="#Post-List-Search_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.boardUri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.categoryName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자 이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.hashtagList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 해시태그 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.views</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 조회수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.modifiedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 수정일자</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_curl_request"><a class="link" href="#Post-List-Search_curl_request">Curl request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/posts/all?page=1&amp;size=10' -i -X GET</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_http_request"><a class="link" href="#Post-List-Search_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/posts/all?page=1&amp;size=10 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_http_response"><a class="link" href="#Post-List-Search_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Content-Length: 6871
+
+{
+  "message" : "success",
+  "result" : {
+    "content" : [ {
+      "id" : 10568,
+      "boardId" : 84953,
+      "boardName" : "VBocJaRcunKIbNnKjzTIblsYuRbBtXtWYEhZrbhZmpY",
+      "boardUri" : "CnDXMFqZjWDGqCdLafALjRctfPXKOqcHNyhYyTo",
+      "categoryId" : 65309,
+      "categoryName" : "KkJcpWacSbpzoAAaHEwKZGUqogrGSUWeLgglzRzAgoXj",
+      "email" : "ELIcRNNNbwjeirpEQdTrJxHyKXJDSIcBHCy",
+      "authorName" : "TbdqbhFuwMrNFkoeANEDnQbVFztcvl",
+      "title" : "EpLprciViXseMkygtMhVXdrtxhIyDYQdMIeyUzsyCTGkXltdxPIRHplfeXOZhCcuCcmNQeHXytJhesWXjidR",
+      "content" : "sQzVKSwpGTwXgSuGQRkFWNWAFttTacNUw",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2010-03-22T17:32:19"
+    }, {
+      "id" : 67744,
+      "boardId" : 54518,
+      "boardName" : "ULZAyLBmsLcdeWTdXPlQgjMVXbpRYzBTjzlglRKAeamYUmWJtnJZLqwakeYceaYFBlWcoVdFXlfhbUilkMpiHDMUve",
+      "boardUri" : "ErKUBEqCrhrtgxJ",
+      "categoryId" : 54783,
+      "categoryName" : "kIaKuxYYVASJcIaSPolvldIfZTciudeieeoLVjkmgvzBIt",
+      "email" : "jVfJNonEnOinZjUfzQhdgLLfDT",
+      "authorName" : "oaMAzEEplqjJjNBgpTmxxpIoQMODRhfGEfXIoTtOmcBeivNUYvPBzMiJFouxILNvFthRIkEgEYzhlSTPkcSUyTS",
+      "title" : "eOMtThyhVNLWUZNRcBaQKxIyedUsFwdkelQbxeTeQOvaScfqIOOmaaJxkyvRnLRYtGKbgicZ",
+      "content" : "aHCBRQDSxVLhpfQGTMDYpsBZxvfBoeygjbUMaAIKKIkknjWEXJUfPxxQHeWKEJdpHYZGhtgdntugzvvKAXLhMLlNgNfZBdyFGRa",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2013-12-25T14:03:56"
+    }, {
+      "id" : 64715,
+      "boardId" : 46477,
+      "boardName" : "dTBGekxiOKesleAVkNopHIQgYGLlIATFrAvxsxbMLeWsiFKoH",
+      "boardUri" : "URsAEFZObrvYcJZUdQpkNMRWMnuqMZjGmbGpqIfdzlCGXKU",
+      "categoryId" : 86124,
+      "categoryName" : "biWSSSRpRXLAURzytlmbnRTFArBmCsVoOcCJNSiiARGiEvtzMXGjrOkbSWTmyDBSi",
+      "email" : "bkYtnUGVo",
+      "authorName" : "nYyFolqwISJOtzCNOSxfoRrtAfJCbmCImLHIRhFVIjiziEduCgomzdXP",
+      "title" : "QYcIOkvAhLTcmYrOLszOqwGlmyzrhupKjZNKuuiOPAgFhomWJfRGWaenLOfnn",
+      "content" : "bsvVUNOIIkGfcJxDJJZJbEarRLyuorIWNQOnyxEhUZUSQTAwirgqwyeMkANvTRlyuhxQOVP",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2016-03-28T21:40:48"
+    }, {
+      "id" : 40950,
+      "boardId" : 93692,
+      "boardName" : "AwWAdrGBDrDLsgBgexViZgrKBWczdNHorIPZ",
+      "boardUri" : "cUIAsnToHXJHTpcmeudVULShLgMRPcVMQqkoneVDlQwgPZOlXMT",
+      "categoryId" : 44745,
+      "categoryName" : "xEOw",
+      "email" : "eWeFBHjrZbzQtNifxunJrNjEShZrHxUXZLsiCILswQxcidEXOrmoNfVObIpLFAgmWIOBxkIVxigiWBA",
+      "authorName" : "SHmsSXjiYyHgnCOzkzCmXMMcd",
+      "title" : "si",
+      "content" : "QAyzBggVxIBZNzDpAVJeBpjuMxifEIcaNLmSxeKRYKWeoeWYAnPqFakEMMBrfwnhGtigSuEFkhDdhwakDTqmsSGHiu",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2016-05-21T07:21:47"
+    }, {
+      "id" : 90813,
+      "boardId" : 5615,
+      "boardName" : "dajaSkDgLLilCBECfdTYzLIjkMjeXOcsbyMIFzMlUuAUWbxudYBPKTsxsWhDFaNVKjYZgX",
+      "boardUri" : "jMsYrTTtNqSdZKPpUbgAVROixhGudcPmBfVEKtNpM",
+      "categoryId" : 26084,
+      "categoryName" : "WvECPNHLtSaJBivlQlbCYsXeTZuHTdrcnsJnJZAvtdymhpgkDXoFlhRBcKBXBbWXdWXwTdjnMViNGnHBGZBxkStz",
+      "email" : "vJICJCauMjpIktrEvSURvpTAfhvDXpAHENtgMGCGqk",
+      "authorName" : "JYWmjZuvhyzJVjNQUaTUTszHrPcEhnzYNcSdxnWNZTrlvsW",
+      "title" : "NkSaQDNUQSNAqiYcvYdApXZAhIqy",
+      "content" : "EqOanmdQlEEyhkeny",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2021-01-11T19:02:43"
+    }, {
+      "id" : 96213,
+      "boardId" : 56565,
+      "boardName" : "bmMjoeEhkOoIOHdtJgEIMUZfuIIGdXsvEATICEfsPabSPUvSaEemafDFoVjYiIwJSHmtozrRDdTmBRfOqgH",
+      "boardUri" : "XqxKLWTUajbMltkRfwuIdceDfyEUaMD",
+      "categoryId" : 73456,
+      "categoryName" : "F",
+      "email" : "GfQeQgmhuSRTKSLYazfdCHrfOyxIZedJAVZmHKYOWTsGdDDmWIiKLDRoptjoGfdkYSSGLGnzxEmvuNZj",
+      "authorName" : "rkAztiBnUktJUBwodmpWbmJL",
+      "title" : "UiQomPCRxZDUELhkLaBjDxmQuDgDuRCexrHILlbkHDOkNRBPZXkeFNJDBXwIQIuQIJLjzMS",
+      "content" : "ohizrZXYtLSfZpVZR",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2022-10-12T15:58:12"
+    }, {
+      "id" : 23837,
+      "boardId" : 35720,
+      "boardName" : "EWlPHkQoOvgFdXlkwYjuUDTvlSTUPXCBBBSdTROfEFcfiLguytLyVcWKOPHPXiGheYrNjDcL",
+      "boardUri" : "LrtHlSbkbLFuJJzPxbyqSGSjObqaofRuIVGyaUbMNSkmkxKbzpzqdzTRbctZdpWGpwcwEhIlJjgGVCvMFJWiHcILAGAqvhfHH",
+      "categoryId" : 44947,
+      "categoryName" : "E",
+      "email" : "leIoRWNLmpmWL",
+      "authorName" : "gZgVIAipVWVtUORDsYKQgQGC",
+      "title" : "AOHZHqClOwqNIKolkcOstBpQZfJuXEjjrjZQPTgXrTrJjCwYVGHsqcXeRyNkbFIBbmqKilCiTubnRJemRDsp",
+      "content" : "ziWvqOeokynLZfenPUruOED",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2022-10-26T14:10:31"
+    }, {
+      "id" : 84987,
+      "boardId" : 45323,
+      "boardName" : "TBQhlXHpXrgNSDnAqHZqZJoNBSJttJMNeZrSn",
+      "boardUri" : "zKLALzGkVIRBaKcuVpcvDXeSPESakMyUkLnjMhIVatvgjkEzlgLUDnSYhnhPvjrOkIqgFLewOCXBNaOYtLDKiEEOIrs",
+      "categoryId" : 48158,
+      "categoryName" : "pkTh",
+      "email" : "nRgRBnmAUrvSEpGmHqsNLHZGIszwNIarzXYHpommoWcsXnoWMlkodlyIxNltWFKkxb",
+      "authorName" : "rfNpRwzupQjxOTzoNnfPUlBoViVFkdByiuwhnVdMTMtwlrfcMK",
+      "title" : "JKI",
+      "content" : "baUvSwdeWWzAQLsKfMOceUPgKWYQMdN",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2023-02-22T13:57:59"
+    }, {
+      "id" : 89176,
+      "boardId" : 87661,
+      "boardName" : "ApoAvzIQcFMFPPXgLhJfeW",
+      "boardUri" : "VJUzCxXsdVtCaoKEAIJICpmeVlReEFqjcIBckPyzcsXOupFlmpLDtzlVdDTBgdEsuF",
+      "categoryId" : 10020,
+      "categoryName" : "zOekBTpMdKnGjTVy",
+      "email" : "vOmdGLlzOC",
+      "authorName" : "mtohuJJLNbdEiosLLAApkOSRrCEFHvtHQWIvZrbmhvLPAfsurYSDDwWIexFzoJMjdnReNwWRCFCUWJiAgfinggmADzVwl",
+      "title" : "sOUUIC",
+      "content" : "OBSnOqQKJZCmUNEUvvRsHMXISkzNEVYUcucSoAb",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2023-12-13T06:21:59"
+    }, {
+      "id" : 73749,
+      "boardId" : 43353,
+      "boardName" : "lTPHCQQegzbjNOmMdHxJLKqkRmLoBqM",
+      "boardUri" : "eYELHLoSeYgAFmxlBuWtjEADfexbdcHdLUWESQegVbikAIRtbbrEZTeTtUswTGglsiMYlihyhISroEwTXbfkekflYymmhwN",
+      "categoryId" : 60443,
+      "categoryName" : "lYRnmfASmQbFfHwtYWCzyONixAeYjUiMFBNxNbVNPblPTsLKpramFoXVmcWSyEizHoNqRNBiw",
+      "email" : "PwJbdXzExdWvQEnxoJskXwLLe",
+      "authorName" : "ITBoZcebOzpaXIZCoSXesWzkGBJIXZhPehtwqlQyOKwRnTYjauAvxjnFNyQhBpFuaQdTrQDkcHUQkNuMolEcD",
+      "title" : "Fe",
+      "content" : "LZJBVpqrgYEfgBQZscwWwvexJVjoBNJoDKyqXGsYnOlEVto",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2025-10-21T11:18:08"
+    } ],
+    "pageable" : "INSTANCE",
+    "last" : true,
+    "totalElements" : 10,
+    "totalPages" : 1,
+    "size" : 10,
+    "number" : 0,
+    "sort" : {
+      "empty" : true,
+      "sorted" : false,
+      "unsorted" : true
+    },
+    "first" : true,
+    "numberOfElements" : 10,
+    "empty" : false
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_httpie_request"><a class="link" href="#Post-List-Search_httpie_request">HTTPie request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ http GET 'http://localhost:8080/api/v1/posts/all?page=1&amp;size=10'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_request_body"><a class="link" href="#Post-List-Search_request_body">Request body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_request_parameters"><a class="link" href="#Post-List-Search_request_parameters">Request parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 사이즈</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_response_body"><a class="link" href="#Post-List-Search_response_body">Response body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "message" : "success",
+  "result" : {
+    "content" : [ {
+      "id" : 10568,
+      "boardId" : 84953,
+      "boardName" : "VBocJaRcunKIbNnKjzTIblsYuRbBtXtWYEhZrbhZmpY",
+      "boardUri" : "CnDXMFqZjWDGqCdLafALjRctfPXKOqcHNyhYyTo",
+      "categoryId" : 65309,
+      "categoryName" : "KkJcpWacSbpzoAAaHEwKZGUqogrGSUWeLgglzRzAgoXj",
+      "email" : "ELIcRNNNbwjeirpEQdTrJxHyKXJDSIcBHCy",
+      "authorName" : "TbdqbhFuwMrNFkoeANEDnQbVFztcvl",
+      "title" : "EpLprciViXseMkygtMhVXdrtxhIyDYQdMIeyUzsyCTGkXltdxPIRHplfeXOZhCcuCcmNQeHXytJhesWXjidR",
+      "content" : "sQzVKSwpGTwXgSuGQRkFWNWAFttTacNUw",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2010-03-22T17:32:19"
+    }, {
+      "id" : 67744,
+      "boardId" : 54518,
+      "boardName" : "ULZAyLBmsLcdeWTdXPlQgjMVXbpRYzBTjzlglRKAeamYUmWJtnJZLqwakeYceaYFBlWcoVdFXlfhbUilkMpiHDMUve",
+      "boardUri" : "ErKUBEqCrhrtgxJ",
+      "categoryId" : 54783,
+      "categoryName" : "kIaKuxYYVASJcIaSPolvldIfZTciudeieeoLVjkmgvzBIt",
+      "email" : "jVfJNonEnOinZjUfzQhdgLLfDT",
+      "authorName" : "oaMAzEEplqjJjNBgpTmxxpIoQMODRhfGEfXIoTtOmcBeivNUYvPBzMiJFouxILNvFthRIkEgEYzhlSTPkcSUyTS",
+      "title" : "eOMtThyhVNLWUZNRcBaQKxIyedUsFwdkelQbxeTeQOvaScfqIOOmaaJxkyvRnLRYtGKbgicZ",
+      "content" : "aHCBRQDSxVLhpfQGTMDYpsBZxvfBoeygjbUMaAIKKIkknjWEXJUfPxxQHeWKEJdpHYZGhtgdntugzvvKAXLhMLlNgNfZBdyFGRa",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2013-12-25T14:03:56"
+    }, {
+      "id" : 64715,
+      "boardId" : 46477,
+      "boardName" : "dTBGekxiOKesleAVkNopHIQgYGLlIATFrAvxsxbMLeWsiFKoH",
+      "boardUri" : "URsAEFZObrvYcJZUdQpkNMRWMnuqMZjGmbGpqIfdzlCGXKU",
+      "categoryId" : 86124,
+      "categoryName" : "biWSSSRpRXLAURzytlmbnRTFArBmCsVoOcCJNSiiARGiEvtzMXGjrOkbSWTmyDBSi",
+      "email" : "bkYtnUGVo",
+      "authorName" : "nYyFolqwISJOtzCNOSxfoRrtAfJCbmCImLHIRhFVIjiziEduCgomzdXP",
+      "title" : "QYcIOkvAhLTcmYrOLszOqwGlmyzrhupKjZNKuuiOPAgFhomWJfRGWaenLOfnn",
+      "content" : "bsvVUNOIIkGfcJxDJJZJbEarRLyuorIWNQOnyxEhUZUSQTAwirgqwyeMkANvTRlyuhxQOVP",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2016-03-28T21:40:48"
+    }, {
+      "id" : 40950,
+      "boardId" : 93692,
+      "boardName" : "AwWAdrGBDrDLsgBgexViZgrKBWczdNHorIPZ",
+      "boardUri" : "cUIAsnToHXJHTpcmeudVULShLgMRPcVMQqkoneVDlQwgPZOlXMT",
+      "categoryId" : 44745,
+      "categoryName" : "xEOw",
+      "email" : "eWeFBHjrZbzQtNifxunJrNjEShZrHxUXZLsiCILswQxcidEXOrmoNfVObIpLFAgmWIOBxkIVxigiWBA",
+      "authorName" : "SHmsSXjiYyHgnCOzkzCmXMMcd",
+      "title" : "si",
+      "content" : "QAyzBggVxIBZNzDpAVJeBpjuMxifEIcaNLmSxeKRYKWeoeWYAnPqFakEMMBrfwnhGtigSuEFkhDdhwakDTqmsSGHiu",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2016-05-21T07:21:47"
+    }, {
+      "id" : 90813,
+      "boardId" : 5615,
+      "boardName" : "dajaSkDgLLilCBECfdTYzLIjkMjeXOcsbyMIFzMlUuAUWbxudYBPKTsxsWhDFaNVKjYZgX",
+      "boardUri" : "jMsYrTTtNqSdZKPpUbgAVROixhGudcPmBfVEKtNpM",
+      "categoryId" : 26084,
+      "categoryName" : "WvECPNHLtSaJBivlQlbCYsXeTZuHTdrcnsJnJZAvtdymhpgkDXoFlhRBcKBXBbWXdWXwTdjnMViNGnHBGZBxkStz",
+      "email" : "vJICJCauMjpIktrEvSURvpTAfhvDXpAHENtgMGCGqk",
+      "authorName" : "JYWmjZuvhyzJVjNQUaTUTszHrPcEhnzYNcSdxnWNZTrlvsW",
+      "title" : "NkSaQDNUQSNAqiYcvYdApXZAhIqy",
+      "content" : "EqOanmdQlEEyhkeny",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2021-01-11T19:02:43"
+    }, {
+      "id" : 96213,
+      "boardId" : 56565,
+      "boardName" : "bmMjoeEhkOoIOHdtJgEIMUZfuIIGdXsvEATICEfsPabSPUvSaEemafDFoVjYiIwJSHmtozrRDdTmBRfOqgH",
+      "boardUri" : "XqxKLWTUajbMltkRfwuIdceDfyEUaMD",
+      "categoryId" : 73456,
+      "categoryName" : "F",
+      "email" : "GfQeQgmhuSRTKSLYazfdCHrfOyxIZedJAVZmHKYOWTsGdDDmWIiKLDRoptjoGfdkYSSGLGnzxEmvuNZj",
+      "authorName" : "rkAztiBnUktJUBwodmpWbmJL",
+      "title" : "UiQomPCRxZDUELhkLaBjDxmQuDgDuRCexrHILlbkHDOkNRBPZXkeFNJDBXwIQIuQIJLjzMS",
+      "content" : "ohizrZXYtLSfZpVZR",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2022-10-12T15:58:12"
+    }, {
+      "id" : 23837,
+      "boardId" : 35720,
+      "boardName" : "EWlPHkQoOvgFdXlkwYjuUDTvlSTUPXCBBBSdTROfEFcfiLguytLyVcWKOPHPXiGheYrNjDcL",
+      "boardUri" : "LrtHlSbkbLFuJJzPxbyqSGSjObqaofRuIVGyaUbMNSkmkxKbzpzqdzTRbctZdpWGpwcwEhIlJjgGVCvMFJWiHcILAGAqvhfHH",
+      "categoryId" : 44947,
+      "categoryName" : "E",
+      "email" : "leIoRWNLmpmWL",
+      "authorName" : "gZgVIAipVWVtUORDsYKQgQGC",
+      "title" : "AOHZHqClOwqNIKolkcOstBpQZfJuXEjjrjZQPTgXrTrJjCwYVGHsqcXeRyNkbFIBbmqKilCiTubnRJemRDsp",
+      "content" : "ziWvqOeokynLZfenPUruOED",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2022-10-26T14:10:31"
+    }, {
+      "id" : 84987,
+      "boardId" : 45323,
+      "boardName" : "TBQhlXHpXrgNSDnAqHZqZJoNBSJttJMNeZrSn",
+      "boardUri" : "zKLALzGkVIRBaKcuVpcvDXeSPESakMyUkLnjMhIVatvgjkEzlgLUDnSYhnhPvjrOkIqgFLewOCXBNaOYtLDKiEEOIrs",
+      "categoryId" : 48158,
+      "categoryName" : "pkTh",
+      "email" : "nRgRBnmAUrvSEpGmHqsNLHZGIszwNIarzXYHpommoWcsXnoWMlkodlyIxNltWFKkxb",
+      "authorName" : "rfNpRwzupQjxOTzoNnfPUlBoViVFkdByiuwhnVdMTMtwlrfcMK",
+      "title" : "JKI",
+      "content" : "baUvSwdeWWzAQLsKfMOceUPgKWYQMdN",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2023-02-22T13:57:59"
+    }, {
+      "id" : 89176,
+      "boardId" : 87661,
+      "boardName" : "ApoAvzIQcFMFPPXgLhJfeW",
+      "boardUri" : "VJUzCxXsdVtCaoKEAIJICpmeVlReEFqjcIBckPyzcsXOupFlmpLDtzlVdDTBgdEsuF",
+      "categoryId" : 10020,
+      "categoryName" : "zOekBTpMdKnGjTVy",
+      "email" : "vOmdGLlzOC",
+      "authorName" : "mtohuJJLNbdEiosLLAApkOSRrCEFHvtHQWIvZrbmhvLPAfsurYSDDwWIexFzoJMjdnReNwWRCFCUWJiAgfinggmADzVwl",
+      "title" : "sOUUIC",
+      "content" : "OBSnOqQKJZCmUNEUvvRsHMXISkzNEVYUcucSoAb",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2023-12-13T06:21:59"
+    }, {
+      "id" : 73749,
+      "boardId" : 43353,
+      "boardName" : "lTPHCQQegzbjNOmMdHxJLKqkRmLoBqM",
+      "boardUri" : "eYELHLoSeYgAFmxlBuWtjEADfexbdcHdLUWESQegVbikAIRtbbrEZTeTtUswTGglsiMYlihyhISroEwTXbfkekflYymmhwN",
+      "categoryId" : 60443,
+      "categoryName" : "lYRnmfASmQbFfHwtYWCzyONixAeYjUiMFBNxNbVNPblPTsLKpramFoXVmcWSyEizHoNqRNBiw",
+      "email" : "PwJbdXzExdWvQEnxoJskXwLLe",
+      "authorName" : "ITBoZcebOzpaXIZCoSXesWzkGBJIXZhPehtwqlQyOKwRnTYjauAvxjnFNyQhBpFuaQdTrQDkcHUQkNuMolEcD",
+      "title" : "Fe",
+      "content" : "LZJBVpqrgYEfgBQZscwWwvexJVjoBNJoDKyqXGsYnOlEVto",
+      "hashtagList" : [ ],
+      "modifiedAt" : "2025-10-21T11:18:08"
+    } ],
+    "pageable" : "INSTANCE",
+    "last" : true,
+    "totalElements" : 10,
+    "totalPages" : 1,
+    "size" : 10,
+    "number" : 0,
+    "sort" : {
+      "empty" : true,
+      "sorted" : false,
+      "unsorted" : true
+    },
+    "first" : true,
+    "numberOfElements" : 10,
+    "empty" : false
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Post-List-Search_response_fields"><a class="link" href="#Post-List-Search_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].boardName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].boardUri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 게시판 URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].categoryName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 카테고리명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자 이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 작성자명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].hashtagList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 해시태그 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content[].modifiedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post 수정일자</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -466,7 +3680,7 @@ Unresolved directive in index.adoc - include::post.adoc[]</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-01-15 22:19:04 +0900
+Last updated 2023-01-18 21:05:19 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

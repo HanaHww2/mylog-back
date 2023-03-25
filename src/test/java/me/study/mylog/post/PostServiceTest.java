@@ -6,8 +6,8 @@ import me.study.mylog.board.entity.BoardType;
 import me.study.mylog.category.entity.Category;
 import me.study.mylog.category.repository.CategoryRepository;
 import me.study.mylog.post.entity.Post;
-import me.study.mylog.post.dto.PostDetailResponse;
-import me.study.mylog.post.dto.SavePostRequest;
+import me.study.mylog.post.dto.CreatePostRequest;
+import me.study.mylog.post.repository.PostRepository;
 import me.study.mylog.post.service.PostReadService;
 import me.study.mylog.post.service.PostWriteService;
 import me.study.mylog.upload.repository.ImageFileRepository;
@@ -22,7 +22,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
 import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -75,7 +74,7 @@ class PostServiceTest {
         Long userId = 1L;
         String userEmail = "test@example.com";
 
-        SavePostRequest requestDto = SavePostRequest.builder()
+        CreatePostRequest requestDto = CreatePostRequest.builder()
 //                .email("hanah@example.com")
                 .content("테스트 본문")
                 .title("테스트 타이틀")

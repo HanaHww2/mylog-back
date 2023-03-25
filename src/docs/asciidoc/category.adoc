@@ -1,13 +1,22 @@
 [[Category-API]]
 == Category-API
 
-[[Category-List]]
-=== Category 리스트 조회
-
+[[Create-Category]]
+=== Category 생성
 operation::create-category[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
 
+[[Modify-Category]]
+=== Category 수정
 operation::modify-category-value[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
 
+[[Delete-Category]]
+=== Category 삭제
+operation::delete-category[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
+[[Category-List]]
+=== Category 조회
 operation::category-info-by-id[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
 
+[[Category-List]]
+=== Category 리스트 조회
 operation::category-list-by-board[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']

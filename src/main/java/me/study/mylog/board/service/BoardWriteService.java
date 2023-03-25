@@ -112,4 +112,8 @@ public class BoardWriteService {
                 .toList();
         return BoardMapper.toBoardDetailResponseDto(board, categoryDtoList);
     }
+
+    public void deleteBoard(Long boardId) {
+        boardRepository.deleteById(boardId);
+    }
 }

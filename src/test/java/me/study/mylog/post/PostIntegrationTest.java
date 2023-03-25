@@ -57,7 +57,6 @@ public class PostIntegrationTest {
         databaseCleanUp.execute();
     }
 
-    @WithMockUser
     @DisplayName("조건에_맞춰_postList를_조회해_반환하는지_검증")
     @Test
     public void chkGetPostListWell() throws Exception {

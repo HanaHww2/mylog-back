@@ -5,7 +5,6 @@ import me.study.mylog.board.entity.BoardType;
 
 public record CreateBoardRequest(
         String name,
-        String uri,
         String icon,
         BoardType boardType,
         String nickname // 랜덤?ㅠ

@@ -7,8 +7,10 @@ import me.study.mylog.category.dto.CategoryCreateRequest;
 import me.study.mylog.category.dto.CategoryModifyRequest;
 import me.study.mylog.category.service.CategoryReadService;
 import me.study.mylog.category.dto.CategoryResponseDto;
+import me.study.mylog.category.service.CategoryWriteService;
 import me.study.mylog.common.dto.ApiResponse;
 import me.study.mylog.usecase.CreateCategoryUsecase;
+import me.study.mylog.usecase.DeleteCategoryUsecase;
 import me.study.mylog.usecase.GetCategoryDetailUsecase;
 import me.study.mylog.usecase.ModifyCategoryValueUsecase;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +29,7 @@ public class CategoryController {
     private final CreateCategoryUsecase createCategoryUsecase;
     private final ModifyCategoryValueUsecase modifyCategoryValueUsecase;
     private final GetCategoryDetailUsecase getCategoryDetailUsecase;
-
-    @GetMapping("/categories")
-    public ResponseEntity<?> getCategoriesByBoard(@RequestParam Long boardId) {
-
-        List<CategoryResponseDto> dtoList = categoryReadService.getCategoriesByBoardId(boardId);
-        return ResponseEntity.ok(new ApiResponse("SUCCESS", dtoList));
-    }
+    private final DeleteCategoryUsecase deleteCategoryUsecase;
 
     @PostMapping("/categories")
     public ResponseEntity<ApiResponse<CategoryResponseDto>> createNewCategory(@AuthenticationPrincipal UserPrincipal userPrincipal,
@@ -49,6 +45,20 @@ public class CategoryController {
 
         var responseDto = modifyCategoryValueUsecase.execute(dto, userPrincipal.getId());
         return ResponseEntity.ok(new ApiResponse("SUCCESS", responseDto));
+    }
+
+    @DeleteMapping("categories/{boardId}/{categoryId}")
+    public ResponseEntity<?> deleteCategory(@AuthenticationPrincipal UserPrincipal userPrincipal,
+                                            @PathVariable Long boardId, @PathVariable Long categoryId) {
+        deleteCategoryUsecase.execute(boardId, categoryId, userPrincipal.getId());
+        return ResponseEntity.ok(new ApiResponse("SUCCESS", Boolean.TRUE));
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<?> getCategoriesByBoard(@RequestParam Long boardId) {
+
+        List<CategoryResponseDto> dtoList = categoryReadService.getCategoriesByBoardId(boardId);
+        return ResponseEntity.ok(new ApiResponse("SUCCESS", dtoList));
     }
 
     @GetMapping("/categories/{boardId}/{categoryId}")

@@ -53,7 +53,7 @@ public class Board extends BaseEntity {
 
     public void modifyValues(ModifyBoardRequest modifyBoardRequest) {
         this.name = modifyBoardRequest.name();
-        this.uri = modifyBoardRequest.uri();
+        this.uri = "/" + modifyBoardRequest.name();
         this.icon = modifyBoardRequest.icon();
         this.boardType = modifyBoardRequest.boardType();
     }

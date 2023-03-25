@@ -25,6 +25,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.security.Principal;
+import java.util.EnumSet;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,6 +40,7 @@ public class UserController {
 
     @PostMapping("/auth/signup")
     public ResponseEntity<ApiResponse<?>> signUpNewUser(@Valid @RequestBody UserDto userDto) {
+
         UserDto newUserDto;
         try {
             newUserDto = userWriteService.register(userDto);

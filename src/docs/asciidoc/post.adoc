@@ -1,13 +1,22 @@
 [[Post-API]]
 == Post-API
 
-[[Post-List-Search]]
-=== Post 리스트 조회
-
+[[Create-Post]]
+=== Post 생성
 operation::create-post[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
 
+[[Modify-Post]]
+=== Post 수정
 operation::modify-post[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
 
+[[Delete-Post]]
+=== Post 삭제
+operation::delete-post[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
+[[Get-Post]]
+=== Post 조회
 operation::get-post-by-postId[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
 
+[[Search-Post-List]]
+=== Post 리스트 조회
 operation::all-post-list[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']

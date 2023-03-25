@@ -3,7 +3,7 @@ package me.study.mylog.usecase;
 import lombok.RequiredArgsConstructor;
 import me.study.mylog.board.service.BoardMemberReadService;
 import me.study.mylog.common.exception.BadRequestException;
-import me.study.mylog.post.PostRepository;
+import me.study.mylog.post.repository.PostRepository;
 import me.study.mylog.post.dto.ModifyPostRequest;
 import me.study.mylog.post.dto.PostDetailResponse;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,11 @@
-package me.study.mylog.post.dto;
+package me.study.mylog.comment.dto;
 
 import lombok.*;
+import me.study.mylog.upload.dto.ImageFileRequest;
 
-import java.util.HashSet;
+import javax.annotation.Nullable;
+import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 /*
 * Controller에서 @RequestBody로 외부에서 데이터를 받는 경우엔
@@ -18,14 +19,12 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SavePostRequest {
-    // 사용자 정보는 토큰으로 확인한다.
-    //private String email;
-    private Long boardId;
-    private Long categoryId;
-    private String title;
-    private String content;
-    @Builder.Default
-    private Set<String> tagList = new HashSet<>();
+public class CreateCommentRequest {
+
+    @NotNull private Long boardId;
+    @NotNull private Long postId;
+    @Nullable private Long parentCommentId;
+    @NotNull private String writerName;
+    @NotNull private String content;
     private List<ImageFileRequest> imageListDto;
 }

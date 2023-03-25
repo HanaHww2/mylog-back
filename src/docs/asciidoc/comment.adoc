@@ -1,0 +1,22 @@
+[[Comment-API]]
+== Comment-API
+
+[[Create-Comment]]
+=== Comment 등록
+
+operation::create-comment[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
+[[Modify-Comment]]
+=== Comment 수정
+
+operation::modify-comment[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
+[[Delete-Comment]]
+=== Comment 삭제
+
+operation::delete-comment[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']
+
+[[Get-Comment-List]]
+=== Comment 리스트 조회
+
+operation::comment-list-by-postId[sn ippets='request-fields,curl-request, http-request, request-headers, http-response, response-headers, response-fields, links']

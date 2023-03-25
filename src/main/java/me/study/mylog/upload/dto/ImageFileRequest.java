@@ -1,4 +1,4 @@
-package me.study.mylog.post.dto;
+package me.study.mylog.upload.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

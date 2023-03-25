@@ -1,4 +1,4 @@
-= Spring REST Docs
+= MyLog API DOCS
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -9,7 +9,7 @@
 [[introduction]]
 == 소개
 
-include::users.adoc[]
-include::board.adoc[]
-include::category.adoc[]
-include::post.adoc[]
+include::src/docs/asciidoc/users.adoc[]
+include::src/docs/asciidoc/board.adoc[]
+include::src/docs/asciidoc/category.adoc[]
+include::src/docs/asciidoc/post.adoc[]

@@ -1,4 +1,4 @@
-package me.study.mylog.common.jpa_converter;
+package me.study.mylog.common.jpaConverter;
 
 import javax.persistence.AttributeConverter;
 import java.util.Arrays;

@@ -18,7 +18,7 @@ public class ImageFileResponseDto {
     public ImageFileResponseDto(String originFilename) {
         this.originFilename = originFilename;
         int idxForExtension = originFilename.lastIndexOf('.');
-        // datetime 등 을 활용해 조금 더 난수화 할 예정
+        // datetime 등 을 활용해 조금 더 난수화 할 필요
         this.filename = UUID.randomUUID() + originFilename.substring(idxForExtension);
     }
 

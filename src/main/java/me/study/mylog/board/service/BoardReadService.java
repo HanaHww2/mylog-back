@@ -26,7 +26,7 @@ public class BoardReadService {
         return BoardMapper.toBoardDetailResponseDto(boardById, categoryDtoList);
     }
 
-    public BoardDetailResponse getBoardsByUri(String boardUri) {
+    public BoardDetailResponse getBoardByUri(String boardUri) {
         var boardByUri = boardRepository.findByUri(boardUri)
                 .orElseThrow(() -> new IllegalArgumentException("Not valid boardId"));
 

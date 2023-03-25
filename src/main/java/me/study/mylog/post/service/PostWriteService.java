@@ -2,25 +2,15 @@ package me.study.mylog.post.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.study.mylog.board.entity.Board;
 import me.study.mylog.board.repository.BoardRepository;
-import me.study.mylog.category.entity.Category;
 import me.study.mylog.category.repository.CategoryRepository;
-import me.study.mylog.post.PostRepository;
-import me.study.mylog.post.dto.ImageFileRequest;
-import me.study.mylog.post.dto.PostDetailResponse;
-import me.study.mylog.post.dto.SavePostRequest;
+import me.study.mylog.post.repository.PostRepository;
+import me.study.mylog.post.dto.CreatePostRequest;
 import me.study.mylog.post.entity.Post;
-import me.study.mylog.upload.domain.ImageFile;
 import me.study.mylog.upload.repository.ImageFileRepository;
-import me.study.mylog.users.domain.User;
 import me.study.mylog.users.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -38,7 +28,7 @@ public class PostWriteService {
      * TODO 글에 첨부된 이미지 등 파일 정보의 저장도 실행한다. -> 메소드 분리하기!!!
      * */
     @Transactional
-    public Post save(SavePostRequest dto, Long userId) {
+    public Post save(CreatePostRequest dto, Long userId) {
 //        User user = userRepository.findById(userId)
 //                .orElseThrow(()-> new IllegalArgumentException("Invalid User Email, couldn't find user"));
 //        Board board = boardRepository.findById(dto.getBoardId())
@@ -62,6 +52,13 @@ public class PostWriteService {
         return saved;
     }
 
+    /**
+     * 게시글 소프트 딜리트
+     */
+    @Transactional
+    public void delete(Post post) {
+        postRepository.delete(post);
+    }
 
     /**
      * 게시글 조회수 업데이트 (리턴 없이 업데이트만 수행)

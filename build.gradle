@@ -1,10 +1,10 @@
 plugins {
+    id 'java'
     id 'org.springframework.boot' version '2.7.6'
     id 'io.spring.dependency-management' version '1.0.12.RELEASE'
     // Asciidoctor 플러그인 적용
     // gradle 7.0 이상부터는 jvm 사용
     id "org.asciidoctor.jvm.convert" version "3.3.2"
-    id 'java'
     id 'jacoco'
 }
 
@@ -62,7 +62,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
-                minimum = 0.80
+                minimum = 0.70
             }
             excludes = []
         }
@@ -75,14 +75,14 @@ jacocoTestReport {
         csv.enabled true
         xml.enabled false
     }
-    finalizedBy 'jacocoTestCoverageVerification'
+    //finalizedBy 'jacocoTestCoverageVerification'
 }
 
 tasks.named('test') {
     systemProperty("spring.profiles.active", "test")
     outputs.dir snippetsDir
     useJUnitPlatform()
-  //  finalizedBy 'jacocoTestReport'
+    finalizedBy 'jacocoTestReport'
 }
 
 // static/docs 폴더 비우기

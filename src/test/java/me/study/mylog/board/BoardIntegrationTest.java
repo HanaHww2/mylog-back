@@ -73,20 +73,7 @@ class BoardIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer {ACCESS_TOKEN}"))
                 .andExpect(status().isOk())
-                .andDo(print())
-                    .andDo(document("get-board-list",
-                    preprocessRequest(prettyPrint()),
-                    preprocessResponse(prettyPrint()),
-                    responseFields(
-                            fieldWithPath("message").description("응답 메세지"),
-                            subsectionWithPath("result[]").description("결과값"),
-                            fieldWithPath("result[].id").description("게시판 아이디"),
-                            fieldWithPath("result[].name").description("게시판명"),
-                            fieldWithPath("result[].uri").description("게시판 URI"),
-                            fieldWithPath("result[].categories").description("카테고리 리스트"),
-                            fieldWithPath("result[].icon").description("게시판 아이콘")
-                    )
-        ));
+                .andDo(print());
     }
 
     @WithMockCustomUser
@@ -100,22 +87,6 @@ class BoardIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status()
                         .isOk())
-                .andDo(print())
-                .andDo(document("get-board-info-by-id",
-                        preprocessRequest(prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        responseFields(
-                                fieldWithPath("message").description("응답 메세지"),
-                                subsectionWithPath("result").description("결과값"),
-                                fieldWithPath("result.id").description("게시판 아이디"),
-                                fieldWithPath("result.name").description("게시판명"),
-                                fieldWithPath("result.uri").description("게시판 URI"),
-                                fieldWithPath("result.views").description("게시판 조회수"),
-                                fieldWithPath("result.icon").description("게시판 아이콘"),
-                                fieldWithPath("result.categories").description("카테고리 리스트"),
-                                fieldWithPath("result.nickname").description("유저 닉네임"),
-                                fieldWithPath("result.boardMemberType").description("유저 역할")
-                        )
-                ));
+                .andDo(print());
     }
 }

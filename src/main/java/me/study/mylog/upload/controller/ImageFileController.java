@@ -41,7 +41,7 @@ public class ImageFileController {
     * 차후, 스케쥴링 혹은 배치 작업을 통해서, 디비에 기록되지 않은 uri를 가진 이미지나 첨부파일은 삭제 처리해보고자 한다.
     * 이 로직은 차후 상황에 따라 변경 가능할 것이다.
     * */
-    // TODO 로컬 파일 시스템 활용과 S3 활용에서 이미지 도메인? 구조 차이가 있음 -> 수정 중, 결과 확인 필요
+    // TODO 로컬 파일 시스템 활용과 S3 활용에서 응답 데이터 구조 차이가 있음 -> 수정 중, 결과 확인 필요
     @PostMapping("/api/images/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("imgFiles") List<MultipartFile> multipartFiles) {
 

@@ -2,6 +2,7 @@ package me.study.mylog.board.service;
 
 import lombok.RequiredArgsConstructor;
 import me.study.mylog.board.dto.BoardDetailResponse;
+import me.study.mylog.board.entity.BoardMember;
 import me.study.mylog.board.mapper.BoardMemberMapper;
 import me.study.mylog.board.repository.BoardMemberRepository;
 import me.study.mylog.category.mapper.CategoryMapper;
@@ -17,12 +18,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class BoardMemberReadService {
+
     private final UserRepository userRepository;
     private final BoardMemberRepository boardMemberRepository;
 
+    @Transactional(readOnly = true)
     public void existsBoardMemberByBoardIdAndUserId(Long boardId, Long userId) {
         var result = boardMemberRepository.existsByBoardIdAndUserId(boardId, userId);
         if (!result) throw new BadRequestException("Not a board member");
+    }
+
+    @Transactional(readOnly = true)
+    public BoardMember getBoardMemberByBoardIdAndUserId(Long boardId, Long userId) {
+        var boardMember = boardMemberRepository.findByBoardIdAndUserId(boardId, userId)
+                .orElseThrow(() -> {throw new IllegalArgumentException("Not a board member");});
+        return boardMember;
     }
 
     @Transactional(readOnly = true)

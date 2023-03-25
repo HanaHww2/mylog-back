@@ -1,15 +1,12 @@
 package me.study.mylog.post.controller;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.study.mylog.auth.security.JwtAuthenticationFilter;
 import me.study.mylog.auth.security.UserPrincipal;
 import me.study.mylog.common.domain.BaseTimeEntity;
+import me.study.mylog.common.dto.PageResponse;
 import me.study.mylog.post.dto.ModifyPostRequest;
 import me.study.mylog.post.service.PostReadService;
 import me.study.mylog.post.entity.Post;
@@ -17,6 +14,7 @@ import me.study.mylog.post.dto.PostDetailResponse;
 import me.study.mylog.post.dto.PostMainResponse;
 import me.study.mylog.post.service.PostWriteService;
 import me.study.mylog.usecase.CreatePostUsecase;
+import me.study.mylog.usecase.DeletePostUsecase;
 import me.study.mylog.usecase.ModifyPostUsecase;
 import me.study.mylog.users.domain.RoleType;
 import me.study.mylog.util.fixture.PostFixtureFactory;
@@ -33,6 +31,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -47,7 +48,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
@@ -75,6 +75,8 @@ class PostControllerTest {
     private CreatePostUsecase createPostUsecase;
     @MockBean
     private ModifyPostUsecase modifyPostUsecase;
+    @MockBean
+    private DeletePostUsecase deletePostUsecase;
     @MockBean
     private PostReadService postReadService;
     @MockBean
@@ -106,12 +108,13 @@ class PostControllerTest {
         List<PostMainResponse> dtoList = this.posts.stream()
                 .map(PostMainResponse::new)
                 .collect(Collectors.toList());
-        var postMainResponseDtoPage = new PageImpl<>(dtoList);
+        Pageable pageable = PageRequest.of(0, 10,  Sort.Direction.DESC, "modifiedAt");
+        var postMainResponseDtoPage = new PageImpl<PostMainResponse>(dtoList, pageable, 10);
 
         String content = objectMapper.writeValueAsString(dtoList);
 
         //given(userService.register(any())).willReturn(response); 중첩 구조여서 에러 발생
-        BDDMockito.willReturn(postMainResponseDtoPage).given(postReadService).getAllPostDesc(any());
+        BDDMockito.willReturn(new PageResponse<>(postMainResponseDtoPage)).given(postReadService).getAllPostDesc(any());
 
         // when, then
         mockMvc.perform(get("/api/v1/posts/all?page=1&size=10"))

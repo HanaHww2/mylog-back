@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Getter
-public class CustomPageDto<T> {
+public class PageResponse<T> {
     List<T> content;
     boolean first;
     boolean last;
@@ -20,7 +20,7 @@ public class CustomPageDto<T> {
     int pageSize;
     long offset;
 
-    public CustomPageDto(Page page) {
+    public PageResponse(Page page) {
         Pageable pageable = page.getPageable();
 
         this.content = page.getContent();
